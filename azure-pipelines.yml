@@ -11,5 +11,6 @@ pool:
 
 steps:
 - script: |
-    make
+    qmake -makefile -o ./Makefile SCAPES.pro
+    make -f Makefile
   displayName: 'make'

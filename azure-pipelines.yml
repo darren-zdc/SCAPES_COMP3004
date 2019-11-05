@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  name: 'COMP3004-F19'
+  name: 'GroupPool'
 
 steps:
 - script: |

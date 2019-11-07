@@ -22,6 +22,7 @@ SOURCES += \
         jmorestmt.cpp \
         jmpstmt.cpp \
         main.cpp \
+        preferences.cpp \
         printstmt.cpp \
         program.cpp \
         readstmt.cpp \
@@ -40,6 +41,7 @@ HEADERS += \
     identifier.h \
     jmorestmt.h \
     jmpstmt.h \
+    preferences.h \
     printstmt.h \
     program.h \
     readstmt.h \

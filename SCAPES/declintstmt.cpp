@@ -1,6 +1,6 @@
 #include "declintstmt.h"
 
-DeclIntStmt::DeclIntStmt(string input)
+DeclIntStmt::DeclIntStmt()
 {
 
 }

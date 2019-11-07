@@ -15,16 +15,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        CompStmt.cpp \
-        DeclIntStmt.cpp \
-        EndStmt.cpp \
-        JMoreStmt.cpp \
-        JmpStmt.cpp \
-        PrintStmt.cpp \
-        ReadStmt.cpp \
+        compstmt.cpp \
+        declintstmt.cpp \
+        endstmt.cpp \
+        identifier.cpp \
+        jmorestmt.cpp \
+        jmpstmt.cpp \
         main.cpp \
+        printstmt.cpp \
         program.cpp \
-        statement.cpp
+        readstmt.cpp \
+        statement.cpp \
+        variable.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -32,5 +34,14 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    compstmt.h \
     declintstmt.h \
-    program.h
+    endstmt.h \
+    identifier.h \
+    jmorestmt.h \
+    jmpstmt.h \
+    printstmt.h \
+    program.h \
+    readstmt.h \
+    statement.h \
+    variable.h

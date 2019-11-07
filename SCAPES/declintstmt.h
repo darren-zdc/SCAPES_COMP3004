@@ -7,7 +7,7 @@ class DeclIntStmt
 {
 public:
     DeclIntStmt();
-protected:
+private:
     void Compile();
     void Run();
 };

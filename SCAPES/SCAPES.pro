@@ -37,8 +37,7 @@ SOURCES += \
         uimanager.cpp \
         variable.cpp \
  	Create.cpp \
-        Save.cpp \
-	test.cpp
+        Save.cpp
 
 
 # Default rules for deployment.
@@ -65,7 +64,6 @@ HEADERS += \
     variable.h \
     Create.h \
     Save.h \
-    test.h
 
 FORMS += \
     mainwindow.ui

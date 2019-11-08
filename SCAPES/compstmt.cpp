@@ -8,6 +8,7 @@ CompStmt::CompStmt()
 CompStmt::CompStmt(string line): Statement(line)
 {}
 
+//Syntax checking
 void CompStmt::compile()
 {
 

@@ -14,6 +14,7 @@ void PrintStmt::run()
 
 }
 
+//Syntax checking
 void PrintStmt::compile()
 {
 

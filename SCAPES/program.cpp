@@ -14,9 +14,10 @@ void Program::Compile()
     {
         while(getline(myprogram, line))
         {
-            CreateStatement(line);
+            createStatement(line);
             Statement* st = statements.back();
             st->compile();
+            createIdentifier(st, line);
         }
     }
 
@@ -28,9 +29,9 @@ void Program::Execute()
 
 }
 
-void Program::CreateStatement(string line)
+void Program::createStatement(string line)
 {
-    vector<string> lineParses =Split(line);
+    vector<string> lineParses =split(line);
     if (lineParses[0] == "dci")
     {
         //declares an integer variable
@@ -80,7 +81,50 @@ void Program::CreateStatement(string line)
     }
 }
 
-vector<string> Program::Split(string line)
+void Program::createIdentifier(Statement* st, string line)
+{
+    vector<string> lineParses =split(line);
+    if (lineParses[0] == "dci")
+    {
+        //declares an integer variable
+        identifiers.push_back(Identifier(lineParses[1]));
+    }
+    else if (lineParses[0] == "rdi")
+    {
+        //reads an integer value from the user
+
+    }
+    else if (lineParses[0] == "prt")
+    {
+        //prints out the value of a variable
+    }
+    else if (lineParses[0] == "cmp")
+    {
+        //compares two values to test
+
+    }
+    else if (lineParses[0] == "jmr")
+    {
+        //jump to the specified label
+
+    }
+    else if (lineParses[0] == "jmp")
+    {
+        //unconditional jump to the specified labl
+
+    }
+    else if (lineParses[0] == "#")
+    {
+        //indicates that the line is a comment
+    }
+    else
+    {
+        //error
+    }
+}
+
+
+vector<string> Program::split(string line)
 {
     istringstream iss(line);
     vector<string> results((istream_iterator<std::string>(iss)),

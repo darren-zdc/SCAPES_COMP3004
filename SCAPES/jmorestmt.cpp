@@ -12,6 +12,7 @@ void JMoreStmt::run()
 
 }
 
+//Syntax checking
 void JMoreStmt::compile()
 {
 

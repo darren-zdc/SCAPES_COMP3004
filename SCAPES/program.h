@@ -35,8 +35,9 @@ private:
     Preferences preference;
     string filename;
     string comparisonFlag;
-    void CreateStatement(string line);
-    vector<string> Split(string line);
+    void createStatement(string line);
+    void createIdentifier(Statement* st, string line);
+    vector<string> split(string line);
 
 };
 #endif // PROGRAM_H

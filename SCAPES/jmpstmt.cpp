@@ -13,6 +13,7 @@ void JmpStmt::run()
 
 }
 
+//Syntax checking
 void JmpStmt::compile()
 {
 

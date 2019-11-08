@@ -12,6 +12,7 @@ void ReadStmt::run()
 
 }
 
+//Syntax checking
 void ReadStmt::compile()
 {
 

@@ -1,6 +1,10 @@
-QT -= gui
+QT += core gui
 
-CONFIG += c++11 console
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+TEMPLATE = app
+
+CONFIG += c++11
 CONFIG -= app_bundle
 
 # The following define makes your compiler emit warnings if you use
@@ -15,10 +19,27 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        Create.cpp \
-        Save.cpp \
+        compstmt.cpp \
+        declintstmt.cpp \
+        endstmt.cpp \
+        identifier.cpp \
+        jmorestmt.cpp \
+        jmpstmt.cpp \
+        label.cpp \
         main.cpp \
-        test.cpp
+        mainwindow.cpp \
+        operand.cpp \
+        preferences.cpp \
+        printstmt.cpp \
+        program.cpp \
+        readstmt.cpp \
+        statement.cpp \
+        uimanager.cpp \
+        variable.cpp \
+ 	Create.cpp \
+        Save.cpp \
+	test.cpp
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -26,6 +47,25 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    compstmt.h \
+    declintstmt.h \
+    endstmt.h \
+    identifier.h \
+    jmorestmt.h \
+    jmpstmt.h \
+    label.h \
+    mainwindow.h \
+    operand.h \
+    preferences.h \
+    printstmt.h \
+    program.h \
+    readstmt.h \
+    statement.h \
+    uimanager.h \
+    variable.h \
     Create.h \
     Save.h \
     test.h
+
+FORMS += \
+    mainwindow.ui

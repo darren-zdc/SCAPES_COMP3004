@@ -5,7 +5,7 @@ CompStmt::CompStmt()
 
 }
 
-CompStmt::CompStmt(string line): Statement(line)
+CompStmt::CompStmt(vector<string> lineParses): Statement(lineParses)
 {}
 
 //Syntax checking

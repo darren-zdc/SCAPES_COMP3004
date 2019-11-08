@@ -6,7 +6,7 @@ class JmpStmt : public Statement
 {
 public:
     JmpStmt();
-    JmpStmt(string line);
+    JmpStmt(vector<string> lineParses);
     void compile();
     void run();
 };

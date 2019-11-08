@@ -35,34 +35,34 @@ void Program::createStatement(string line)
     if (lineParses[0] == "dci")
     {
         //declares an integer variable
-        statements.push_back(new DeclIntStmt(line));
+        statements.push_back(new DeclIntStmt(lineParses));
     }
     else if (lineParses[0] == "rdi")
     {
         //reads an integer value from the user
-        statements.push_back(new ReadStmt(line));
+        statements.push_back(new ReadStmt(lineParses));
 
     }
     else if (lineParses[0] == "prt")
     {
         //prints out the value of a variable
-        statements.push_back(new PrintStmt(line));
+        statements.push_back(new PrintStmt(lineParses));
     }
     else if (lineParses[0] == "cmp")
     {
         //compares two values to test
-        statements.push_back(new CompStmt(line));
+        statements.push_back(new CompStmt(lineParses));
 
     }
     else if (lineParses[0] == "jmr")
     {
         //jump to the specified label
-        statements.push_back(new JMoreStmt(line));
+        statements.push_back(new JMoreStmt(lineParses));
     }
     else if (lineParses[0] == "jmp")
     {
         //unconditional jump to the specified labl
-        statements.push_back(new JmpStmt(line));
+        statements.push_back(new JmpStmt(lineParses));
     }
     else if (lineParses[0] == "end")
     {

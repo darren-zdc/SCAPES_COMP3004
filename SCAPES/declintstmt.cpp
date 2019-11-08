@@ -5,7 +5,7 @@ DeclIntStmt::DeclIntStmt()
 
 }
 
-DeclIntStmt::DeclIntStmt(string input): Statement(input)
+DeclIntStmt::DeclIntStmt(vector<string> lineParses): Statement(lineParses)
 {}
 
 //Syntax checking

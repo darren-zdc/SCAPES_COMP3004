@@ -6,7 +6,7 @@ class JMoreStmt : public Statement
 {
 public:
     JMoreStmt();
-    JMoreStmt(string line);
+    JMoreStmt(vector<string> lineParses);
     void compile();
     void run();
 };

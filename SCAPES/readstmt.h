@@ -6,7 +6,7 @@ class ReadStmt : public Statement
 {
 public:
     ReadStmt();
-    ReadStmt(string line);
+    ReadStmt(vector<string> lineParses);
     void compile();
     void run();
 };

@@ -5,7 +5,7 @@ PrintStmt::PrintStmt()
 
 }
 
-PrintStmt::PrintStmt(string line) : Statement (line)
+PrintStmt::PrintStmt(vector<string> lineParses) : Statement (lineParses)
 {
 
 }

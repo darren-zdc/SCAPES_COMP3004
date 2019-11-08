@@ -4,7 +4,7 @@ JMoreStmt::JMoreStmt()
 {
 
 }
-JMoreStmt::JMoreStmt(string input): Statement(input)
+JMoreStmt::JMoreStmt(vector<string> lineParses): Statement(lineParses)
 {}
 
 void JMoreStmt::run()

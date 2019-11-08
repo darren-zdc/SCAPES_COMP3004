@@ -7,7 +7,7 @@ class CompStmt: public Statement
 {
 public:
     CompStmt();
-    CompStmt(string line);
+    CompStmt(vector<string> lineParses);
     void compile();
     void run();
 };

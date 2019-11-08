@@ -4,7 +4,7 @@ ReadStmt::ReadStmt()
 {
 
 }
-ReadStmt::ReadStmt(string input): Statement(input)
+ReadStmt::ReadStmt(vector<string> lineParses): Statement(lineParses)
 {}
 
 void ReadStmt::run()

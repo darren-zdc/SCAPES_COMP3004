@@ -5,7 +5,7 @@ JmpStmt::JmpStmt()
 
 }
 
-JmpStmt::JmpStmt(string line): Statement (line)
+JmpStmt::JmpStmt(vector<string> lineParses): Statement (lineParses)
 {}
 
 void JmpStmt::run()

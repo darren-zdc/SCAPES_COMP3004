@@ -9,5 +9,5 @@ Statement::~Statement()
 
 Statement::Statement() {}
 
-Statement::Statement(string line): line(line)
+Statement::Statement(vector<string> lineParses): lineParses(lineParses)
 {}

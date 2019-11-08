@@ -8,6 +8,7 @@ int main(int argc, char *argv[])
     uimanager *manager = new uimanager;
     MainWindow w;
     w.attachDependancies(manager);
+    manager->window = &w;
     w.show();
     return a.exec();
 }

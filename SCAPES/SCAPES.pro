@@ -22,6 +22,7 @@ SOURCES += \
         compstmt.cpp \
         declintstmt.cpp \
         endstmt.cpp \
+        filemanager.cpp \
         identifier.cpp \
         jmorestmt.cpp \
         jmpstmt.cpp \
@@ -46,6 +47,7 @@ HEADERS += \
     compstmt.h \
     declintstmt.h \
     endstmt.h \
+    filemanager.h \
     identifier.h \
     jmorestmt.h \
     jmpstmt.h \

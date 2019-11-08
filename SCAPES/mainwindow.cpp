@@ -1,5 +1,6 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include <uimanager.h>
+#include <ui_mainwindow.h>
 #include <QStringListModel>
 
 MainWindow::MainWindow(QWidget *parent) :   //setup use of UI file
@@ -38,7 +39,7 @@ void MainWindow::on_CreateButton_clicked() //sends command to create a file, the
     if (texteditor->isVisible() == false)
     {
         textbox->setText("Created New File");
-        manager->RecieveSignal("create", "null");
+        manager->RecieveSignal("create", "null", "null");
         if (manager->PollProgramList().size() != 0)
         {
             QStringListModel *model = new QStringListModel;
@@ -56,7 +57,7 @@ void MainWindow::on_CompileButton_clicked() //sends compile command, then update
         QString name = index.data(Qt::DisplayRole).toString();
         textbox->setText("Compiling File ");
         textbox->append(name);
-        manager->RecieveSignal("compile", name);
+        manager->RecieveSignal("compile", name, "null");
         if (manager->PollProgramList().size() != 0)
         {
             QStringListModel *model = new QStringListModel;
@@ -74,13 +75,13 @@ void MainWindow::on_RunButton_clicked() //sends run command, then update the pro
         QString name = index.data(Qt::DisplayRole).toString();
         textbox->setText("Running File ");
         textbox->append(name);
-        manager->RecieveSignal("run", name);
-        if (manager->PollProgramList().size() != 0)
-        {
-            QStringListModel *model = new QStringListModel;
-            model->setStringList(manager->PollProgramList());
-            listview->setModel(model);
-        }
+        manager->RecieveSignal("run", name, "null");
+        //if (manager->PollProgramList().size() != 0)
+        //{
+          //  QStringListModel *model = new QStringListModel;
+          //  model->setStringList(manager->PollProgramList());
+          //  listview->setModel(model);
+        //}
     }
 }
 
@@ -88,13 +89,9 @@ void MainWindow::on_SaveButton_clicked() //send save command
 {
     if (texteditor->isVisible())
     {
-        QStringList commands;
-        commands << textbox->toPlainText();
-        //for (int i = 0; i < texteditor->size(); i++)
-        //{
-
-        //}
-        manager->RecieveSignal("save", textbox->toPlainText());
+        //TODO update save signal with actual save data
+        QString temp = texteditor->toPlainText();
+        manager->RecieveSignal("save", textbox->toPlainText(), temp);
     }
 }
 
@@ -105,7 +102,7 @@ void MainWindow::on_OpenButton_clicked() //send open command
         QModelIndex index = this->listview->currentIndex();
         QString name = index.data(Qt::DisplayRole).toString();
         textbox->setText(name);
-        manager->RecieveSignal("open", name);
+        manager->RecieveSignal("open", name, "null");
         for (int i = 0; i < manager->PollFileContents().size(); i++)
         {
             texteditor->append(manager->PollFileContents()[i]);
@@ -121,7 +118,7 @@ void MainWindow::on_CloseButton_clicked() //send close command, then update prog
     if (texteditor->isVisible())
     {
         textbox->clear();
-        manager->RecieveSignal("close", "null");
+        manager->RecieveSignal("close", "null", "null");
         if (manager->PollProgramList().size() != 0)
         {
             QStringListModel *model = new QStringListModel;

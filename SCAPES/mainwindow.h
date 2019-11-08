@@ -2,10 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <uimanager.h>
 #include <QStringListModel>
 #include <QListView>
 #include <QTextEdit>
+
+class uimanager;
 
 namespace Ui {
 class MainWindow;

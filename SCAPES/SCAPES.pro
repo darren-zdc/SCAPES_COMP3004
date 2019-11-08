@@ -36,7 +36,10 @@ SOURCES += \
         readstmt.cpp \
         statement.cpp \
         uimanager.cpp \
-        variable.cpp
+        variable.cpp \
+ 	Create.cpp \
+        Save.cpp
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -60,7 +63,9 @@ HEADERS += \
     readstmt.h \
     statement.h \
     uimanager.h \
-    variable.h
+    variable.h \
+    Create.h \
+    Save.h \
 
 FORMS += \
     mainwindow.ui

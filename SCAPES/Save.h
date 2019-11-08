@@ -5,13 +5,16 @@
 #include <fstream>
 #include <vector>
 #include <string.h>
+#include "preferences.h"
 
 using namespace std;
 
 class Save{
 
 public:
-  Save(string name, vector<string> &instruction, string path);
+  Save(string name, vector<string> &instruction);
+private:
+  Preferences pref;
 };
 
 #endif // SAVE_H

@@ -1,13 +1,8 @@
 #include "Create.h"
 
-// default path
-Create::Create(){
-  Create("../programs/");
-}
-
 // create with path
-Create::Create(string p){
-  string path = p;
+Create::Create(){
+  string path = pref.getDirectory();
 
   string name = "untitled"; // default name
   int counter = 1; // how many untitled there are

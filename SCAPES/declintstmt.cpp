@@ -5,13 +5,16 @@ DeclIntStmt::DeclIntStmt()
 
 }
 
-void DeclIntStmt::Compile()
+DeclIntStmt::DeclIntStmt(string input): Statement(input)
+{}
+
+void DeclIntStmt::compile()
 {
 
 
 }
 
-void DeclIntStmt::Run()
+void DeclIntStmt::run()
 {
 
 

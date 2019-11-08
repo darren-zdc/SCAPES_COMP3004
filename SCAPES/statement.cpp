@@ -1,21 +1,13 @@
 
 #include "statement.h"
 
-Statement::Statement()
+Statement::~Statement()
 {
 
 
 }
 
+Statement::Statement() {}
 
-void Statement::compile(string instr)
-{
-
-}
-
-
-void Statement::run()
-{
-
-
-}	
+Statement::Statement(string line): line(line)
+{}

@@ -1,14 +1,16 @@
 #ifndef DECLINTSTMT_H
 #define DECLINTSTMT_H
+#include "statement.h"
 #include <string>
+
 using namespace std;
 
-class DeclIntStmt
+class DeclIntStmt : public Statement
 {
 public:
     DeclIntStmt();
-private:
-    void Compile();
-    void Run();
+    DeclIntStmt(string line);
+    void compile();
+    void run();
 };
 #endif // DECLINTSTMT_H

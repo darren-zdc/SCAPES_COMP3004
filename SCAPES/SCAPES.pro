@@ -1,6 +1,10 @@
-QT -= gui
+QT += core gui
 
-CONFIG += c++11 console
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+TEMPLATE = app
+
+CONFIG += c++11
 CONFIG -= app_bundle
 
 # The following define makes your compiler emit warnings if you use
@@ -23,12 +27,14 @@ SOURCES += \
         jmpstmt.cpp \
         label.cpp \
         main.cpp \
+        mainwindow.cpp \
         operand.cpp \
         preferences.cpp \
         printstmt.cpp \
         program.cpp \
         readstmt.cpp \
         statement.cpp \
+        uimanager.cpp \
         variable.cpp
 
 # Default rules for deployment.
@@ -44,10 +50,15 @@ HEADERS += \
     jmorestmt.h \
     jmpstmt.h \
     label.h \
+    mainwindow.h \
     operand.h \
     preferences.h \
     printstmt.h \
     program.h \
     readstmt.h \
     statement.h \
+    uimanager.h \
     variable.h
+
+FORMS += \
+    mainwindow.ui

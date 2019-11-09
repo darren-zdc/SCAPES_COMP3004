@@ -15,7 +15,7 @@ class uimanager
 public:
     void RecieveSignal(string signal, QString filename, QString secondaryData);
     QStringList PollProgramList();
-    QStringList PollFileContents();
+    QStringList PollFileContents(QString name);
     MainWindow *window;
 private:
     void SendSignal(string signal, QString filename, QString secondaryData);

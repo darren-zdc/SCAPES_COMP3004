@@ -14,9 +14,9 @@ QStringList filemanager::programRequest()
     return (createOpenControl("null", 2));
 }
 
-QStringList filemanager::contentsRequest()
+QStringList filemanager::contentsRequest(QString name)
 {
-    return createOpenControl("null", 1);
+    return createOpenControl(name, 1);
 }
 
 void filemanager::recieveSignal(string signal, QString filename, QString secondaryData)
@@ -27,7 +27,7 @@ void filemanager::recieveSignal(string signal, QString filename, QString seconda
     }
     else if (signal == "open")
     {
-        createOpenControl(filename, 0);
+        createOpenControl(filename, 1);
     }
     else if (signal == "save")
     {
@@ -79,9 +79,9 @@ void filemanager::createSaveControl(QString name, QStringList contents)
 
 void filemanager::createCreateControl()
 {
-    //createControl *control = new createControl;
-    //control->createfile();
-    //delete control;
+    createControl *control = new createControl;
+    control->createfile();
+    delete control;
 }
 
 void filemanager::createCompileControl(QString name)

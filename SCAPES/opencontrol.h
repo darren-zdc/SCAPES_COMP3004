@@ -6,10 +6,11 @@
 class openControl
 {
 public:
-    openControl(QString, int tag);
+    openControl(QString name, int tag);
     QStringList openControlFuncitonality();
 private:
     int flag;
+    QString name;
     QStringList getFileList();
     QStringList getFileContents();
     //setOpenfile();

@@ -15,9 +15,9 @@ QStringList uimanager::PollProgramList() //communicates with storage to update t
     return files->programRequest();
 }
 
-QStringList uimanager::PollFileContents()
+QStringList uimanager::PollFileContents(QString name)
 {
-    return files->contentsRequest();
+    return files->contentsRequest(name);
 }
 
 void uimanager::SendSignal(string signal, QString filename, QString secondaryData) //private signal handler, communicates with X

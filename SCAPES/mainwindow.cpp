@@ -102,10 +102,11 @@ void MainWindow::on_OpenButton_clicked() //send open command
         QModelIndex index = this->listview->currentIndex();
         QString name = index.data(Qt::DisplayRole).toString();
         textbox->setText(name);
-        manager->RecieveSignal("open", name, "null");
-        for (int i = 0; i < manager->PollFileContents().size(); i++)
+        //manager->RecieveSignal("open", name, "null");
+        QStringList contents = manager->PollFileContents(name);
+        for (int i = 0; i < contents.size(); i++)
         {
-            texteditor->append(manager->PollFileContents()[i]);
+            texteditor->append(contents[i]);
         }
         texteditor->setVisible(true);
         listview->setVisible(false);

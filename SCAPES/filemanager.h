@@ -12,7 +12,7 @@ public:
     filemanager();
     void recieveSignal(string signal, QString filename, QString secondaryData);
     QStringList programRequest();
-    QStringList contentsRequest();
+    QStringList contentsRequest(QString name);
 private:
     void createCreateControl();
     void createSaveControl(QString name, QStringList contents);

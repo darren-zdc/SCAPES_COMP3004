@@ -4,13 +4,17 @@
 #include <iostream>
 #include <fstream>
 
+#include "preferences.h"
+
 using namespace std;
 
 class Create{
 
 public:
   Create();
-  Create(string p);
+
+private:
+  Preferences pref;
 };
 
 #endif // CREATE_H

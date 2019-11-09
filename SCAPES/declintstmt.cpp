@@ -12,7 +12,6 @@ DeclIntStmt::DeclIntStmt(vector<string> lineParses): Statement(lineParses)
 void DeclIntStmt::compile()
 {
 
-
 }
 
 void DeclIntStmt::run()

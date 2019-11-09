@@ -1,9 +1,8 @@
 #include "Save.h"
 
-Save::Save(string name, vector<string> &instruction, string path){
-  //cout << "Name: " + "untitled" + ", path: " + "../programs/" + " /n";
-  //cout << "Instructions: \n";
+Save::Save(string name, vector<string> &instruction){
 
+  string path = pref.getDirectory();
 
   ifstream exist(path + name);
   if(!exist){
@@ -19,5 +18,5 @@ Save::Save(string name, vector<string> &instruction, string path){
 
   saveFile.close();
 
-  
+
 }

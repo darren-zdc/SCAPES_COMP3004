@@ -20,7 +20,7 @@ void Program::Compile()
             createIdentifier(st, line);
         }
     }
-
+    //serialization to .cscapes
 }
 
 void Program::Execute()

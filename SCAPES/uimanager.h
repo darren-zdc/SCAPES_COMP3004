@@ -8,6 +8,8 @@
 
 using namespace std;
 
+class MainWindow;
+
 class uimanager
 {
 public:

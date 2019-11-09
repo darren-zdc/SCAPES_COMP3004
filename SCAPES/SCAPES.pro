@@ -20,6 +20,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         compstmt.cpp \
+    createcontrol.cpp \
         declintstmt.cpp \
         endstmt.cpp \
         filemanager.cpp \
@@ -29,6 +30,7 @@ SOURCES += \
         label.cpp \
         main.cpp \
         mainwindow.cpp \
+    opencontrol.cpp \
         operand.cpp \
         preferences.cpp \
         printstmt.cpp \
@@ -48,6 +50,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     compstmt.h \
+    createcontrol.h \
     declintstmt.h \
     endstmt.h \
     filemanager.h \
@@ -56,6 +59,7 @@ HEADERS += \
     jmpstmt.h \
     label.h \
     mainwindow.h \
+    opencontrol.h \
     operand.h \
     preferences.h \
     printstmt.h \

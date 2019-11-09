@@ -9,6 +9,9 @@ void uimanager::RecieveSignal(string signal, QString filename, QString secondary
 
 QStringList uimanager::PollProgramList() //communicates with storage to update the ui's program list
 {
+    //QStringList temp;
+    //temp << "file1" << "file2" << "file3";
+    //return temp;
     return files->programRequest();
 }
 

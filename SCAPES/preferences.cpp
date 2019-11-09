@@ -3,7 +3,7 @@
 Preferences::Preferences()
 {
     this->language = "SCAPES";
-    this->directory = "/home/student/temp";
+    this->directory = "../programs/";
 }
 
 string Preferences::getLanguage()

@@ -13,3 +13,4 @@ string Operand::getValue()
 {
     return identifier.getName();
 }
+

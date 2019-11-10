@@ -12,6 +12,10 @@
 #include "readstmt.h"
 #include "compstmt.h"
 #include "variable.h"
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QFile>
 #include <vector>
 #include <list>
 #include <fstream>
@@ -24,10 +28,11 @@ class Program
 {
 public:
     Program(string filename);    
-protected:
     void Compile();
     void Execute();
     void print();
+    static string getFileName(string filePath, bool withExtension = true, char seperator = '/');
+
 private:
     vector<Identifier> identifiers;
     vector<Statement*> statements;
@@ -37,7 +42,9 @@ private:
     string comparisonFlag;
     void createStatement(string line);
     void createIdentifier(Statement* st, string line);
-    vector<string> split(string line);
+    static vector<string> split(string line);
+    void serializeToJSON();
+
 
 };
 #endif // PROGRAM_H

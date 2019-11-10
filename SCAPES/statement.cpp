@@ -9,5 +9,13 @@ Statement::~Statement()
 
 Statement::Statement() {}
 
-Statement::Statement(vector<string> lineParses): lineParses(lineParses)
+Statement::Statement(vector<string> lineParses): lineParses(lineParses), instruction(lineParses[0])
 {}
+
+string Statement::getInstruction() {
+    return instruction;
+}
+
+vector<Operand> Statement::getOperands() {
+    return operands;
+}

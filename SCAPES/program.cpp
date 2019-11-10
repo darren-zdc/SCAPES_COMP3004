@@ -20,7 +20,15 @@ void Program::Compile()
             createIdentifier(st, line);
         }
     }
+    else if (myprogram.fail())
+    {
+        //failed to open a file
+        string v;
+    }
+
+
     //serialization to .cscapes
+    this->serializeToJSON();
 }
 
 void Program::Execute()
@@ -121,8 +129,38 @@ void Program::createIdentifier(Statement* st, string line)
     {
         //error
     }
+
+
 }
 
+void Program::serializeToJSON()
+{
+    QJsonObject jProgram;
+    jProgram["filename"] = QString::fromStdString(this->filename);
+    QJsonArray jStatements;
+    for(Statement* st :statements)
+    {
+        QJsonObject jStatement;
+        jStatement["instruction"] = QString::fromStdString(st->getInstruction());
+        QJsonArray jOperands;
+        for(Operand op: st->getOperands())
+        {
+            QJsonObject jOperand;
+            jOperand["name"] = QString::fromStdString(op.getValue());
+            jOperands.push_back(jOperand);
+        }
+        jStatement["operands"] = jOperands;
+        jStatements.push_back(jStatement);
+    }
+    jProgram["statements"] =jStatements;
+    QJsonDocument doc(jProgram);
+    string jsonFilename;
+    jsonFilename = preference.getDirectory() + getFileName("/" + this->filename, false) + ".json";
+    QFile jsonFile(QString::fromStdString(jsonFilename));
+    jsonFile.open(QIODevice::WriteOnly);
+    jsonFile.write(doc.toJson());
+
+}
 
 vector<string> Program::split(string line)
 {
@@ -130,4 +168,18 @@ vector<string> Program::split(string line)
     vector<string> results((istream_iterator<std::string>(iss)),
                    istream_iterator<std::string>());
     return results;
+}
+
+
+string Program::getFileName(string filePath, bool withExtension, char seperator)
+{
+    // Get last dot position
+    std::size_t dotPos = filePath.rfind('.');
+    std::size_t sepPos = filePath.rfind(seperator);
+
+    if(sepPos != string::npos)
+    {
+        return filePath.substr(sepPos + 1, filePath.size() - (withExtension || dotPos == string::npos ? 1 : dotPos) );
+    }
+    return "";
 }

@@ -1,7 +1,7 @@
 #include "savecontrol.h"
 #include <Save.h>
 
-savecontrol::savecontrol(QString name, QStringList commands, string dir)
+savecontrol::savecontrol(QString name, QStringList commands, string dir) //setup valid working variables
 {
     if (name.endsWith(".txt"))
     {
@@ -15,7 +15,7 @@ savecontrol::savecontrol(QString name, QStringList commands, string dir)
     this->directory = dir;
 }
 
-void savecontrol::saveFile()
+void savecontrol::saveFile() //parse given commands into vector of strings, and save them accordingly
 {
     string name = filename.QString::toStdString();
 

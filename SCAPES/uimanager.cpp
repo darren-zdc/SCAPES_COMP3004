@@ -22,34 +22,34 @@ QStringList uimanager::PollProgramList() //communicates with storage to update t
     return names;
 }
 
-QStringList uimanager::PollFileContents(QString name)
+QStringList uimanager::PollFileContents(QString name) //return contents of requested file
 {
     return files->contentsRequest(name);
 }
 
-QString uimanager::getDirectory()
+QString uimanager::getDirectory() //ask preference manager for current directory
 {
     QString temp = QString::fromStdString(pref->GetDirectory());
     return temp;
 }
 
-QString uimanager::getLang()
+QString uimanager::getLang() //ask preference manager for current language
 {
     QString temp = QString::fromStdString(pref->GetDirectory());
     return temp;
 }
 
-void uimanager::SetDirectory(QString dir, QString user)
+void uimanager::SetDirectory(QString dir, QString user) //tell preference manager to change the directory
 {
     pref->SetDirectory(dir.QString::toStdString(), user.QString::toStdString());
 }
 
-void uimanager::SetLang(QString lang, QString user)
+void uimanager::SetLang(QString lang, QString user) //tell the preferences manager to change the language
 {
     pref->SetLang(lang.QString::toStdString(), user.QString::toStdString());
 }
 
-void uimanager::SendSignal(string signal, QString filename, QString secondaryData) //private signal handler, communicates with X
+void uimanager::SendSignal(string signal, QString filename, QString secondaryData) //private signal handler, communicates with file manager
 {
     if (signal == "create")
     {

@@ -5,7 +5,7 @@ proxypreferences::proxypreferences()
 
 }
 
-bool proxypreferences::checkAccess(string user)
+bool proxypreferences::checkAccess(string user) //core of proxy object, used to check is given user has access to requested functionality
 {
     if (user == "systemAdmin")
         return true;
@@ -13,28 +13,28 @@ bool proxypreferences::checkAccess(string user)
         return false;
 }
 
-void proxypreferences::setLanguage(string lang, string user)
+void proxypreferences::setLanguage(string lang, string user) //overwritten function to check permissions before setting language
 {
     if (checkAccess(user))
     {
-        real->setLanguage(lang, user);
+        real->setLanguage(lang, user); //communicate with real preference object is user has valid permissions
     }
 }
 
-void proxypreferences::setDirectory(string dir, string user)
+void proxypreferences::setDirectory(string dir, string user) //overwritten function to check permissions before setting directory
 {
     if (checkAccess(user))
     {
-        real->setDirectory(dir, user);
+        real->setDirectory(dir, user); //communicate with real preference object is user has valid permissions
     }
 }
 
-string proxypreferences::getDirectory()
+string proxypreferences::getDirectory() //permission check not required to get the current directory
 {
     return real->getDirectory();
 }
 
-string proxypreferences::getLanguage()
+string proxypreferences::getLanguage() //premission check not required to get the current language
 {
     return real->getLanguage();
 }

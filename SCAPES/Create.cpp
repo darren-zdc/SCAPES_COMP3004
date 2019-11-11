@@ -8,7 +8,7 @@ Create::Create(string dir){
   int counter = 1; // how many untitled there are
 
   // if theres no "untitled" file
-  ifstream exist(path + name);
+  ifstream exist(path + name + ".txt");
   if(!exist){
     ofstream newFile(path + name + ".txt");
     return;

@@ -4,6 +4,11 @@ Program::Program(string filename) : preference(), filename(filename)
 {
 }
 
+vector<Variable> Program::getVariables()
+{
+    return variables;
+}
+
 void Program::Compile()
 {
     string filePath = preference.getDirectory() + "/" + filename;
@@ -44,6 +49,7 @@ void Program::createStatement(string line)
     {
         //declares an integer variable
         statements.push_back(new DeclIntStmt(lineParses));
+        statements.back()->setProgram(*this);
     }
     else if (lineParses[0] == "rdi")
     {
@@ -95,11 +101,12 @@ void Program::createIdentifier(Statement* st, string line)
     if (lineParses[0] == "dci")
     {
         //declares an integer variable
-        identifiers.push_back(Identifier(lineParses[1]));
+        variables.push_back(Variable(lineParses[1]));
     }
     else if (lineParses[0] == "rdi")
     {
         //reads an integer value from the user
+        //maybe do nothing, the variable get assigned at the runtime. By default, the value is 0.
 
     }
     else if (lineParses[0] == "prt")

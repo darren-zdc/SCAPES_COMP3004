@@ -5,6 +5,9 @@
 #include "operand.h"
 #include "label.h"
 using namespace  std;
+
+class Program;
+
 class Statement
 {
 public:
@@ -15,11 +18,13 @@ public:
     virtual void run() = 0;
     string getInstruction();
     vector<Operand> getOperands();
+    void setProgram(Program &prog);
 protected:
     vector<string> lineParses;
     vector<Operand> operands;
     Label label;
     string instruction;
+    Program* program;
 
 };
 #endif // STATEMENT_H

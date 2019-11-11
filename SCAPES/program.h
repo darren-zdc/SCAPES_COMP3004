@@ -32,9 +32,9 @@ public:
     void Execute();
     void print();
     static string getFileName(string filePath, bool withExtension = true, char seperator = '/');
-
+    vector<Variable> getVariables();
 private:
-    vector<Identifier> identifiers;
+    vector<Label> labels;
     vector<Statement*> statements;
     vector<Variable> variables;
     Preferences preference;

@@ -5,6 +5,12 @@ Variable::Variable()
 
 }
 
+Variable::Variable(string name): Identifier (name)
+{}
+
+Variable::Variable(string name, int value): Identifier (name), value(value)
+{}
+
 int Variable::getValue()
 {
     return value;

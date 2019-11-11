@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.attachDependancies(manager);
     manager->window = &w;
+
     w.show();
     return a.exec();
     /*

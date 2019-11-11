@@ -9,15 +9,44 @@ void uimanager::RecieveSignal(string signal, QString filename, QString secondary
 
 QStringList uimanager::PollProgramList() //communicates with storage to update the ui's program list
 {
-    //QStringList temp;
-    //temp << "file1" << "file2" << "file3";
-    //return temp;
-    return files->programRequest();
+    QStringList fileList = files->programRequest();
+    QStringList names;
+    for (int i = 0; i < fileList.size(); i++)
+    {
+        QStringList temp = fileList[i].split(("/"), QString::SkipEmptyParts);
+        if (temp[temp.size()-1] != "." && temp[temp.size()-1] != "..")
+        {
+            names.append(temp[temp.size()-1]);
+        }
+    }
+    return names;
 }
 
 QStringList uimanager::PollFileContents(QString name)
 {
     return files->contentsRequest(name);
+}
+
+QString uimanager::getDirectory()
+{
+    QString temp = QString::fromStdString(pref->GetDirectory());
+    return temp;
+}
+
+QString uimanager::getLang()
+{
+    QString temp = QString::fromStdString(pref->GetDirectory());
+    return temp;
+}
+
+void uimanager::SetDirectory(QString dir, QString user)
+{
+    pref->SetDirectory(dir.QString::toStdString(), user.QString::toStdString());
+}
+
+void uimanager::SetLang(QString lang, QString user)
+{
+    pref->SetLang(lang.QString::toStdString(), user.QString::toStdString());
 }
 
 void uimanager::SendSignal(string signal, QString filename, QString secondaryData) //private signal handler, communicates with X

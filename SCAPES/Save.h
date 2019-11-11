@@ -12,9 +12,7 @@ using namespace std;
 class Save{
 
 public:
-  Save(string name, vector<string> &instruction);
-private:
-  Preferences pref;
+  Save(string name, vector<string> &instruction, string dir);
 };
 
 #endif // SAVE_H

@@ -11,7 +11,7 @@ using namespace std;
 class Create{
 
 public:
-  Create();
+  Create(string dir);
 
 private:
   Preferences pref;

@@ -3,6 +3,8 @@
 #include <QStringList>
 #include <createcontrol.h>
 #include <opencontrol.h>
+#include <savecontrol.h>
+#include <compilecontrol.h>
 
 filemanager::filemanager()
 {
@@ -44,6 +46,11 @@ void filemanager::recieveSignal(string signal, QString filename, QString seconda
     }
 }
 
+preferenceManager* filemanager::getPrefManager()
+{
+    return this->pref;
+}
+
 void filemanager::createRunControl(QString name)
 {
 
@@ -51,22 +58,7 @@ void filemanager::createRunControl(QString name)
 
 QStringList filemanager::createOpenControl(QString name, int flag)
 {
-    //flag of 0 means just set the file to "open"
-    //flag of 1 means return contents of open file
-    //flag of 2 means return list of all files
-
-    //QStringList temp;
-    //if (flag == 2)
-    //{
-      //  temp << "file1" << "file2" << "file3";
-    //}
-    //else if (flag == 1)
-    //{
-      //  temp << "test line 1" << "test line 2" << "test line 3";
-    //}
-    //return temp;
-    openControl *control = new openControl(name, flag);
-    control->openControlFuncitonality();
+    openControl *control = new openControl(name, flag, pref->GetDirectory());
     QStringList temp = control->openControlFuncitonality();
     delete control;
     return temp;
@@ -74,17 +66,21 @@ QStringList filemanager::createOpenControl(QString name, int flag)
 
 void filemanager::createSaveControl(QString name, QStringList contents)
 {
-
+    savecontrol *control = new savecontrol(name, contents, pref->GetDirectory());
+    control->saveFile();
+    delete control;
 }
 
 void filemanager::createCreateControl()
 {
-    createControl *control = new createControl;
+    createControl *control = new createControl(pref->GetDirectory());
     control->createfile();
     delete control;
 }
 
 void filemanager::createCompileControl(QString name)
 {
-
+    //compileControl *control = new compileControl();
+    //control->compileFile();
+    //delete control;
 }

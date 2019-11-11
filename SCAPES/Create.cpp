@@ -1,8 +1,8 @@
 #include "Create.h"
 
 // create with path
-Create::Create(){
-  string path = pref.getDirectory();
+Create::Create(string dir){
+  string path = dir;
 
   string name = "untitled"; // default name
   int counter = 1; // how many untitled there are
@@ -10,15 +10,15 @@ Create::Create(){
   // if theres no "untitled" file
   ifstream exist(path + name);
   if(!exist){
-    ofstream newFile(path + name);
+    ofstream newFile(path + name + ".txt");
     return;
   }
 
   // if theres an "untitled" + "num"
   while(true){
-    ifstream exist2(path + name + to_string(counter));
+    ifstream exist2(path + name + to_string(counter) + ".txt");
     if(!exist2){
-      ofstream newFile(path + name + to_string(counter));
+      ofstream newFile(path + name + to_string(counter) + ".txt");
       break;
     }else{
       counter++;

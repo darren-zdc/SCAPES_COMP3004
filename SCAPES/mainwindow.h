@@ -35,9 +35,16 @@ private slots:
 
     void on_CloseButton_clicked();
 
+    void on_actionChange_Language_triggered();
+
+    void on_actionChange_Directory_triggered();
+
+    void on_actionAdmin_Options_triggered();
+
 private:
     Ui::MainWindow *ui;
     uimanager *manager;
+    QString userType = "programmer";
     QStringList namelist;
     QListView *listview;
     QTextEdit *textbox;

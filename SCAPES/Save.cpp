@@ -1,8 +1,8 @@
 #include "Save.h"
 
-Save::Save(string name, vector<string> &instruction){
+Save::Save(string name, vector<string> &instruction, string dir){
 
-  string path = pref.getDirectory();
+  string path = dir;
 
   ifstream exist(path + name);
   if(!exist){

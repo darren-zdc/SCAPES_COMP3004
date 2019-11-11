@@ -3,23 +3,25 @@
 #include <QStringList>
 #include <createcontrol.h>
 #include <opencontrol.h>
+#include <savecontrol.h>
+#include <compilecontrol.h>
 
 filemanager::filemanager()
 {
 
 }
 
-QStringList filemanager::programRequest()
+QStringList filemanager::programRequest() //request list of programs
 {
     return (createOpenControl("null", 2));
 }
 
-QStringList filemanager::contentsRequest(QString name)
+QStringList filemanager::contentsRequest(QString name) //request contents of a file
 {
     return createOpenControl(name, 1);
 }
 
-void filemanager::recieveSignal(string signal, QString filename, QString secondaryData)
+void filemanager::recieveSignal(string signal, QString filename, QString secondaryData) //signal handler
 {
     if (signal == "run")
     {
@@ -44,47 +46,41 @@ void filemanager::recieveSignal(string signal, QString filename, QString seconda
     }
 }
 
+preferenceManager* filemanager::getPrefManager()
+{
+    return this->pref;
+}
+
 void filemanager::createRunControl(QString name)
 {
 
 }
 
-QStringList filemanager::createOpenControl(QString name, int flag)
+QStringList filemanager::createOpenControl(QString name, int flag) //initiate control flow for opening file list/file contents
 {
-    //flag of 0 means just set the file to "open"
-    //flag of 1 means return contents of open file
-    //flag of 2 means return list of all files
-
-    //QStringList temp;
-    //if (flag == 2)
-    //{
-      //  temp << "file1" << "file2" << "file3";
-    //}
-    //else if (flag == 1)
-    //{
-      //  temp << "test line 1" << "test line 2" << "test line 3";
-    //}
-    //return temp;
-    openControl *control = new openControl(name, flag);
-    control->openControlFuncitonality();
+    openControl *control = new openControl(name, flag, pref->GetDirectory());
     QStringList temp = control->openControlFuncitonality();
     delete control;
     return temp;
 }
 
-void filemanager::createSaveControl(QString name, QStringList contents)
+void filemanager::createSaveControl(QString name, QStringList contents) //initiate control flow fo saving a file
 {
-
+    savecontrol *control = new savecontrol(name, contents, pref->GetDirectory());
+    control->saveFile();
+    delete control;
 }
 
-void filemanager::createCreateControl()
+void filemanager::createCreateControl() //initiate control flow for creating a blank file
 {
-    createControl *control = new createControl;
+    createControl *control = new createControl(pref->GetDirectory());
     control->createfile();
     delete control;
 }
 
-void filemanager::createCompileControl(QString name)
+void filemanager::createCompileControl(QString name) //initiate control flow for compiling a program
 {
-
+    //compileControl *control = new compileControl();
+    //control->compileFile();
+    //delete control;
 }

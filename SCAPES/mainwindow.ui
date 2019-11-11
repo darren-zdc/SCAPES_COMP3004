@@ -147,10 +147,28 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>false</bool>
+    <bool>true</bool>
    </attribute>
+   <addaction name="actionAdmin_Options"/>
+   <addaction name="actionChange_Language"/>
+   <addaction name="actionChange_Directory"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionAdmin_Options">
+   <property name="text">
+    <string>DEBUG: Change User Type</string>
+   </property>
+  </action>
+  <action name="actionChange_Language">
+   <property name="text">
+    <string>Change Language</string>
+   </property>
+  </action>
+  <action name="actionChange_Directory">
+   <property name="text">
+    <string>Change Directory</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

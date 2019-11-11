@@ -2,6 +2,8 @@
 #include <uimanager.h>
 #include <ui_mainwindow.h>
 #include <QStringListModel>
+#include <QMessageBox>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent) :   //setup use of UI file
     QMainWindow(parent),
@@ -46,6 +48,9 @@ void MainWindow::on_CreateButton_clicked() //sends command to create a file, the
             model->setStringList(manager->PollProgramList());
             listview->setModel(model);
         }
+        QMessageBox message;
+        message.setText("Blank File Created");
+        message.exec();
     }
 }
 
@@ -64,6 +69,9 @@ void MainWindow::on_CompileButton_clicked() //sends compile command, then update
             model->setStringList(manager->PollProgramList());
             listview->setModel(model);
         }
+        QMessageBox message;
+        message.setText("Program Compiled");
+        message.exec();
     }
 }
 
@@ -76,12 +84,6 @@ void MainWindow::on_RunButton_clicked() //sends run command, then update the pro
         textbox->setText("Running File ");
         textbox->append(name);
         manager->RecieveSignal("run", name, "null");
-        //if (manager->PollProgramList().size() != 0)
-        //{
-          //  QStringListModel *model = new QStringListModel;
-          //  model->setStringList(manager->PollProgramList());
-          //  listview->setModel(model);
-        //}
     }
 }
 
@@ -89,9 +91,11 @@ void MainWindow::on_SaveButton_clicked() //send save command
 {
     if (texteditor->isVisible())
     {
-        //TODO update save signal with actual save data
         QString temp = texteditor->toPlainText();
         manager->RecieveSignal("save", textbox->toPlainText(), temp);
+        QMessageBox message;
+        message.setText("Program Saved");
+        message.exec();
     }
 }
 
@@ -102,7 +106,6 @@ void MainWindow::on_OpenButton_clicked() //send open command
         QModelIndex index = this->listview->currentIndex();
         QString name = index.data(Qt::DisplayRole).toString();
         textbox->setText(name);
-        //manager->RecieveSignal("open", name, "null");
         QStringList contents = manager->PollFileContents(name);
         for (int i = 0; i < contents.size(); i++)
         {
@@ -131,4 +134,33 @@ void MainWindow::on_CloseButton_clicked() //send close command, then update prog
         listview->setVisible(true);
         textbox->setReadOnly(true);
     }
+}
+
+void MainWindow::on_actionChange_Language_triggered()
+{
+
+}
+
+void MainWindow::on_actionChange_Directory_triggered()
+{
+    QString fileName = QFileDialog::getExistingDirectory(this, tr("Set Directory"), manager->getDirectory());
+    manager->SetDirectory(fileName, userType);
+    if (manager->PollProgramList().size() != 0)
+    {
+        QStringListModel *model = new QStringListModel;
+        model->setStringList(manager->PollProgramList());
+        listview->setModel(model);
+    }
+}
+
+void MainWindow::on_actionAdmin_Options_triggered()
+{
+    if (userType == "programmer")
+        userType = "systemAdmin";
+    else
+        userType = "programmer";
+
+    QMessageBox message;
+    message.setText("User type changed to: " + userType);
+    message.exec();
 }

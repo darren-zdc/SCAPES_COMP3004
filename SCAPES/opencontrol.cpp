@@ -3,10 +3,13 @@
 #include <QDirIterator>
 #include <QTextStream>
 
-openControl::openControl(QString name, int tag)
+openControl::openControl(QString name, int tag, string dir) //setup working variables
 {
     this->flag = tag;
-    this->name = name;
+    QString temp = QString::fromStdString(dir);
+    this->directory = temp;
+    temp.append(name);
+    this->name = temp;
 }
 
 QStringList openControl::openControlFuncitonality()
@@ -14,32 +17,33 @@ QStringList openControl::openControlFuncitonality()
     if (flag == 1) //flag is one, we want to open the specified file
     {
         QStringList contents;
-        QDirIterator iterator("../SCAPES/programs/", QDirIterator::Subdirectories);
-
+        QDirIterator iterator(directory, QDirIterator::Subdirectories); //go to working directory
         while (iterator.hasNext())
         {
             QFile file(iterator.next());
-            if (file.fileName() == this->name)
+            if (file.fileName() == this->name && file.fileName().endsWith("txt")) //search for selected file of valid type
             {
                 file.open(QIODevice::ReadOnly);
                 QString content = file.readAll();
                 contents = content.split(QRegExp("[\n]"), QString::SkipEmptyParts);
+                file.close();
             }
         }
         return contents;
     }
-    else //flag is 2, we wnt the list of programs
+    else //flag is 2, we want the list of programs
     {
         QStringList filenames;
-        QDirIterator iterator("../SCAPES/programs/", QDirIterator::Subdirectories);
+        QDirIterator iterator(directory, QDirIterator::Subdirectories);
 
-        while (iterator.hasNext())
+        while (iterator.hasNext()) //iterate through working directory
         {
             QFile file(iterator.next());
-            file.open(QIODevice::ReadOnly);
-            if (file.fileName() != "../SCAPES/programs/.." && file.fileName() != "../SCAPES/programs/.")
+            if (file.fileName().endsWith("txt") || file.fileName().endsWith("json")) //return files of valid type only
             {
+                file.open(QIODevice::ReadOnly);
                 filenames.append(file.fileName());
+                file.close();
             }
         }
 

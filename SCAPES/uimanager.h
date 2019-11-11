@@ -17,10 +17,14 @@ public:
     QStringList PollProgramList();
     QStringList PollFileContents(QString name);
     MainWindow *window;
+    QString getDirectory();
+    QString getLang();
+    void SetDirectory(QString dir, QString user);
+    void SetLang(QString lang, QString user);
 private:
     void SendSignal(string signal, QString filename, QString secondaryData);
-    //TODO add reference to some form of file manager to get program list and file contents
     filemanager *files = new filemanager;
+    preferenceManager *pref = files->getPrefManager();
 };
 
 #endif // UIMANAGER_H

@@ -7,9 +7,9 @@ class Preferences
 {
 public:
     Preferences();
-    void setDirectory(string dir);
+    void setDirectory(string dir, string user);
     string getDirectory();
-    void setLanguage(string lang);
+    void setLanguage(string lang, string user);
     string getLanguage();
 
 private:

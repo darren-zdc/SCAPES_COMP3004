@@ -19,6 +19,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    compilecontrol.cpp \
         compstmt.cpp \
     createcontrol.cpp \
         declintstmt.cpp \
@@ -32,10 +33,14 @@ SOURCES += \
         mainwindow.cpp \
     opencontrol.cpp \
         operand.cpp \
+    preferencemanager.cpp \
         preferences.cpp \
         printstmt.cpp \
         program.cpp \
+    proxypreferences.cpp \
         readstmt.cpp \
+    realpreferences.cpp \
+    savecontrol.cpp \
         statement.cpp \
         uimanager.cpp \
         variable.cpp \
@@ -49,6 +54,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    compilecontrol.h \
     compstmt.h \
     createcontrol.h \
     declintstmt.h \
@@ -61,10 +67,14 @@ HEADERS += \
     mainwindow.h \
     opencontrol.h \
     operand.h \
+    preferencemanager.h \
     preferences.h \
     printstmt.h \
     program.h \
+    proxypreferences.h \
     readstmt.h \
+    realpreferences.h \
+    savecontrol.h \
     statement.h \
     uimanager.h \
     variable.h \

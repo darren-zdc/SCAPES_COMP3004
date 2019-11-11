@@ -16,12 +16,12 @@ string Preferences::getDirectory()
     return this->directory;
 }
 
-void Preferences::setLanguage(string lang)
+void Preferences::setLanguage(string lang, string user)
 {
     this->language = lang;
 }
 
-void Preferences::setDirectory(string dir)
+void Preferences::setDirectory(string dir, string user)
 {
     this->directory = dir;
 }

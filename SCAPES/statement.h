@@ -2,6 +2,7 @@
 #define STATEMENT_H
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "operand.h"
 #include "label.h"
 using namespace  std;

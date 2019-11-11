@@ -190,3 +190,23 @@ string Program::getFileName(string filePath, bool withExtension, char seperator)
     }
     return "";
 }
+/*
+Variable* Program::findVariable(Variable var)
+{
+    for(Variable element: variables)
+    {
+        if (element.getName() == var.getName())
+            return &element;
+    }
+    return nullptr;
+}
+*/
+bool Program::ifExistVariable(Variable var)
+{
+    for(Variable element: variables)
+    {
+        if (element.getName() == var.getName())
+            return true;
+    }
+    return false;
+}

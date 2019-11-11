@@ -15,5 +15,8 @@ void JMoreStmt::run()
 //Syntax checking
 void JMoreStmt::compile()
 {
-
+    if(lineParses.size() != 2)
+    {
+        //error invalid input
+    }
 }

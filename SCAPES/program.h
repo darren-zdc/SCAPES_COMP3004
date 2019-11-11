@@ -33,6 +33,9 @@ public:
     void print();
     static string getFileName(string filePath, bool withExtension = true, char seperator = '/');
     vector<Variable> getVariables();
+    void createVariable(string name);
+    Variable* findVariable(Variable var);
+    bool ifExistVariable(Variable var);
 private:
     vector<Label> labels;
     vector<Statement*> statements;

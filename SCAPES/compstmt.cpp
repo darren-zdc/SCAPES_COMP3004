@@ -17,7 +17,7 @@ void CompStmt::compile()
         return;
     }
     vector<Variable> temp = program->getVariables();
-    if(find(temp.begin(), temp.end(), lineParses[1]) == temp.end() || find(temp.begin(), temp.end(), lineParses[2]) == temp.end())
+    if(!program->ifExistVariable(Variable(lineParses[1])) || !program->ifExistVariable(Variable(lineParses[2])))
     {
         //error cannot find the variable inside the program variable
         return;

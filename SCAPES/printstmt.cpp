@@ -24,7 +24,7 @@ void PrintStmt::compile()
     }
     vector<Variable> temp;
     temp = program->getVariables();
-    if(find(temp.begin(), temp.end(), lineParses[1]) == temp.end())
+    if(!program->ifExistVariable(Variable(lineParses[1])))
     {
         //error cannot find the variable inside the program variable
         return;

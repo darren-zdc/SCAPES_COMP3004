@@ -12,6 +12,9 @@ Statement::Statement() {}
 Statement::Statement(vector<string> lineParses): lineParses(lineParses), instruction(lineParses[0])
 {}
 
+Statement::Statement(vector<string> lineParses, string label): lineParses(lineParses), instruction(lineParses[0]), label(Label(label))
+{}
+
 string Statement::getInstruction()
 {
     return instruction;
@@ -20,6 +23,11 @@ string Statement::getInstruction()
 vector<Operand> Statement::getOperands()
 {
     return operands;
+}
+
+Label* Statement::getLabel()
+{
+    return &label;
 }
 
 void Statement::setProgram(Program &prog)

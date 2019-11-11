@@ -6,6 +6,8 @@ class EndStmt : public Statement
 {
 public:
     EndStmt();
+    EndStmt(vector<string> lineParses);
+    EndStmt(vector<string> lineParses, string label);
     void compile();
     void run();
 };

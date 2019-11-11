@@ -9,6 +9,7 @@ class DeclIntStmt : public Statement
 public:
     DeclIntStmt();
     DeclIntStmt(vector<string> line);
+    DeclIntStmt(vector<string> line, string label);
     void compile();
     void run();
 };

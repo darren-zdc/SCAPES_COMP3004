@@ -12,6 +12,7 @@
 #include "readstmt.h"
 #include "compstmt.h"
 #include "variable.h"
+#include "label.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -33,9 +34,12 @@ public:
     void print();
     static string getFileName(string filePath, bool withExtension = true, char seperator = '/');
     vector<Variable> getVariables();
-    void createVariable(string name);
+    int createVariable(string name);
+    void createLabel(string name);
     Variable* findVariable(Variable var);
-    bool ifExistVariable(Variable var);
+    int ifExistVariable(string name);
+    int ifExistLabel(string name);
+    int ifPrevCompExist();
 private:
     vector<Label> labels;
     vector<Statement*> statements;
@@ -43,8 +47,8 @@ private:
     Preferences preference;
     string filename;
     string comparisonFlag;
-    void createStatement(string line);
-    void createIdentifier(Statement* st, string line);
+    void createStatement(string line, string label="");
+    //void createIdentifier(Statement* st, string line);
     static vector<string> split(string line);
     void serializeToJSON();
 

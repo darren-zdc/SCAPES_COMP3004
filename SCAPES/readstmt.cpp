@@ -7,6 +7,9 @@ ReadStmt::ReadStmt()
 ReadStmt::ReadStmt(vector<string> lineParses): Statement(lineParses)
 {}
 
+ReadStmt::ReadStmt(vector<string> lineParses, string label): Statement(lineParses, label)
+{}
+
 void ReadStmt::run()
 {
 
@@ -22,7 +25,7 @@ void ReadStmt::compile()
     }
     vector<Variable> temp;
     temp = program->getVariables();
-    if(!program->ifExistVariable(Variable(lineParses[1])))
+    if(!program->ifExistVariable(lineParses[1]))
     {
         //error cannot find the variable inside the program variable
         return;

@@ -7,6 +7,7 @@ class PrintStmt : public Statement
 public:
     PrintStmt();
     PrintStmt(vector<string> lineParses);
+    PrintStmt(vector<string> lineParses, string label);
     void compile();
     void run();
 };

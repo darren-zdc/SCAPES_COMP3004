@@ -11,7 +11,6 @@
 
 int main(int argc, char *argv[])
 {
-
     QApplication a(argc, argv);
     uimanager *manager = new uimanager;
     MainWindow w;
@@ -30,6 +29,10 @@ int main(int argc, char *argv[])
     }
     cCurrentPath[sizeof(cCurrentPath) - 1] = '\0';
     printf ("The current working directory is %s", cCurrentPath);
+    */
+    /*
+    Program program("test.txt");
+    program.Compile();
     */
 }
 

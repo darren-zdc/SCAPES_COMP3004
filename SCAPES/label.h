@@ -6,6 +6,7 @@ class Label : public Identifier
 {
 public:
     Label();
+    Label(string name);
 };
 
 #endif // LABEL_H

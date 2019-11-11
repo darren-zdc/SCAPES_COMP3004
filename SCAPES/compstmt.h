@@ -8,6 +8,7 @@ class CompStmt: public Statement
 public:
     CompStmt();
     CompStmt(vector<string> lineParses);
+    CompStmt(vector<string> lineParses, string label);
     void compile();
     void run();
 };

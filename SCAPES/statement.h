@@ -14,11 +14,13 @@ class Statement
 public:
     Statement();
     Statement(vector<string> lineParses);
+    Statement(vector<string> lineParses, string label);
     virtual ~Statement() = 0;
     virtual void compile() = 0;
     virtual void run() = 0;
     string getInstruction();
     vector<Operand> getOperands();
+    Label* getLabel();
     void setProgram(Program &prog);
 protected:
     vector<string> lineParses;

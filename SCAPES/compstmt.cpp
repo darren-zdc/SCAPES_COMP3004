@@ -8,6 +8,9 @@ CompStmt::CompStmt()
 CompStmt::CompStmt(vector<string> lineParses): Statement(lineParses)
 {}
 
+CompStmt::CompStmt(vector<string> lineParses, string label): Statement(lineParses, label)
+{}
+
 //Syntax checking
 void CompStmt::compile()
 {
@@ -17,7 +20,7 @@ void CompStmt::compile()
         return;
     }
     vector<Variable> temp = program->getVariables();
-    if(!program->ifExistVariable(Variable(lineParses[1])) || !program->ifExistVariable(Variable(lineParses[2])))
+    if(!program->ifExistVariable(lineParses[1]) || !program->ifExistVariable(lineParses[2]))
     {
         //error cannot find the variable inside the program variable
         return;

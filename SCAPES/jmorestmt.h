@@ -7,6 +7,7 @@ class JMoreStmt : public Statement
 public:
     JMoreStmt();
     JMoreStmt(vector<string> lineParses);
+    JMoreStmt(vector<string> lineParses, string label);
     void compile();
     void run();
 };

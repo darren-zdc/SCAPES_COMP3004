@@ -1,5 +1,7 @@
 #include "program.h"
 
+enum flag{ERROR, SUCCESS, CONTINUE};
+
 Program::Program(string filename, string dir) : filename(filename), directory(dir)
 {
 
@@ -20,24 +22,50 @@ int Program::Compile()
     {
         while(getline(myprogram, line))
         {
-            createStatement(line);
-            Statement* st = statements.back();
-            if(st->compile() == 0)
+            int flag = createStatement(line);
+            if (flag == SUCCESS)
             {
-                return 0;
+                Statement* st = statements.back();
+                if(st->compile() == ERROR)
+                {
+                    return ERROR;
+                }
             }
-            //createIdentifier(st, line);
+            else if (flag == ERROR)
+            {
+                return ERROR;
+            }
         }
     }
     else if (myprogram.fail())
     {
         //failed to open a file
+        return ERROR;
+    }
+
+    //Overall check
+    for (Label l : labels)
+    {
+        bool isLabelDeclared = false;
+        for (Statement* st : statements)
+        {
+            if (st->getLabel()->getName() == l.getName())
+            {
+               isLabelDeclared = true;
+               break;
+            }
+        }
+        if (isLabelDeclared == false)
+        {
+            //Label never declared
+            return ERROR;
+        }
     }
 
 
     //serialization to .cscapes
     this->serializeToJSON();
-    return 1;
+    return SUCCESS;
 }
 
 void Program::Execute()
@@ -46,9 +74,16 @@ void Program::Execute()
 
 }
 
-void Program::createStatement(string line, string label)
+int Program::createStatement(string line, string label)
 {
     vector<string> lineParses =split(line);
+
+    //Case for empty line
+    if (lineParses.size() == 0)
+    {
+        return CONTINUE;
+    }
+
     if (lineParses[0] == "dci")
     {
         //declares an integer variable
@@ -85,74 +120,32 @@ void Program::createStatement(string line, string label)
     {
         //indicates the end of the program
         statements.push_back(new EndStmt(lineParses, label));
-        return;
         //Deconstruct the statement vector
     }
     else if (lineParses[0] == "#")
     {
         //indicates that the line is a comment
+        return CONTINUE;
     }
     else if (lineParses[0].back() == ':')
     {       
         this->createStatement(line.substr(lineParses[0].length()+1, line.length() - lineParses[0].length())
                 , lineParses[0].substr(0,lineParses[0].size()-1));
-        return;
+        return SUCCESS;
     }
-    else if (lineParses.size() == 0 || line.size() == 0)
+    else if (lineParses[0] == "\r" || lineParses[0] == "\n" || line == "")
     {
-
+        return CONTINUE;
     }
     else
     {
         //error
-        return;
+        return ERROR;
     }
     statements.back()->setProgram(*this);
+    return SUCCESS;
 }
-/*
-void Program::createIdentifier(Statement* st, string line)
-{
-    vector<string> lineParses =split(line);
-    if (lineParses[0] == "dci")
-    {
-        //declares an integer variable
-        variables.push_back(Variable(lineParses[1]));
-    }
-    else if (lineParses[0] == "rdi")
-    {
-        //reads an integer value from the user
-        //maybe do nothing, the variable get assigned at the runtime. By default, the value is 0.
 
-    }
-    else if (lineParses[0] == "prt")
-    {
-        //prints out the value of a variable
-    }
-    else if (lineParses[0] == "cmp")
-    {
-        //compares two values to test
-
-    }
-    else if (lineParses[0] == "jmr")
-    {
-        //jump to the specified label
-
-    }
-    else if (lineParses[0] == "jmp")
-    {
-        //unconditional jump to the specified labl
-
-    }
-    else if (lineParses[0] == "#")
-    {
-        //indicates that the line is a comment
-    }
-    else
-    {
-        //error
-    }
-}
-*/
 int Program::createVariable(string name)
 {
     if(ifExistVariable(name))

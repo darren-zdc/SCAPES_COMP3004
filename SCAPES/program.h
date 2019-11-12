@@ -1,7 +1,6 @@
 #ifndef PROGRAM_H
 #define PROGRAM_H
-#include "identifier.h"
-#include "statement.h"
+#include "compstmt.h"
 #include "declintstmt.h"
 #include "endstmt.h"
 #include "identifier.h"
@@ -9,7 +8,7 @@
 #include "jmpstmt.h"
 #include "printstmt.h"
 #include "readstmt.h"
-#include "compstmt.h"
+#include "statement.h"
 #include "variable.h"
 #include "label.h"
 #include <QJsonObject>
@@ -17,7 +16,6 @@
 #include <QJsonDocument>
 #include <QFile>
 #include <vector>
-#include <list>
 #include <fstream>
 #include <string>
 #include <sstream>
@@ -46,7 +44,7 @@ private:
     string filename;
     string directory;
     string comparisonFlag;
-    void createStatement(string line, string label="");
+    int createStatement(string line, string label="");
     //void createIdentifier(Statement* st, string line);
     static vector<string> split(string line);
     void serializeToJSON();

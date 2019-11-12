@@ -27,7 +27,8 @@ unzip SCAPES.zip
 2. Build the SCAPES system
 ```shell
 cd SCAPES
-qmake -makefile -o ./Makefile SCAPES.pro && make -f Makefile
+qmake -makefile -o ./Makefile SCAPES.pro 
+make -f Makefile
 ```
 
 3. Launch the system

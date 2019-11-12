@@ -83,3 +83,9 @@ HEADERS += \
 
 FORMS += \
     mainwindow.ui
+
+DISTFILES += \
+    ../localRepo/test1.txt \
+    ../localRepo/test2.json \
+    ../localRepo/test2.txt \
+    README.md

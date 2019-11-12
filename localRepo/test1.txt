@@ -1,0 +1,10 @@
+dci a
+dci b
+rdi a
+rdi b
+cmp a b
+jmr L1
+prt b
+jmp L2
+L1: print a
+L2: end

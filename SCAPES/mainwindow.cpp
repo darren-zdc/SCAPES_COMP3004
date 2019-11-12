@@ -141,7 +141,7 @@ void MainWindow::on_actionChange_Language_triggered()
 
 }
 
-void MainWindow::on_actionChange_Directory_triggered()
+void MainWindow::on_actionChange_Directory_triggered() //allows navigation to change directory
 {
     QString fileName = QFileDialog::getExistingDirectory(this, tr("Set Directory"), manager->getDirectory());
     manager->SetDirectory(fileName, userType);
@@ -153,7 +153,7 @@ void MainWindow::on_actionChange_Directory_triggered()
     }
 }
 
-void MainWindow::on_actionAdmin_Options_triggered()
+void MainWindow::on_actionAdmin_Options_triggered() //alternates between programmer and system admin user type, TODO change to logout button
 {
     if (userType == "programmer")
         userType = "systemAdmin";
@@ -163,4 +163,9 @@ void MainWindow::on_actionAdmin_Options_triggered()
     QMessageBox message;
     message.setText("User type changed to: " + userType);
     message.exec();
+}
+
+void MainWindow::displayMessage(QString message, int flag) //displays a given message, with location depending on flag
+{
+
 }

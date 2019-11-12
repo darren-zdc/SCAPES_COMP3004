@@ -21,6 +21,7 @@ public:
     QString getLang();
     void SetDirectory(QString dir, QString user);
     void SetLang(QString lang, QString user);
+    void displayMessage(string message, int type);
 private:
     void SendSignal(string signal, QString filename, QString secondaryData);
     filemanager *files = new filemanager;

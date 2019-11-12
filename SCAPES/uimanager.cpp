@@ -72,3 +72,8 @@ void uimanager::SendSignal(string signal, QString filename, QString secondaryDat
         files->recieveSignal(signal, filename, secondaryData);
     }
 }
+
+void uimanager::displayMessage(string message, int type)
+{
+
+}

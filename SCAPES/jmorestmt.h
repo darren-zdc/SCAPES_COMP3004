@@ -8,7 +8,7 @@ public:
     JMoreStmt();
     JMoreStmt(vector<string> lineParses);
     JMoreStmt(vector<string> lineParses, string label);
-    void compile();
+    int compile();
     void run();
 };
 

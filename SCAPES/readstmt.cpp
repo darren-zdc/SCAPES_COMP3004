@@ -16,21 +16,22 @@ void ReadStmt::run()
 }
 
 //Syntax checking
-void ReadStmt::compile()
+int ReadStmt::compile()
 {
     if (lineParses.size() != 2)
     {
         //error not a valid input
-        return;
+        return 0;
     }
     vector<Variable> temp;
     temp = program->getVariables();
     if(!program->ifExistVariable(lineParses[1]))
     {
         //error cannot find the variable inside the program variable
-        return;
+        return 0;
     }
     operands.push_back(Operand(lineParses[1]));
+    return 1;
 }
 
 /*

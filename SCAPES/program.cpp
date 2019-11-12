@@ -10,7 +10,7 @@ vector<Variable> Program::getVariables()
     return variables;
 }
 
-void Program::Compile()
+int Program::Compile()
 {
     string filePath = directory + "/" + filename;
     list<string> lines;
@@ -22,19 +22,22 @@ void Program::Compile()
         {
             createStatement(line);
             Statement* st = statements.back();
-            st->compile();
+            if(!st->compile())
+            {
+                return 0;
+            }
             //createIdentifier(st, line);
         }
     }
     else if (myprogram.fail())
     {
         //failed to open a file
-        string v;
     }
 
 
     //serialization to .cscapes
     this->serializeToJSON();
+    return 1;
 }
 
 void Program::Execute()

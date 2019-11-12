@@ -15,12 +15,12 @@ void EndStmt::run()
 
 }
 
-void EndStmt::compile()
+int EndStmt::compile()
 {
     if(lineParses.size() != 1)
     {
         //error invalid input
-        return;
+        return 0;
     }
-
+    return 1;
 }

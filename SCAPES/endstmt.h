@@ -8,7 +8,7 @@ public:
     EndStmt();
     EndStmt(vector<string> lineParses);
     EndStmt(vector<string> lineParses, string label);
-    void compile();
+    int compile();
     void run();
 };
 

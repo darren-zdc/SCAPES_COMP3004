@@ -28,7 +28,7 @@ class Program
 {
 public:
     Program(string filename, string dir);
-    void Compile();
+    int Compile();
     void Execute();
     void print();
     static string getFileName(string filePath, bool withExtension = true, char seperator = '/');

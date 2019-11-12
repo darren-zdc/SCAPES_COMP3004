@@ -10,7 +10,7 @@ public:
     DeclIntStmt();
     DeclIntStmt(vector<string> line);
     DeclIntStmt(vector<string> line, string label);
-    void compile();
+    int compile();
     void run();
 };
 #endif // DECLINTSTMT_H

@@ -17,15 +17,16 @@ void JmpStmt::run()
 }
 
 //Syntax checking
-void JmpStmt::compile()
+int JmpStmt::compile()
 {
     if(lineParses.size() != 2)
     {
         //error invalid input
-        return;
+        return 0;
     }
 
     //check if the previous instruction is comp
     program->createLabel(lineParses[1]);
     operands.push_back(lineParses[1]);
+    return 1;
 }

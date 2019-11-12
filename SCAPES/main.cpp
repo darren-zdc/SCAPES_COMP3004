@@ -32,5 +32,6 @@ int main(int argc, char *argv[])
     cCurrentPath[sizeof(cCurrentPath) - 1] = '\0';
     printf ("The current working directory is %s", cCurrentPath);
     */
+
 }
 

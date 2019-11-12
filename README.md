@@ -61,9 +61,9 @@ The compiled program will be appeared in the main window. You are able to view t
 
 ## Authors
 
-Dicong Zhao \\
-Marco Shen  \\
-Liam Costello  \\
+Dicong Zhao <br />
+Marco Shen <br />
+Liam Costello  <br />
 
 ## License
 

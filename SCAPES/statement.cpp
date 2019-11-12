@@ -13,7 +13,10 @@ Statement::Statement(vector<string> lineParses): lineParses(lineParses), instruc
 {}
 
 Statement::Statement(vector<string> lineParses, string label): lineParses(lineParses), instruction(lineParses[0]), label(Label(label))
-{}
+{
+    logger = nullptr;
+    logger = CPlusPlusLogging::Logger::getInstance();
+}
 
 string Statement::getInstruction()
 {

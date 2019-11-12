@@ -13,6 +13,7 @@
 #include "compstmt.h"
 #include "variable.h"
 #include "label.h"
+#include "Logger.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>

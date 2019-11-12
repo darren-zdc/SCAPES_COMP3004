@@ -10,7 +10,9 @@ DeclIntStmt::DeclIntStmt(vector<string> lineParses): Statement(lineParses)
 {}
 
 DeclIntStmt::DeclIntStmt(vector<string> lineParses, string label): Statement(lineParses, label)
-{}
+{
+
+}
 
 void DeclIntStmt::compile()
 {

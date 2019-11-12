@@ -17,12 +17,14 @@ void CompStmt::compile()
     if(lineParses.size() != 3)
     {
         //error invalid input
+        logger->error("Invalid input");
         return;
     }
     vector<Variable> temp = program->getVariables();
     if(!program->ifExistVariable(lineParses[1]) || !program->ifExistVariable(lineParses[2]))
     {
         //error cannot find the variable inside the program variable
+        logger->error("Duplicated variable declared");
         return;
     }
     operands.push_back(Operand(lineParses[1]));

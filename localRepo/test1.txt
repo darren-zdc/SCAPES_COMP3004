@@ -6,5 +6,5 @@ cmp a b
 jmr L1
 prt b
 jmp L2
-L1: print a
+L1: prt a
 L2: end

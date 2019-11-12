@@ -85,7 +85,7 @@ FORMS += \
     mainwindow.ui
 
 DISTFILES += \
+    ../README.md \
     ../localRepo/test1.txt \
     ../localRepo/test2.json \
-    ../localRepo/test2.txt \
-    README.md
+    ../localRepo/test2.txt

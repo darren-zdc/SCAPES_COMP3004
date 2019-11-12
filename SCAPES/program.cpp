@@ -240,10 +240,11 @@ string Program::getFileName(string filePath, bool withExtension, char seperator)
     // Get last dot position
     std::size_t dotPos = filePath.rfind('.');
     std::size_t sepPos = filePath.rfind(seperator);
-
+    int extensionLength;
+    extensionLength = filePath.size() - dotPos +1;
     if(sepPos != string::npos)
     {
-        return filePath.substr(sepPos + 1, filePath.size() - (withExtension || dotPos == string::npos ? 1 : dotPos) );
+        return filePath.substr(sepPos + 1, filePath.size() - (withExtension ? 1 : extensionLength) );
     }
     return "";
 }

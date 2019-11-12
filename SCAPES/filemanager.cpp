@@ -80,7 +80,7 @@ void filemanager::createCreateControl() //initiate control flow for creating a b
 
 void filemanager::createCompileControl(QString name) //initiate control flow for compiling a program
 {
-    //compileControl *control = new compileControl();
-    //control->compileFile();
-    //delete control;
+    compileControl *control = new compileControl(name, pref->GetDirectory());
+    control->compile();
+    delete control;
 }

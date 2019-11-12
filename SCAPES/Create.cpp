@@ -8,17 +8,17 @@ Create::Create(string dir){
   int counter = 1; // how many untitled there are
 
   // if theres no "untitled" file
-  ifstream exist(path + name + ".txt");
+  ifstream exist(path + "/" + name + ".txt");
   if(!exist){
-    ofstream newFile(path + name + ".txt");
+    ofstream newFile(path + "/" + name + ".txt");
     return;
   }
 
   // if theres an "untitled" + "num"
   while(true){
-    ifstream exist2(path + name + to_string(counter) + ".txt");
+    ifstream exist2(path + "/" + name + to_string(counter) + ".txt");
     if(!exist2){
-      ofstream newFile(path + name + to_string(counter) + ".txt");
+      ofstream newFile(path + "/" + name + to_string(counter) + ".txt");
       break;
     }else{
       counter++;

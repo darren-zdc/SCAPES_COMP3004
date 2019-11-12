@@ -1,7 +1,8 @@
 #include "program.h"
 
-Program::Program(string filename) : preference(), filename(filename)
+Program::Program(string filename, string dir) : filename(filename), directory(dir)
 {
+
 }
 
 vector<Variable> Program::getVariables()
@@ -11,7 +12,7 @@ vector<Variable> Program::getVariables()
 
 void Program::Compile()
 {
-    string filePath = preference.getDirectory() + filename;
+    string filePath = directory + "/" + filename;
     list<string> lines;
     string line;
     ifstream myprogram(filePath);
@@ -215,7 +216,7 @@ void Program::serializeToJSON()
 
     QJsonDocument doc(jProgram);
     string jsonFilename;
-    jsonFilename = preference.getDirectory() + getFileName("/" + this->filename, false) + ".json";
+    jsonFilename = directory + "/" + getFileName("/" + this->filename, false) + ".json";
     QFile jsonFile(QString::fromStdString(jsonFilename));
     jsonFile.open(QIODevice::WriteOnly);
     jsonFile.write(doc.toJson());

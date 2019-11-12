@@ -22,7 +22,7 @@ int Program::Compile()
         {
             createStatement(line);
             Statement* st = statements.back();
-            if(!st->compile())
+            if(st->compile() == 0)
             {
                 return 0;
             }

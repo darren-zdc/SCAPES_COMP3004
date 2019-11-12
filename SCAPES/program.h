@@ -12,7 +12,6 @@
 #include "compstmt.h"
 #include "variable.h"
 #include "label.h"
-#include "Logger.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -29,7 +28,7 @@ class Program
 {
 public:
     Program(string filename, string dir);
-    void Compile();
+    int Compile();
     void Execute();
     void print();
     static string getFileName(string filePath, bool withExtension = true, char seperator = '/');

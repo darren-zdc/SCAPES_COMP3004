@@ -18,7 +18,7 @@ void PrintStmt::run()
 }
 
 //Syntax checking
-void PrintStmt::compile()
+int PrintStmt::compile()
 {
     if(lineParses.size() != 2)
     {
@@ -29,7 +29,8 @@ void PrintStmt::compile()
     if(!program->ifExistVariable(lineParses[1]))
     {
         //error cannot find the variable inside the program variable
-        return;
+        return 0;
     }
     operands.push_back(Operand(lineParses[1]));
+    return 1;
 }

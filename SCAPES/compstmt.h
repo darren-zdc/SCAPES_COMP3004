@@ -9,7 +9,7 @@ public:
     CompStmt();
     CompStmt(vector<string> lineParses);
     CompStmt(vector<string> lineParses, string label);
-    void compile();
+    int compile();
     void run();
 };
 

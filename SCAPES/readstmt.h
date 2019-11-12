@@ -9,7 +9,7 @@ public:
     ReadStmt();
     ReadStmt(vector<string> lineParses);
     ReadStmt(vector<string> lineParses, string label);
-    void compile();
+    int compile();
     void run();
 private:
     bool isNumber(string s);

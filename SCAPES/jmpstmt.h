@@ -8,7 +8,7 @@ public:
     JmpStmt();
     JmpStmt(vector<string> lineParses);
     JmpStmt(vector<string> lineParses, string label);
-    void compile();
+    int compile();
     void run();
 };
 

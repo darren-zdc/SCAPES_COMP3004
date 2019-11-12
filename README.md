@@ -10,7 +10,7 @@ format suitable for execution, and they can run the compiled programs.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
@@ -43,27 +43,30 @@ The default directory is `../localRepo`. All the test files and the compiled fil
 Program file is the file with `.txt` extension.
 Compiled file is the file with `.json` extension.
 
+If the provided file structure is altered, select the change user type option to become a system admin, and manually set the directory with the chage directory option.
+
 ### Open Program
 Select the file from the main menu and click `Open Program`
 
 ### Create Program
-Simply click the `Create Program` button. And edit your program inside the main dialog. 
+Click the `Create Program` button, this will create a blank file that can then be opened and edited.
 
 ### Save Program
-Click the `Save Program` button to save the program.
+Click the `Save Program` button to save the program (program must be open).
 
 
 ### Compiled Program
-After Saving the program, select the program file and click `Compile Program` button to compile.
-The compiled program will be appeared in the main window. You are able to view the compiled program by selectiing the compiled program file and click `Open Program`.
+After saving and closing the program, select the program file and click `Compile Program` button to compile.
+The compiled program will be appeared in the main window. You are able to view the contents of the compiled program by selectiing the compiled program file and click `Open Program`.
+No json file will be created if the compiler encounters any syntax errors.
 
 
 
 ## Authors
 
 Dicong Zhao (100996654)
-Marco Shen
-Liam Costello
+Marco Shen (101045818)
+Liam Costello (100977619)
 
 ## License
 

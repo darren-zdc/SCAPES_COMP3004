@@ -91,7 +91,6 @@ void Program::createStatement(string line, string label)
     else if (lineParses[0] == "#")
     {
         //indicates that the line is a comment
-        return;
     }
     else if (lineParses[0].back() == ':')
     {       

@@ -1,7 +1,6 @@
 #ifndef PROGRAM_H
 #define PROGRAM_H
 #include "identifier.h"
-#include "preferences.h"
 #include "statement.h"
 #include "declintstmt.h"
 #include "endstmt.h"
@@ -29,7 +28,7 @@ using namespace std;
 class Program
 {
 public:
-    Program(string filename);    
+    Program(string filename, string dir);
     void Compile();
     void Execute();
     void print();
@@ -45,8 +44,8 @@ private:
     vector<Label> labels;
     vector<Statement*> statements;
     vector<Variable> variables;
-    Preferences preference;
     string filename;
+    string directory;
     string comparisonFlag;
     void createStatement(string line, string label="");
     //void createIdentifier(Statement* st, string line);

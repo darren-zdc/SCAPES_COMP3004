@@ -8,6 +8,7 @@ openControl::openControl(QString name, int tag, string dir) //setup working vari
     this->flag = tag;
     QString temp = QString::fromStdString(dir);
     this->directory = temp;
+    temp.append("/");
     temp.append(name);
     this->name = temp;
 }
@@ -21,7 +22,7 @@ QStringList openControl::openControlFuncitonality()
         while (iterator.hasNext())
         {
             QFile file(iterator.next());
-            if (file.fileName() == this->name && file.fileName().endsWith("txt")) //search for selected file of valid type
+            if (file.fileName() == this->name) //search for selected file of valid type
             {
                 file.open(QIODevice::ReadOnly);
                 QString content = file.readAll();

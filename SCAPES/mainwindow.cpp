@@ -165,7 +165,7 @@ void MainWindow::on_actionAdmin_Options_triggered() //alternates between program
     message.exec();
 }
 
-void MainWindow::displayMessage(QString message, int flag) //displays a given message, with location depending on flag
+void MainWindow::displayMessage(int flag) //displays a given message, with location depending on flag
 {
 
 }

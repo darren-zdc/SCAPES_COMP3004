@@ -73,7 +73,7 @@ void uimanager::SendSignal(string signal, QString filename, QString secondaryDat
     }
 }
 
-void uimanager::displayMessage(string message, int type)
+void uimanager::displayMessage(int type)
 {
 
 }

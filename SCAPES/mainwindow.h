@@ -19,7 +19,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     void attachDependancies(uimanager *manager);
-    void displayMessage(QString message, int flag);
+    void displayMessage(int flag);
     ~MainWindow();
 
 private slots:

@@ -1,0 +1,121 @@
+{
+    "filename": "test2.txt",
+    "labels": [
+        {
+            "name": "L2"
+        },
+        {
+            "name": "L3"
+        },
+        {
+            "name": "L1"
+        }
+    ],
+    "statements": [
+        {
+            "instruction": "dci",
+            "operands": [
+                {
+                    "name": "a"
+                }
+            ]
+        },
+        {
+            "instruction": "dci",
+            "operands": [
+                {
+                    "name": "b"
+                }
+            ]
+        },
+        {
+            "instruction": "rdi",
+            "label": "L1",
+            "operands": [
+                {
+                    "name": "a"
+                }
+            ]
+        },
+        {
+            "instruction": "rdi",
+            "operands": [
+                {
+                    "name": "b"
+                }
+            ]
+        },
+        {
+            "instruction": "cmp",
+            "operands": [
+                {
+                    "name": "a"
+                },
+                {
+                    "name": "b"
+                }
+            ]
+        },
+        {
+            "instruction": "jmr",
+            "operands": [
+                {
+                    "name": "L2"
+                }
+            ]
+        },
+        {
+            "instruction": "jmp",
+            "operands": [
+                {
+                    "name": "L3"
+                }
+            ]
+        },
+        {
+            "instruction": "prt",
+            "label": "L2",
+            "operands": [
+                {
+                    "name": "a"
+                }
+            ]
+        },
+        {
+            "instruction": "jmp",
+            "operands": [
+                {
+                    "name": "L1"
+                }
+            ]
+        },
+        {
+            "instruction": "prt",
+            "label": "L3",
+            "operands": [
+                {
+                    "name": "b"
+                }
+            ]
+        },
+        {
+            "instruction": "prt",
+            "operands": [
+                {
+                    "name": "b"
+                }
+            ]
+        },
+        {
+            "instruction": "end"
+        }
+    ],
+    "variables": [
+        {
+            "name": "a"
+        },
+        {
+            "name": "b"
+        }
+    ]
+}

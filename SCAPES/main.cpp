@@ -1,9 +1,6 @@
-#include <iostream>
 #include <QApplication>
 #include "mainwindow.h"
 #include "uimanager.h"
-#include "Create.h"
-#include "program.h"
 //#include <stdio.h>  /* defines FILENAME_MAX */
 //#include <unistd.h>
 //#include <QDebug>

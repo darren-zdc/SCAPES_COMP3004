@@ -99,14 +99,6 @@
             ]
         },
         {
-            "instruction": "prt",
-            "operands": [
-                {
-                    "name": "b"
-                }
-            ]
-        },
-        {
             "instruction": "end"
         }
     ],

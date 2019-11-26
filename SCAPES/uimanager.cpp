@@ -65,15 +65,57 @@ void uimanager::SendSignal(string signal, QString filename, QString secondaryDat
     }
     else if (signal == "save")
     {
-        files->recieveSignal(signal, filename, secondaryData);
+        files->recieveSignal(signal, openFile, secondaryData);
+    }
+    else if (signal == "rename")
+    {
+        files->recieveSignal(signal, openFile, secondaryData);
     }
     else if (signal == "open")
     {
         files->recieveSignal(signal, filename, secondaryData);
     }
+
 }
 
-void uimanager::displayMessage(int type)
+void uimanager::displayMessage(int type, string source) //display pop-up messages to the user
 {
+    if (source == "CompileControl")
+    {
+        if (type == 0)
+        {
+            window->displayMessage("Message From Compiler: Error");
+        }
+        else if (type == 1)
+        {
+            window->displayMessage("Message From Compiler: Success");
+        }
+    }
+    else if (source == "SaveControl")
+    {
+        if (type == 0)
+        {
+            window->displayMessage("Save Request Failed");
+        }
+        else if (type == 1)
+        {
+            window->displayMessage("File Saved Successfully");
+        }
+    }
+    else if (source == "RenameControl")
+    {
+        if (type != 0)
+        {
+            window->displayMessage("Failed to Rename File");
+        }
+        else
+        {
+            window->displayMessage("Renamed File");
+        }
+    }
+}
 
+filemanager* uimanager::GetFileManager()
+{
+    return this->files;
 }

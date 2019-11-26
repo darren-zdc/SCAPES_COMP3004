@@ -4,8 +4,11 @@
 #include <string>
 #include <QString>
 #include <preferencemanager.h>
+//#include <uimanager.h>
 
 using namespace std;
+
+class uimanager;
 
 class filemanager
 {
@@ -15,9 +18,11 @@ public:
     QStringList programRequest();
     QStringList contentsRequest(QString name);
     preferenceManager* getPrefManager();
+    uimanager *ui;
 private:
     void createCreateControl();
     void createSaveControl(QString name, QStringList contents);
+    void createRenameControl(QString name, QString newName);
     void createCompileControl(QString name);
     void createRunControl(QString name);
     QStringList createOpenControl(QString name, int flag);

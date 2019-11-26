@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>678</width>
-    <height>496</height>
+    <height>516</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -101,7 +101,7 @@
       <x>10</x>
       <y>410</y>
       <width>591</width>
-      <height>41</height>
+      <height>51</height>
      </rect>
     </property>
    </widget>
@@ -147,7 +147,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <addaction name="actionAdmin_Options"/>
    <addaction name="actionChange_Language"/>

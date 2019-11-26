@@ -15,7 +15,7 @@ savecontrol::savecontrol(QString name, QStringList commands, string dir) //setup
     this->directory = dir;
 }
 
-void savecontrol::saveFile() //parse given commands into vector of strings, and save them accordingly
+int savecontrol::saveFile() //parse given commands into vector of strings, and save them accordingly
 {
     string name = filename.QString::toStdString();
 
@@ -26,4 +26,5 @@ void savecontrol::saveFile() //parse given commands into vector of strings, and 
     }
     Save *temp = new Save(name, commands, directory);
     delete temp;
+    return 1;
 }

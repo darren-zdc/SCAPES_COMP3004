@@ -7,8 +7,8 @@ compileControl::compileControl(QString name, string dir)
     this->directory = dir;
 }
 
-void compileControl::compile()
+int compileControl::compile()
 {
     Program *prog = new Program(filename.QString::toStdString(), directory);
-    prog->Compile();
+    return prog->Compile();
 }

@@ -69,9 +69,9 @@ void MainWindow::on_CompileButton_clicked() //sends compile command, then update
             model->setStringList(manager->PollProgramList());
             listview->setModel(model);
         }
-        QMessageBox message;
-        message.setText("Program Compiled");
-        message.exec();
+        //QMessageBox message;
+        //message.setText("Program Compiled");
+        //message.exec();
     }
 }
 
@@ -92,10 +92,11 @@ void MainWindow::on_SaveButton_clicked() //send save command
     if (texteditor->isVisible())
     {
         QString temp = texteditor->toPlainText();
-        manager->RecieveSignal("save", textbox->toPlainText(), temp);
-        QMessageBox message;
-        message.setText("Program Saved");
-        message.exec();
+        manager->RecieveSignal("save", "null", temp);
+        manager->RecieveSignal("rename", "null", textbox->toPlainText());
+        //QMessageBox message;
+        //message.setText("Program Saved");
+        //message.exec();
     }
 }
 
@@ -106,6 +107,7 @@ void MainWindow::on_OpenButton_clicked() //send open command
         QModelIndex index = this->listview->currentIndex();
         QString name = index.data(Qt::DisplayRole).toString();
         textbox->setText(name);
+        manager->openFile = name;
         QStringList contents = manager->PollFileContents(name);
         for (int i = 0; i < contents.size(); i++)
         {
@@ -113,7 +115,7 @@ void MainWindow::on_OpenButton_clicked() //send open command
         }
         texteditor->setVisible(true);
         listview->setVisible(false);
-        textbox->setReadOnly(false);
+        textbox->setReadOnly(false);     
     }
 }
 
@@ -165,7 +167,9 @@ void MainWindow::on_actionAdmin_Options_triggered() //alternates between program
     message.exec();
 }
 
-void MainWindow::displayMessage(int flag) //displays a given message, with location depending on flag
+void MainWindow::displayMessage(QString text) //displays a given message, with location depending on flag
 {
-
+    QMessageBox message;
+    message.setText(text);
+    message.exec();
 }

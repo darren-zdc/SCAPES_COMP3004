@@ -18,5 +18,4 @@ L2: prt a
 jmp L1
 L3: prt b
 # Prints b and end the program
-prt b
 end

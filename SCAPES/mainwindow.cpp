@@ -94,9 +94,6 @@ void MainWindow::on_SaveButton_clicked() //send save command
         QString temp = texteditor->toPlainText();
         manager->RecieveSignal("save", "null", temp);
         manager->RecieveSignal("rename", "null", textbox->toPlainText());
-        //QMessageBox message;
-        //message.setText("Program Saved");
-        //message.exec();
     }
 }
 
@@ -140,10 +137,12 @@ void MainWindow::on_CloseButton_clicked() //send close command, then update prog
 
 void MainWindow::on_actionChange_Language_triggered()
 {
-
+    QMessageBox message;
+    message.setText("Language change functionality is not required, this option is visible for the sake of completeness in regards to the original SCAPES project description.");
+    message.exec();
 }
 
-void MainWindow::on_actionChange_Directory_triggered() //allows navigation to change directory
+void MainWindow::on_actionChange_Directory_triggered() //allows navigation to change directory, input will be ignored if user does not have required permission
 {
     QString fileName = QFileDialog::getExistingDirectory(this, tr("Set Directory"), manager->getDirectory());
     manager->SetDirectory(fileName, userType);

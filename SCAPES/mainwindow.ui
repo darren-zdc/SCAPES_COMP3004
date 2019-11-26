@@ -161,7 +161,7 @@
   </action>
   <action name="actionChange_Language">
    <property name="text">
-    <string>Change Language</string>
+    <string>Change Programming Language</string>
    </property>
   </action>
   <action name="actionChange_Directory">

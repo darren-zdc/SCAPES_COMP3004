@@ -25,6 +25,8 @@ int savecontrol::saveFile() //parse given commands into vector of strings, and s
         commands[i] = contents[i].QString::toStdString();
     }
     Save *temp = new Save(name, commands, directory);
+
     delete temp;
+
     return 1;
 }

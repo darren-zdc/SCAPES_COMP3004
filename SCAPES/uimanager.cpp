@@ -84,11 +84,11 @@ void uimanager::displayMessage(int type, string source) //display pop-up message
     {
         if (type == 0)
         {
-            window->displayMessage("Message From Compiler: Error");
+            window->displayMessage("Compiler Error: Aborting");
         }
         else if (type == 1)
         {
-            window->displayMessage("Message From Compiler: Success");
+            window->displayMessage("Program Compiled Successfully");
         }
     }
     else if (source == "SaveControl")
@@ -113,9 +113,20 @@ void uimanager::displayMessage(int type, string source) //display pop-up message
             window->displayMessage("Renamed File");
         }
     }
+    else if (source == "ExecuteControl")
+    {
+        window->displayMessage("Execution Error: Invalid File Type");
+    }
 }
 
 filemanager* uimanager::GetFileManager()
 {
     return this->files;
+}
+
+void uimanager::displayOutput(string output)
+{
+    QString temp = QString::fromStdString(output);
+    QStringList display = temp.split("/");
+    window->displayOutput(display);
 }

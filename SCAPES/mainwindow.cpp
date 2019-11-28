@@ -69,9 +69,6 @@ void MainWindow::on_CompileButton_clicked() //sends compile command, then update
             model->setStringList(manager->PollProgramList());
             listview->setModel(model);
         }
-        //QMessageBox message;
-        //message.setText("Program Compiled");
-        //message.exec();
     }
 }
 
@@ -111,6 +108,7 @@ void MainWindow::on_OpenButton_clicked() //send open command
             texteditor->append(contents[i]);
         }
         texteditor->setVisible(true);
+        texteditor->setReadOnly(false);
         listview->setVisible(false);
         textbox->setReadOnly(false);     
     }
@@ -171,4 +169,16 @@ void MainWindow::displayMessage(QString text) //displays a given message, with l
     QMessageBox message;
     message.setText(text);
     message.exec();
+}
+
+void MainWindow::displayOutput(QStringList output)
+{
+    for (int i = 0; i < output.size(); i++)
+    {
+        texteditor->append(output[i]);
+    }
+    texteditor->setVisible(true);
+    texteditor->setReadOnly(true);
+    listview->setVisible(false);
+    textbox->setReadOnly(true);
 }

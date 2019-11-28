@@ -20,6 +20,7 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     void attachDependancies(uimanager *manager);
     void displayMessage(QString text);
+    void displayOutput(QStringList output);
     ~MainWindow();
 
 private slots:

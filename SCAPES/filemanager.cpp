@@ -60,9 +60,17 @@ preferenceManager* filemanager::getPrefManager()
 
 void filemanager::createRunControl(QString name) //initiate control flow to execute a program
 {
-    executeControl *control = new executeControl();
-
-    delete control;
+    if (name.endsWith(".json"))
+    {
+        executeControl *control = new executeControl(name.QString::toStdString(), pref->GetDirectory());
+        string output = control->executeProgram();
+        delete control;
+        this->ui->displayOutput(output);
+    }
+    else
+    {
+        this->ui->displayMessage(1, "ExecuteControl");
+    }
 }
 
 QStringList filemanager::createOpenControl(QString name, int flag) //initiate control flow for opening file list/file contents
@@ -73,7 +81,7 @@ QStringList filemanager::createOpenControl(QString name, int flag) //initiate co
     return temp;
 }
 
-void filemanager::createSaveControl(QString name, QStringList contents) //initiate control flow fo saving a file
+void filemanager::createSaveControl(QString name, QStringList contents) //initiate control flow for saving a file
 {
     savecontrol *control = new savecontrol(name, contents, pref->GetDirectory());
     int message = control->saveFile();

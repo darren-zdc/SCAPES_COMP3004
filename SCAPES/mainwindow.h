@@ -5,6 +5,7 @@
 #include <QStringListModel>
 #include <QListView>
 #include <QTextEdit>
+#include <QPushButton>
 
 class uimanager;
 
@@ -51,6 +52,13 @@ private:
     QListView *listview;
     QTextEdit *textbox;
     QTextEdit *texteditor;
+    QPushButton *CloseButton;
+    QPushButton *OpenButton;
+    QPushButton *CompileButton;
+    QPushButton *RunButton;
+    QPushButton *SaveButton;
+    QPushButton *CreateButton;
+
     void UpdateProgramList(QStringList);
 };
 

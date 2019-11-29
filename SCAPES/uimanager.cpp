@@ -69,7 +69,10 @@ void uimanager::SendSignal(string signal, QString filename, QString secondaryDat
     }
     else if (signal == "rename")
     {
-        files->recieveSignal(signal, openFile, secondaryData);
+        if (secondaryData != openFile && secondaryData.append(".txt") != openFile)
+        {
+            files->recieveSignal(signal, openFile, secondaryData);
+        }
     }
     else if (signal == "open")
     {

@@ -46,8 +46,8 @@
    <widget class="QPushButton" name="CreateButton">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>50</y>
+      <x>540</x>
+      <y>40</y>
       <width>121</width>
       <height>41</height>
      </rect>
@@ -59,8 +59,8 @@
    <widget class="QPushButton" name="CompileButton">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>200</y>
+      <x>540</x>
+      <y>140</y>
       <width>121</width>
       <height>41</height>
      </rect>
@@ -72,8 +72,8 @@
    <widget class="QPushButton" name="RunButton">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>250</y>
+      <x>540</x>
+      <y>190</y>
       <width>121</width>
       <height>41</height>
      </rect>
@@ -85,8 +85,8 @@
    <widget class="QPushButton" name="SaveButton">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>300</y>
+      <x>540</x>
+      <y>40</y>
       <width>121</width>
       <height>41</height>
      </rect>
@@ -108,8 +108,8 @@
    <widget class="QPushButton" name="OpenButton">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>100</y>
+      <x>540</x>
+      <y>90</y>
       <width>121</width>
       <height>41</height>
      </rect>
@@ -121,8 +121,8 @@
    <widget class="QPushButton" name="CloseButton">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>150</y>
+      <x>540</x>
+      <y>90</y>
       <width>121</width>
       <height>41</height>
      </rect>

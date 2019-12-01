@@ -1,4 +1,4 @@
-#include "program.h"
+﻿#include "program.h"
 
 enum flag{ERROR, SUCCESS, CONTINUE};
 
@@ -135,7 +135,7 @@ int Program::createStatement(string line, string label)
         return CONTINUE;
     }
     else if (lineParses[0].back() == ':')
-    {       
+    {
         this->createStatement(line.substr(lineParses[0].length()+1, line.length() - lineParses[0].length())
                 , lineParses[0].substr(0,lineParses[0].size()-1));
         return SUCCESS;
@@ -239,13 +239,35 @@ Program* Program::deserializeToObject(string jsonFilename, string dir)
     QJsonDocument programDoc = QJsonDocument::fromJson(programJson.toUtf8());
     QJsonObject jProgram = programDoc.object();
     string filenameFromJson = jProgram["filename"].toString().toStdString();
-    Program p(filenameFromJson, dir);
+    Program* p = new Program(filenameFromJson, dir);
     QJsonArray sts = jProgram["statements"].toArray();
     foreach (const QJsonValue & st, sts)
     {
         QJsonObject jSt = st.toObject();
+        QJsonArray jOperds = jSt["operands"].toArray();
+        vector<string> operds;
+        foreach (const QJsonValue & operand, jOperds)
+        {
+            operds.push_back(operand["name"].toString().toStdString());
+            qDebug() << QString::fromStdString(operand["name"].toString().toStdString());
+        }
+        qDebug() << jSt["instruction"].toString();
+        p->createStatement(jSt["instruction"].toString().toStdString(), operds, jSt["label"].toString().toStdString());
+    }
+    QJsonArray vars = jProgram["variables"].toArray();
+    foreach (const QJsonValue & var, vars)
+    {
+        p->createVariable(var["name"].toString().toStdString());
+        qDebug() << var["name"].toString();
+    }
+    QJsonArray labels = jProgram["labels"].toArray();
+    foreach (const QJsonValue & label, labels)
+    {
+        p->createLabel(label["name"].toString().toStdString());
+        qDebug() << label["name"].toString();
 
     }
+    return p;
 }
 
 vector<string> Program::split(string line)

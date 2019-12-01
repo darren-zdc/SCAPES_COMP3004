@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>678</width>
-    <height>496</height>
+    <height>516</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,8 +46,8 @@
    <widget class="QPushButton" name="CreateButton">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>50</y>
+      <x>540</x>
+      <y>40</y>
       <width>121</width>
       <height>41</height>
      </rect>
@@ -59,8 +59,8 @@
    <widget class="QPushButton" name="CompileButton">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>200</y>
+      <x>540</x>
+      <y>140</y>
       <width>121</width>
       <height>41</height>
      </rect>
@@ -72,8 +72,8 @@
    <widget class="QPushButton" name="RunButton">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>250</y>
+      <x>540</x>
+      <y>190</y>
       <width>121</width>
       <height>41</height>
      </rect>
@@ -85,8 +85,8 @@
    <widget class="QPushButton" name="SaveButton">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>300</y>
+      <x>540</x>
+      <y>40</y>
       <width>121</width>
       <height>41</height>
      </rect>
@@ -101,15 +101,15 @@
       <x>10</x>
       <y>410</y>
       <width>591</width>
-      <height>41</height>
+      <height>51</height>
      </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="OpenButton">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>100</y>
+      <x>540</x>
+      <y>90</y>
       <width>121</width>
       <height>41</height>
      </rect>
@@ -121,8 +121,8 @@
    <widget class="QPushButton" name="CloseButton">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>150</y>
+      <x>540</x>
+      <y>90</y>
       <width>121</width>
       <height>41</height>
      </rect>
@@ -147,7 +147,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <addaction name="actionAdmin_Options"/>
    <addaction name="actionChange_Language"/>
@@ -161,7 +161,7 @@
   </action>
   <action name="actionChange_Language">
    <property name="text">
-    <string>Change Language</string>
+    <string>Change Programming Language</string>
    </property>
   </action>
   <action name="actionChange_Directory">

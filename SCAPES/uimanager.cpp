@@ -65,10 +65,71 @@ void uimanager::SendSignal(string signal, QString filename, QString secondaryDat
     }
     else if (signal == "save")
     {
-        files->recieveSignal(signal, filename, secondaryData);
+        files->recieveSignal(signal, openFile, secondaryData);
+    }
+    else if (signal == "rename")
+    {
+        if (secondaryData != openFile && secondaryData.append(".txt") != openFile)
+        {
+            files->recieveSignal(signal, openFile, secondaryData);
+        }
     }
     else if (signal == "open")
     {
         files->recieveSignal(signal, filename, secondaryData);
     }
+
+}
+
+void uimanager::displayMessage(int type, string source) //display pop-up messages to the user
+{
+    if (source == "CompileControl")
+    {
+        if (type == 0)
+        {
+            window->displayMessage("Compiler Error: Aborting");
+        }
+        else if (type == 1)
+        {
+            window->displayMessage("Program Compiled Successfully");
+        }
+    }
+    else if (source == "SaveControl")
+    {
+        if (type == 0)
+        {
+            window->displayMessage("Save Request Failed");
+        }
+        else if (type == 1)
+        {
+            window->displayMessage("File Saved Successfully");
+        }
+    }
+    else if (source == "RenameControl")
+    {
+        if (type != 0)
+        {
+            window->displayMessage("Failed to Rename File");
+        }
+        else
+        {
+            window->displayMessage("Renamed File");
+        }
+    }
+    else if (source == "ExecuteControl")
+    {
+        window->displayMessage("Execution Error: Invalid File Type");
+    }
+}
+
+filemanager* uimanager::GetFileManager()
+{
+    return this->files;
+}
+
+void uimanager::displayOutput(string output)
+{
+    QString temp = QString::fromStdString(output);
+    QStringList display = temp.split("/");
+    window->displayOutput(display);
 }

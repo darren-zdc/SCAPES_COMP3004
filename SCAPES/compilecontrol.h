@@ -8,7 +8,7 @@ class compileControl
 {
 public:
     compileControl(QString name, string dir);
-    void compile();
+    int compile();
 private:
     QString filename;
     string directory;

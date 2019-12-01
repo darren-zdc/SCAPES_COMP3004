@@ -24,6 +24,7 @@ SOURCES += \
     createcontrol.cpp \
         declintstmt.cpp \
         endstmt.cpp \
+    executecontrol.cpp \
         filemanager.cpp \
         identifier.cpp \
         jmorestmt.cpp \
@@ -40,6 +41,7 @@ SOURCES += \
     proxypreferences.cpp \
         readstmt.cpp \
     realpreferences.cpp \
+    renamecontrol.cpp \
     savecontrol.cpp \
         statement.cpp \
         uimanager.cpp \
@@ -59,6 +61,7 @@ HEADERS += \
     createcontrol.h \
     declintstmt.h \
     endstmt.h \
+    executecontrol.h \
     filemanager.h \
     identifier.h \
     jmorestmt.h \
@@ -74,6 +77,7 @@ HEADERS += \
     proxypreferences.h \
     readstmt.h \
     realpreferences.h \
+    renamecontrol.h \
     savecontrol.h \
     statement.h \
     uimanager.h \

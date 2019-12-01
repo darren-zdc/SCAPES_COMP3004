@@ -5,6 +5,7 @@
 #include <QStringListModel>
 #include <QListView>
 #include <QTextEdit>
+#include <QPushButton>
 
 class uimanager;
 
@@ -19,6 +20,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     void attachDependancies(uimanager *manager);
+    void displayMessage(QString text);
+    void displayOutput(QStringList output);
     ~MainWindow();
 
 private slots:
@@ -49,6 +52,13 @@ private:
     QListView *listview;
     QTextEdit *textbox;
     QTextEdit *texteditor;
+    QPushButton *CloseButton;
+    QPushButton *OpenButton;
+    QPushButton *CompileButton;
+    QPushButton *RunButton;
+    QPushButton *SaveButton;
+    QPushButton *CreateButton;
+
     void UpdateProgramList(QStringList);
 };
 

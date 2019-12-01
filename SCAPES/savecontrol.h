@@ -9,7 +9,7 @@ class savecontrol
 {
 public:
     savecontrol(QString name, QStringList commands, string dir);
-    void saveFile();
+    int saveFile();
 private:
     QString filename;
     QStringList contents;

@@ -73,50 +73,45 @@ int Program::Execute()
 
     return 0;
 }
-int Program::createStatement(string instr, vector<string> operds, string label="")
+int Program::createStatement(string instr, vector<string> operds, string label)
 {
     if (instr == "dci")
     {
         //declares an integer variable
-        statements.push_back(new DeclIntStmt(lineParses, label));
+        statements.push_back(new DeclIntStmt(instr, operds, label));
     }
     else if (instr == "rdi")
     {
         //reads an integer value from the user
-        statements.push_back(new ReadStmt(lineParses, label));
+        statements.push_back(new ReadStmt(instr, operds, label));
 
     }
     else if (instr == "prt")
     {
         //prints out the value of a variable
-        statements.push_back(new PrintStmt(lineParses, label));
+        statements.push_back(new PrintStmt(instr, operds, label));
     }
     else if (instr == "cmp")
     {
         //compares two values to test
-        statements.push_back(new CompStmt(lineParses, label));
+        statements.push_back(new CompStmt(instr, operds, label));
 
     }
     else if (instr == "jmr")
     {
         //jump to the specified label
-        statements.push_back(new JMoreStmt(lineParses, label));
+        statements.push_back(new JMoreStmt(instr, operds, label));
     }
     else if (instr == "jmp")
     {
         //unconditional jump to the specified labl
-        statements.push_back(new JmpStmt(lineParses, label));
+        statements.push_back(new JmpStmt(instr, operds, label));
     }
     else if (instr == "end")
     {
         //indicates the end of the program
-        statements.push_back(new EndStmt(lineParses, label));
+        statements.push_back(new EndStmt(instr, operds, label));
         //Deconstruct the statement vector
-    }
-    else if (instr == "#")
-    {
-        //indicates that the line is a comment
-        return CONTINUE;
     }
     else
     {
@@ -134,46 +129,7 @@ int Program::createStatement(string line, string label)
     {
         return CONTINUE;
     }
-
-    if (lineParses[0] == "dci")
-    {
-        //declares an integer variable
-        statements.push_back(new DeclIntStmt(lineParses, label));
-    }
-    else if (lineParses[0] == "rdi")
-    {
-        //reads an integer value from the user
-        statements.push_back(new ReadStmt(lineParses, label));
-
-    }
-    else if (lineParses[0] == "prt")
-    {
-        //prints out the value of a variable
-        statements.push_back(new PrintStmt(lineParses, label));
-    }
-    else if (lineParses[0] == "cmp")
-    {
-        //compares two values to test
-        statements.push_back(new CompStmt(lineParses, label));
-
-    }
-    else if (lineParses[0] == "jmr")
-    {
-        //jump to the specified label
-        statements.push_back(new JMoreStmt(lineParses, label));
-    }
-    else if (lineParses[0] == "jmp")
-    {
-        //unconditional jump to the specified labl
-        statements.push_back(new JmpStmt(lineParses, label));
-    }
-    else if (lineParses[0] == "end")
-    {
-        //indicates the end of the program
-        statements.push_back(new EndStmt(lineParses, label));
-        //Deconstruct the statement vector
-    }
-    else if (lineParses[0] == "#")
+    else if (line[0] == '#')
     {
         //indicates that the line is a comment
         return CONTINUE;
@@ -190,8 +146,8 @@ int Program::createStatement(string line, string label)
     }
     else
     {
-        //error
-        return ERROR;
+        vector<string> tempOperds(lineParses.begin()+1, lineParses.end());
+        createStatement(lineParses[0], tempOperds, label);
     }
     statements.back()->setProgram(*this);
     return SUCCESS;

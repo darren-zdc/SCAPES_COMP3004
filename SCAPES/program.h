@@ -38,7 +38,7 @@ public:
     int ifExistLabel(string name);
     int ifPrevCompExist();
     static Program* deserializeToObject(string filename, string dir);
-
+    int createStatement(string instr, vector<string> operds, string label="");
 private:
     vector<Label> labels;
     vector<Statement*> statements;
@@ -47,7 +47,6 @@ private:
     string directory;
     string comparisonFlag;
     int createStatement(string line, string label="");
-    int createStatement(string instr, vector<string> operds, string label="");
     //void createIdentifier(Statement* st, string line);
     static vector<string> split(string line);
     void serializeToJSON();

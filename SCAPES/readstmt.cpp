@@ -10,6 +10,9 @@ ReadStmt::ReadStmt(vector<string> lineParses): Statement(lineParses)
 ReadStmt::ReadStmt(vector<string> lineParses, string label): Statement(lineParses, label)
 {}
 
+ReadStmt::ReadStmt(string instr, vector<string> operds, string label): Statement (instr, operds, label)
+{}
+
 void ReadStmt::run()
 {
 
@@ -18,11 +21,12 @@ void ReadStmt::run()
 //Syntax checking
 int ReadStmt::compile()
 {
-    if (lineParses.size() != 2)
+    if (p_operands.size() != 1)
     {
         //error not a valid input
         return 0;
     }
+    /*
     vector<Variable> temp;
     temp = program->getVariables();
     if(!program->ifExistVariable(lineParses[1]))
@@ -30,7 +34,8 @@ int ReadStmt::compile()
         //error cannot find the variable inside the program variable
         return 0;
     }
-    operands.push_back(Operand(lineParses[1]));
+    */
+    operands.push_back(Operand(p_operands[0]));
     return 1;
 }
 

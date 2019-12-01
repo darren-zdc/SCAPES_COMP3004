@@ -25,6 +25,7 @@ public:
 protected:
     vector<string> lineParses;
     vector<Operand> operands;
+    vector<string> p_operands;
     Label label;
     string instruction;
     Program* program;

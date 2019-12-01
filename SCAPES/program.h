@@ -20,14 +20,14 @@
 #include <string>
 #include <sstream>
 #include <iterator>
-
+#include <QDebug>
 using namespace std;
 class Program
 {
 public:
     Program(string filename, string dir);
     int Compile();
-    void Execute();
+    int Execute();
     void print();
     static string getFileName(string filePath, bool withExtension = true, char seperator = '/');
     vector<Variable> getVariables();
@@ -37,6 +37,8 @@ public:
     int ifExistVariable(string name);
     int ifExistLabel(string name);
     int ifPrevCompExist();
+    static Program* deserializeToObject(string filename, string dir);
+
 private:
     vector<Label> labels;
     vector<Statement*> statements;
@@ -45,6 +47,7 @@ private:
     string directory;
     string comparisonFlag;
     int createStatement(string line, string label="");
+    int createStatement(string instr, vector<string> operds, string label="");
     //void createIdentifier(Statement* st, string line);
     static vector<string> split(string line);
     void serializeToJSON();

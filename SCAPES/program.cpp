@@ -68,10 +68,61 @@ int Program::Compile()
     return SUCCESS;
 }
 
-void Program::Execute()
+int Program::Execute()
 {
 
+    return 0;
+}
+int Program::createStatement(string instr, vector<string> operds, string label="")
+{
+    if (instr == "dci")
+    {
+        //declares an integer variable
+        statements.push_back(new DeclIntStmt(lineParses, label));
+    }
+    else if (instr == "rdi")
+    {
+        //reads an integer value from the user
+        statements.push_back(new ReadStmt(lineParses, label));
 
+    }
+    else if (instr == "prt")
+    {
+        //prints out the value of a variable
+        statements.push_back(new PrintStmt(lineParses, label));
+    }
+    else if (instr == "cmp")
+    {
+        //compares two values to test
+        statements.push_back(new CompStmt(lineParses, label));
+
+    }
+    else if (instr == "jmr")
+    {
+        //jump to the specified label
+        statements.push_back(new JMoreStmt(lineParses, label));
+    }
+    else if (instr == "jmp")
+    {
+        //unconditional jump to the specified labl
+        statements.push_back(new JmpStmt(lineParses, label));
+    }
+    else if (instr == "end")
+    {
+        //indicates the end of the program
+        statements.push_back(new EndStmt(lineParses, label));
+        //Deconstruct the statement vector
+    }
+    else if (instr == "#")
+    {
+        //indicates that the line is a comment
+        return CONTINUE;
+    }
+    else
+    {
+        //error
+        return ERROR;
+    }
 }
 
 int Program::createStatement(string line, string label)
@@ -220,6 +271,25 @@ void Program::serializeToJSON()
     jsonFile.open(QIODevice::WriteOnly);
     jsonFile.write(doc.toJson());
 
+}
+
+Program* Program::deserializeToObject(string jsonFilename, string dir)
+{
+    QFile jsonFile(QString::fromStdString(dir + "/" + jsonFilename));
+    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    QString programJson = jsonFile.readAll();
+    jsonFile.close();
+
+    QJsonDocument programDoc = QJsonDocument::fromJson(programJson.toUtf8());
+    QJsonObject jProgram = programDoc.object();
+    string filenameFromJson = jProgram["filename"].toString().toStdString();
+    Program p(filenameFromJson, dir);
+    QJsonArray sts = jProgram["statements"].toArray();
+    foreach (const QJsonValue & st, sts)
+    {
+        QJsonObject jSt = st.toObject();
+
+    }
 }
 
 vector<string> Program::split(string line)

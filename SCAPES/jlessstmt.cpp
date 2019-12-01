@@ -1,22 +1,22 @@
-#include "jmorestmt.h"
+#include "jlessstmt.h"
 #include "program.h"
-JMoreStmt::JMoreStmt()
+JLessStmt::JLessStmt()
 {
 
 }
-JMoreStmt::JMoreStmt(vector<string> lineParses): Statement(lineParses)
+JLessStmt::JLessStmt(vector<string> lineParses): Statement(lineParses)
 {}
 
-JMoreStmt::JMoreStmt(vector<string> lineParses, string label):Statement(lineParses, label)
+JLessStmt::JLessStmt(vector<string> lineParses, string label):Statement(lineParses, label)
 {}
 
-void JMoreStmt::run()
+void JLessStmt::run()
 {
 
 }
 
 //Syntax checking
-int JMoreStmt::compile()
+int JLessStmt::compile()
 {
     if(lineParses.size() != 2)
     {

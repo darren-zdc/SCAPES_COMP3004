@@ -47,7 +47,13 @@ SOURCES += \
         uimanager.cpp \
         variable.cpp \
  	Create.cpp \
-        Save.cpp
+        Save.cpp \
+    addstmt.cpp \
+    movstmt.cpp \
+    jlessstmt.cpp \
+    jeqstmt.cpp \
+    declarrstmt.cpp \
+
 
 
 # Default rules for deployment.
@@ -84,6 +90,11 @@ HEADERS += \
     variable.h \
     Create.h \
     Save.h \
+    addstmt.h \
+    movstmt.h \
+    jlessstmt.h \
+    jeqstmt.h \
+    declarrstmt.h \
 
 FORMS += \
     mainwindow.ui

@@ -10,6 +10,11 @@
 #include "readstmt.h"
 #include "statement.h"
 #include "variable.h"
+#include "declarrstmt.h"
+#include "addstmt.h"
+#include "movstmt.h"
+#include "jlessstmt.h"
+#include "jeqstmt.h"
 #include "label.h"
 #include <QJsonObject>
 #include <QJsonArray>
@@ -20,25 +25,26 @@
 #include <string>
 #include <sstream>
 #include <iterator>
-#include <QDebug>
+
 using namespace std;
 class Program
 {
 public:
     Program(string filename, string dir);
     int Compile();
-    int Execute();
+    void Execute();
     void print();
     static string getFileName(string filePath, bool withExtension = true, char seperator = '/');
     vector<Variable> getVariables();
     int createVariable(string name);
+    int createVariable(string name, int size);
     void createLabel(string name);
-    Variable* findVariable(Variable var);
+    Variable* findVariable(string name);
     int ifExistVariable(string name);
     int ifExistLabel(string name);
     int ifPrevCompExist();
-    static Program* deserializeToObject(string filename, string dir);
-    int createStatement(string instr, vector<string> operds, string label="");
+    bool isNumber(const std::string& s);
+    int arrayToInt(const std::string& s);
 private:
     vector<Label> labels;
     vector<Statement*> statements;

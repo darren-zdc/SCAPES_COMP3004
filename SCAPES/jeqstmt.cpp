@@ -1,22 +1,22 @@
-#include "jmorestmt.h"
+#include "jeqstmt.h"
 #include "program.h"
-JMoreStmt::JMoreStmt()
+JEqStmt::JEqStmt()
 {
 
 }
-JMoreStmt::JMoreStmt(vector<string> lineParses): Statement(lineParses)
+JEqStmt::JEqStmt(vector<string> lineParses): Statement(lineParses)
 {}
 
-JMoreStmt::JMoreStmt(vector<string> lineParses, string label):Statement(lineParses, label)
+JEqStmt::JEqStmt(vector<string> lineParses, string label):Statement(lineParses, label)
 {}
 
-void JMoreStmt::run()
+void JEqStmt::run()
 {
 
 }
 
 //Syntax checking
-int JMoreStmt::compile()
+int JEqStmt::compile()
 {
     if(lineParses.size() != 2)
     {

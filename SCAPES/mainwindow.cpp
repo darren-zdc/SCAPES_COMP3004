@@ -29,7 +29,7 @@ void MainWindow::attachDependancies(uimanager *manager) //connects the mainwindo
     this->texteditor = this->findChild<QTextEdit *>("TextEditor"); //setup text editor
     texteditor->setVisible(false);
     this->listview = this->findChild<QListView *>("ProgramList"); //setup program list
-    this->CreateButton = this->findChild<QPushButton *>("CreateButton");
+    this->CreateButton = this->findChild<QPushButton *>("CreateButton"); //setup ui buttons
     this->RunButton = this->findChild<QPushButton *>("RunButton");
     this->OpenButton = this->findChild<QPushButton *>("OpenButton");
     this->CloseButton = this->findChild<QPushButton *>("CloseButton");
@@ -104,7 +104,7 @@ void MainWindow::on_SaveButton_clicked() //send save command
     }
 }
 
-void MainWindow::on_OpenButton_clicked() //send open command
+void MainWindow::on_OpenButton_clicked() //send open command, alternate visible ui buttons
 {
     if (this->listview->currentIndex().isValid() && texteditor->isVisible() == false)
     {
@@ -138,7 +138,7 @@ void MainWindow::on_OpenButton_clicked() //send open command
     }
 }
 
-void MainWindow::on_CloseButton_clicked() //send close command, then update program list
+void MainWindow::on_CloseButton_clicked() //send close command, then update program list and alternate visible ui elements
 {
     if (texteditor->isVisible())
     {
@@ -210,7 +210,7 @@ void MainWindow::displayMessage(QString text) //displays a given message, with l
     message.exec();
 }
 
-void MainWindow::displayOutput(QStringList output)
+void MainWindow::displayOutput(QStringList output) //displays a programs output
 {
     QMessageBox message;
     message.setWindowTitle("Output");

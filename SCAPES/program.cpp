@@ -68,8 +68,46 @@ int Program::Compile()
 
 int Program::Execute()
 {
+    size_t index = 0;
+    while(1)
+    {
+        Statement* st = statements.at(index);
+        if (!st->run())
+        {
+            //error when running
+            logger->error("Runtime error in line "  + to_string(index));
+            return ERROR;
+        }
+        if (st->getInstruction() == "jmp"
+                || st->getInstruction() == "jls"
+                || st->getInstruction() == "jmr"
+                || st->getInstruction() == "jeq")
+        {
+            int labelIndex  = findLabel(st->getOperands()[0].getValue());
+            if (labelIndex < 0)
+            {
+                //Error label not found
+                logger->error("Label not found for line " + to_string(index));
+                return ERROR;
+            }
+            else
+            {
+                index = static_cast<size_t>(labelIndex);
+            }
+        }
+        else
+        {
+            index++;
+        }
 
-    return 0;
+        if (index > statements.size())
+        {
+            //Error index exceed statements size
+            logger->error("No valid end statement");
+            return ERROR;
+        }
+    }
+
 }
 int Program::createStatement(string instr, vector<string> operds, string label)
 {
@@ -280,22 +318,22 @@ Program* Program::deserializeToObject(string jsonFilename, string dir)
         foreach (const QJsonValue & operand, jOperds)
         {
             operds.push_back(operand["name"].toString().toStdString());
-            qDebug() << QString::fromStdString(operand["name"].toString().toStdString());
+            //qDebug() << QString::fromStdString(operand["name"].toString().toStdString());
         }
-        qDebug() << jSt["instruction"].toString();
+        //qDebug() << jSt["instruction"].toString();
         p->createStatement(jSt["instruction"].toString().toStdString(), operds, jSt["label"].toString().toStdString());
     }
     QJsonArray vars = jProgram["variables"].toArray();
     foreach (const QJsonValue & var, vars)
     {
         p->createVariable(var["name"].toString().toStdString());
-        qDebug() << var["name"].toString();
+        //qDebug() << var["name"].toString();
     }
     QJsonArray labels = jProgram["labels"].toArray();
     foreach (const QJsonValue & label, labels)
     {
         p->createLabel(label["name"].toString().toStdString());
-        qDebug() << label["name"].toString();
+        //qDebug() << label["name"].toString();
 
     }
     return p;
@@ -312,6 +350,23 @@ int Program::findVariable(string name, Variable* output)
         }
     }
     return ERROR;
+}
+
+int Program::findLabel(string label)
+{
+    if (!ifExistLabel(label))
+    {
+        logger->error("Label not found");
+        return -1;
+    }
+    for (size_t i=0; i<statements.size(); i++)
+    {
+        if (statements.at(i)->getLabel()->getName() == label)
+        {
+            return static_cast<int>(i);
+        }
+    }
+    return -1;
 }
 
 int Program::ifExistVariable(string name, Variable* output)

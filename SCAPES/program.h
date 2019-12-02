@@ -17,6 +17,9 @@
 #include "jeqstmt.h"
 #include "label.h"
 #include "helperfunction.h"
+
+#include "uimanager.h"
+
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -24,8 +27,6 @@
 #include <vector>
 #include <fstream>
 #include <string>
-#include <iterator>
-#include <QDebug>
 using namespace std;
 enum flag{ERROR, SUCCESS, CONTINUE};
 
@@ -35,15 +36,16 @@ class Program
 public:
     Program(string filename, string dir);
     int Compile();
-    int Execute();
-    void print();
+    int Execute();    
+
+    int setUIManager(uimanager* ui);
     static Program* deserializeToObject(string filename, string dir);
 
     int createVariable(string name, int size=0);
     void createLabel(string name);
     int createStatement(string instr, vector<string> operds, string label="");
     int findVariable(string name, Variable* output);
-
+    int findLabel(string label);
     int ifExistVariable(string name, Variable* output);
     int ifExistLabel(string name);
     int ifPrevCompExist();
@@ -64,5 +66,6 @@ private:
     //void createIdentifier(Statement* st, string line);
     void serializeToJSON();
     Logger* logger;
+    uimanager* ui;
 };
 #endif // PROGRAM_H

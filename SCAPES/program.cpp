@@ -1,4 +1,4 @@
-﻿#include "program.h"
+#include "program.h"
 
 
 Program::Program(string filename, string dir) : filename(filename), directory(dir)
@@ -152,13 +152,11 @@ int Program::createStatement(string line, string label)
     return SUCCESS;
 }
 
-int Program::createVariable(string name)
-{
-    if(ifExistVariable(name))
-    {
+int Program::createVariable(string name, int size){
+    if(ifExistVariable(name)){
         return 0;
     }
-    variables.push_back(Variable(name));
+    variables.push_back(Variable(name, size));
     return 1;
 }
 
@@ -291,17 +289,17 @@ string Program::getFileName(string filePath, bool withExtension, char seperator)
     }
     return "";
 }
-/*
-Variable* Program::findVariable(Variable var)
+
+Variable* Program::findVariable(string name)
 {
     for(Variable element: variables)
     {
-        if (element.getName() == var.getName())
+        if (element.getName() == name)
             return &element;
     }
     return nullptr;
 }
-*/
+
 int Program::ifExistVariable(string name, Variable* output)
 {
     for(Variable element: variables)
@@ -334,3 +332,47 @@ int Program::ifPrevCompExist()
     return ERROR;
 }
 
+bool Program::isNumber(const std::string& s)
+{
+    std::string::const_iterator it = s.begin();
+    while (it != s.end() && std::isdigit(*it)) ++it;
+    return !s.empty() && it == s.end();
+}
+
+// arrayToInt(): takes a operand and check if its an array and return its index value
+int Program::arrayToInt(const std::string& s){
+    size_t posOfPlus = s.find("+"); // posistion of the "+" symbol in the operand
+    string varName = s.substr(1,posOfPlus-1);
+    int index;
+
+    if(s.substr(0,1) != "$"){
+        // doesn't strart with $
+        return -1;
+    }
+
+    if(!ifExistVariable(varName)){
+        // variable doesn't exist
+        return -1;
+    }else{
+        if(!findVariable(varName)->isVarArray()){
+            //variable exist but is not an array variable
+            return -1;
+        }
+    }
+
+    if(!isNumber(s.substr(posOfPlus+1))){
+        // whatever after the "+" sign is not an integer
+        return -1;
+    }else{
+        index = std::stoi(s.substr(posOfPlus+1));
+    }
+    
+    if((!findVariable(varName)->getSize()) <= 0 || (!findVariable(varName)->getSize()) > index){
+        // index out of bound
+        return -1;
+    }
+    
+    // return the value
+    return findVariable(varName)->getValueByIndex(index);
+
+}

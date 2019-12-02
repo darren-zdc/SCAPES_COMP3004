@@ -10,8 +10,6 @@ public:
     DeclIntStmt();
     DeclIntStmt(vector<string> line);
     DeclIntStmt(vector<string> line, string label);
-    DeclIntStmt(string instr, vector<string> operds, string label);
-
     int compile();
     int run();
 };

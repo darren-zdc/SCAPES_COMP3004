@@ -18,9 +18,6 @@ Statement::Statement(vector<string> lineParses, string label): lineParses(linePa
     //logger = CPlusPlusLogging::Logger::getInstance();
 }
 
-Statement::Statement(string inst, vector<string> operds, string label) : p_operands(operds), instruction(inst), label(label)
-{}
-
 string Statement::getInstruction()
 {
     return instruction;

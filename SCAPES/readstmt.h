@@ -12,7 +12,7 @@ public:
     ReadStmt(string instr, vector<string> operds, string label);
 
     int compile();
-    void run();
+    int run();
 private:
     bool isNumber(string s);
 };

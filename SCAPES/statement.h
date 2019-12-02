@@ -18,7 +18,7 @@ public:
     Statement(string instr, vector<string> operds, string label);
     virtual ~Statement() = 0;
     virtual int compile() = 0;
-    virtual void run() = 0;
+    virtual int run() = 0;
     string getInstruction();
     vector<Operand> getOperands();
     Label* getLabel();

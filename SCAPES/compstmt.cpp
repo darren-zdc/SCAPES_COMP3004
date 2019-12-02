@@ -38,7 +38,7 @@ int CompStmt::compile()
     return 1;
 }
 
-void CompStmt::run()
+int CompStmt::run()
 {
 
 }

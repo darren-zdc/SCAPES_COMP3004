@@ -22,23 +22,33 @@
 #include <iterator>
 #include <QDebug>
 using namespace std;
+enum flag{ERROR, SUCCESS, CONTINUE};
+
 class Program
 {
+
 public:
     Program(string filename, string dir);
     int Compile();
     int Execute();
     void print();
     static string getFileName(string filePath, bool withExtension = true, char seperator = '/');
+    static Program* deserializeToObject(string filename, string dir);
+
     vector<Variable> getVariables();
     int createVariable(string name);
     void createLabel(string name);
+    int createStatement(string instr, vector<string> operds, string label="");
+
     Variable* findVariable(Variable var);
-    int ifExistVariable(string name);
+    int ifExistVariable(string name, Variable* output);
     int ifExistLabel(string name);
     int ifPrevCompExist();
-    static Program* deserializeToObject(string filename, string dir);
-    int createStatement(string instr, vector<string> operds, string label="");
+
+    int readInput();
+    int output(string value);
+    int setVariable(string name, int value, int index);
+    int setVariable(string name, int value);
 private:
     vector<Label> labels;
     vector<Statement*> statements;

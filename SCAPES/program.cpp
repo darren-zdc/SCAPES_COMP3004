@@ -1,6 +1,5 @@
 ﻿#include "program.h"
 
-enum flag{ERROR, SUCCESS, CONTINUE};
 
 Program::Program(string filename, string dir) : filename(filename), directory(dir)
 {
@@ -303,14 +302,17 @@ Variable* Program::findVariable(Variable var)
     return nullptr;
 }
 */
-int Program::ifExistVariable(string name)
+int Program::ifExistVariable(string name, Variable* output)
 {
     for(Variable element: variables)
     {
         if (element.getName() == name)
-            return 1;
+        {
+            output = &element;
+            return SUCCESS;
+        }
     }
-    return 0;
+    return ERROR;
 }
 
 int Program::ifExistLabel(string name)
@@ -318,17 +320,17 @@ int Program::ifExistLabel(string name)
     for(Label element: labels)
     {
         if (element.getName() == name)
-            return 1;
+            return SUCCESS;
     }
-    return 0;
+    return ERROR;
 }
 
 int Program::ifPrevCompExist()
 {
     if(statements.rbegin()[1]->getInstruction() == "cmp")
     {
-        return 1;
+        return SUCCESS;
     }
-    return 0;
+    return ERROR;
 }
 

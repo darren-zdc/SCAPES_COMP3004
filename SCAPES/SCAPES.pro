@@ -44,6 +44,7 @@ SOURCES += \
     renamecontrol.cpp \
     savecontrol.cpp \
         statement.cpp \
+    syntaxhelper.cpp \
         uimanager.cpp \
         variable.cpp \
  	Create.cpp \
@@ -80,6 +81,7 @@ HEADERS += \
     renamecontrol.h \
     savecontrol.h \
     statement.h \
+    syntaxhelper.h \
     uimanager.h \
     variable.h \
     Create.h \

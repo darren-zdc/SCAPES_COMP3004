@@ -11,7 +11,7 @@ public:
     PrintStmt(string instr, vector<string> operds, string label);
 
     int compile();
-    void run();
+    int run();
 };
 
 #endif // PRINTSTMT_H

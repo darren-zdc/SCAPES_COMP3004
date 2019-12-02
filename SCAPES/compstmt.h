@@ -9,8 +9,9 @@ public:
     CompStmt();
     CompStmt(vector<string> lineParses);
     CompStmt(vector<string> lineParses, string label);
+    CompStmt(string instr, vector<string> operds, string label);
     int compile();
-    void run();
+    int run();
 };
 
 #endif // COMPSTMT_H

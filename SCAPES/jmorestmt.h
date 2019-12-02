@@ -8,8 +8,9 @@ public:
     JMoreStmt();
     JMoreStmt(vector<string> lineParses);
     JMoreStmt(vector<string> lineParses, string label);
+    JMoreStmt(string instr, vector<string> operds, string label);
     int compile();
-    void run();
+    int run();
 };
 
 #endif // JMORESTMT_H

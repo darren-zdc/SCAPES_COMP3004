@@ -10,7 +10,16 @@
 #include "readstmt.h"
 #include "statement.h"
 #include "variable.h"
+#include "declarrstmt.h"
+#include "addstmt.h"
+#include "movstmt.h"
+#include "jlessstmt.h"
+#include "jeqstmt.h"
 #include "label.h"
+#include "helperfunction.h"
+
+#include "uimanager.h"
+
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -18,25 +27,34 @@
 #include <vector>
 #include <fstream>
 #include <string>
-#include <sstream>
-#include <iterator>
-
 using namespace std;
+enum flag{ERROR, SUCCESS, CONTINUE};
+
 class Program
 {
+
 public:
     Program(string filename, string dir);
     int Compile();
-    void Execute();
-    void print();
-    static string getFileName(string filePath, bool withExtension = true, char seperator = '/');
-    vector<Variable> getVariables();
-    int createVariable(string name);
+    int Execute();    
+
+    int setUIManager(uimanager* ui);
+    static Program* deserializeToObject(string filename, string dir);
+
+    int createVariable(string name, int size=0);
     void createLabel(string name);
-    Variable* findVariable(Variable var);
-    int ifExistVariable(string name);
+    int createStatement(string instr, vector<string> operds, string label="");
+    int findVariable(string name, Variable* output);
+    int findLabel(string label);
+    int ifExistVariable(string name, Variable* output);
     int ifExistLabel(string name);
     int ifPrevCompExist();
+
+    int setVariable(string name, int value, int index = 0);
+
+    int readInput();
+    int output(string value);
+    int arrayToInt(const std::string& s);
 private:
     vector<Label> labels;
     vector<Statement*> statements;
@@ -46,7 +64,8 @@ private:
     string comparisonFlag;
     int createStatement(string line, string label="");
     //void createIdentifier(Statement* st, string line);
-    static vector<string> split(string line);
     void serializeToJSON();
+    Logger* logger;
+    uimanager* ui;
 };
 #endif // PROGRAM_H

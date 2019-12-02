@@ -1,25 +1,25 @@
-#include "jmorestmt.h"
+#include "jeqstmt.h"
 #include "program.h"
-JMoreStmt::JMoreStmt()
+JEqStmt::JEqStmt()
 {
 
 }
-JMoreStmt::JMoreStmt(vector<string> lineParses): Statement(lineParses)
+JEqStmt::JEqStmt(vector<string> lineParses): Statement(lineParses)
 {}
 
-JMoreStmt::JMoreStmt(vector<string> lineParses, string label):Statement(lineParses, label)
+JEqStmt::JEqStmt(vector<string> lineParses, string label):Statement(lineParses, label)
 {}
 
-JMoreStmt::JMoreStmt(string instr, vector<string> operds, string label): Statement (instr, operds, label)
+JEqStmt::JEqStmt(string instr, vector<string> operds, string label): Statement (instr, operds, label)
 {}
 
 //Syntax checking
-int JMoreStmt::compile()
+int JEqStmt::compile()
 {
     if(p_operands.size() != 1)
     {
         //error invalid input
-        logger->error("Invalid jmr input");
+        logger->error("Invalid jeq input");
         return ERROR;
     }
     if (!program->ifPrevCompExist())
@@ -33,7 +33,7 @@ int JMoreStmt::compile()
     return SUCCESS;
 }
 
-int JMoreStmt::run()
+int JEqStmt::run()
 {
     return 0;
 }

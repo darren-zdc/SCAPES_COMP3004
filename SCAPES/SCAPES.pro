@@ -26,10 +26,12 @@ SOURCES += \
         endstmt.cpp \
     executecontrol.cpp \
         filemanager.cpp \
+    helperfunction.cpp \
         identifier.cpp \
         jmorestmt.cpp \
         jmpstmt.cpp \
         label.cpp \
+    logger.cpp \
         main.cpp \
         mainwindow.cpp \
     opencontrol.cpp \
@@ -47,7 +49,13 @@ SOURCES += \
         uimanager.cpp \
         variable.cpp \
  	Create.cpp \
-        Save.cpp
+        Save.cpp \
+    addstmt.cpp \
+    movstmt.cpp \
+    jlessstmt.cpp \
+    jeqstmt.cpp \
+    declarrstmt.cpp \
+
 
 
 # Default rules for deployment.
@@ -63,10 +71,12 @@ HEADERS += \
     endstmt.h \
     executecontrol.h \
     filemanager.h \
+    helperfunction.h \
     identifier.h \
     jmorestmt.h \
     jmpstmt.h \
     label.h \
+    logger.h \
     mainwindow.h \
     opencontrol.h \
     operand.h \
@@ -84,6 +94,11 @@ HEADERS += \
     variable.h \
     Create.h \
     Save.h \
+    addstmt.h \
+    movstmt.h \
+    jlessstmt.h \
+    jeqstmt.h \
+    declarrstmt.h \
 
 FORMS += \
     mainwindow.ui

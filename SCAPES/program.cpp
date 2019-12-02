@@ -1,16 +1,11 @@
 #include "program.h"
 
-enum flag{ERROR, SUCCESS, CONTINUE};
 
 Program::Program(string filename, string dir) : filename(filename), directory(dir)
 {
-
+    logger = Logger::getInstance();
 }
 
-vector<Variable> Program::getVariables()
-{
-    return variables;
-}
 
 int Program::Compile()
 {
@@ -28,11 +23,13 @@ int Program::Compile()
                 Statement* st = statements.back();
                 if(st->compile() == ERROR)
                 {
+                    logger->error("Invalid statement in line " + to_string(statements.size()));
                     return ERROR;
                 }
             }
             else if (flag == ERROR)
             {
+                logger->error("Failed to create statement \"" + line + "\"");
                 return ERROR;
             }
         }
@@ -40,6 +37,7 @@ int Program::Compile()
     else if (myprogram.fail())
     {
         //failed to open a file
+        logger->error("Faild to open file \"" + filename + "\" under \"" + directory + "\" directory");
         return ERROR;
     }
 
@@ -68,67 +66,138 @@ int Program::Compile()
     return SUCCESS;
 }
 
-void Program::Execute()
+int Program::Execute()
 {
+    size_t index = 0;
+    while(1)
+    {
+        Statement* st = statements.at(index);
+        if (!st->run())
+        {
+            //error when running
+            logger->error("Runtime error in line "  + to_string(index));
+            return ERROR;
+        }
+        if (st->getInstruction() == "jmp"
+                || st->getInstruction() == "jls"
+                || st->getInstruction() == "jmr"
+                || st->getInstruction() == "jeq")
+        {
+            int labelIndex  = findLabel(st->getOperands()[0].getValue());
+            if (labelIndex < 0)
+            {
+                //Error label not found
+                logger->error("Label not found for line " + to_string(index));
+                return ERROR;
+            }
+            else
+            {
+                index = static_cast<size_t>(labelIndex);
+            }
+        }
+        else
+        {
+            index++;
+        }
 
+        if (index > statements.size())
+        {
+            //Error index exceed statements size
+            logger->error("No valid end statement");
+            return ERROR;
+        }
+    }
 
+}
+int Program::createStatement(string instr, vector<string> operds, string label)
+{
+    if (instr == "dci")
+    {
+        //declares an integer variable
+        statements.push_back(new DeclIntStmt(instr, operds, label));
+    }
+    else if (instr == "dca")
+    {
+        //declares an array
+        statements.push_back(new DeclArrStmt(instr, operds, label));
+    }
+    else if (instr == "rdi")
+    {
+        //reads an integer value from the user
+        statements.push_back(new ReadStmt(instr, operds, label));
+
+    }
+    else if (instr == "prt")
+    {
+        //prints out the value of a variable
+        statements.push_back(new PrintStmt(instr, operds, label));
+    }    
+    else if (instr == "mov")
+    {
+        //copies values
+        statements.push_back(new MovStmt(instr, operds, label));
+    }
+    else if (instr == "add")
+    {
+        //adds values
+        statements.push_back(new AddStmt(instr, operds, label));
+    }
+    else if (instr == "cmp")
+    {
+        //compares two values to test
+        statements.push_back(new CompStmt(instr, operds, label));
+
+    }
+    else if (instr == "jls")
+    {
+        //jumps to the specified label if smaller
+        statements.push_back(new JLessStmt(instr, operds, label));
+    }
+    else if (instr == "jmr")
+    {
+        //jumps to the specified label if greater
+        statements.push_back(new JMoreStmt(instr, operds, label));
+    }
+    else if (instr == "jeq")
+    {
+        //jumps to the specified label if equal
+        statements.push_back(new JEqStmt(instr, operds, label));
+    }
+    else if (instr == "jmp")
+    {
+        //unconditional jump to the specified labl
+        statements.push_back(new JmpStmt(instr, operds, label));
+    }
+    else if (instr == "end")
+    {
+        //indicates the end of the program
+        statements.push_back(new EndStmt(instr, operds, label));
+        //Deconstruct the statement vector
+    }
+    else
+    {
+        //error
+        logger->error("Invalid instruction " + instr);
+        return ERROR;
+    }
 }
 
 int Program::createStatement(string line, string label)
 {
-    vector<string> lineParses =split(line);
+    vector<string> lineParses = HelperFunction::split(line);
 
     //Case for empty line
     if (lineParses.size() == 0)
     {
         return CONTINUE;
     }
-
-    if (lineParses[0] == "dci")
-    {
-        //declares an integer variable
-        statements.push_back(new DeclIntStmt(lineParses, label));
-    }
-    else if (lineParses[0] == "rdi")
-    {
-        //reads an integer value from the user
-        statements.push_back(new ReadStmt(lineParses, label));
-
-    }
-    else if (lineParses[0] == "prt")
-    {
-        //prints out the value of a variable
-        statements.push_back(new PrintStmt(lineParses, label));
-    }
-    else if (lineParses[0] == "cmp")
-    {
-        //compares two values to test
-        statements.push_back(new CompStmt(lineParses, label));
-
-    }
-    else if (lineParses[0] == "jmr")
-    {
-        //jump to the specified label
-        statements.push_back(new JMoreStmt(lineParses, label));
-    }
-    else if (lineParses[0] == "jmp")
-    {
-        //unconditional jump to the specified labl
-        statements.push_back(new JmpStmt(lineParses, label));
-    }
-    else if (lineParses[0] == "end")
-    {
-        //indicates the end of the program
-        statements.push_back(new EndStmt(lineParses, label));
-        //Deconstruct the statement vector
-    }
-    else if (lineParses[0] == "#")
+    else if (line[0] == '#')
     {
         //indicates that the line is a comment
         return CONTINUE;
     }
     else if (lineParses[0].back() == ':')
-    {       
+    {
         this->createStatement(line.substr(lineParses[0].length()+1, line.length() - lineParses[0].length())
                 , lineParses[0].substr(0,lineParses[0].size()-1));
         return SUCCESS;
@@ -139,21 +208,28 @@ int Program::createStatement(string line, string label)
     }
     else
     {
-        //error
-        return ERROR;
+        vector<string> tempOperds(lineParses.begin()+1, lineParses.end());
+        createStatement(lineParses[0], tempOperds, label);
     }
     statements.back()->setProgram(*this);
     return SUCCESS;
 }
 
-int Program::createVariable(string name)
+int Program::createVariable(string name, int size)
 {
-    if(ifExistVariable(name))
+    if(ifExistVariable(name, nullptr))
     {
-        return 0;
+        return ERROR;
     }
-    variables.push_back(Variable(name));
-    return 1;
+    if (size == 0)
+    {
+        variables.push_back(Variable(name));
+    }
+    else
+    {
+        variables.push_back(Variable(name, size));
+    }
+    return SUCCESS;
 }
 
 void Program::createLabel(string name)
@@ -215,54 +291,95 @@ void Program::serializeToJSON()
 
     QJsonDocument doc(jProgram);
     string jsonFilename;
-    jsonFilename = directory + "/" + getFileName("/" + this->filename, false) + ".json";
+    jsonFilename = directory + "/" + HelperFunction::getFileName("/" + this->filename, false) + ".json";
     QFile jsonFile(QString::fromStdString(jsonFilename));
     jsonFile.open(QIODevice::WriteOnly);
     jsonFile.write(doc.toJson());
 
 }
 
-vector<string> Program::split(string line)
+Program* Program::deserializeToObject(string jsonFilename, string dir)
 {
-    istringstream iss(line);
-    vector<string> results((istream_iterator<std::string>(iss)),
-                   istream_iterator<std::string>());
-    return results;
+    QFile jsonFile(QString::fromStdString(dir + "/" + jsonFilename));
+    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    QString programJson = jsonFile.readAll();
+    jsonFile.close();
+
+    QJsonDocument programDoc = QJsonDocument::fromJson(programJson.toUtf8());
+    QJsonObject jProgram = programDoc.object();
+    string filenameFromJson = jProgram["filename"].toString().toStdString();
+    Program* p = new Program(filenameFromJson, dir);
+    QJsonArray sts = jProgram["statements"].toArray();
+    foreach (const QJsonValue & st, sts)
+    {
+        QJsonObject jSt = st.toObject();
+        QJsonArray jOperds = jSt["operands"].toArray();
+        vector<string> operds;
+        foreach (const QJsonValue & operand, jOperds)
+        {
+            operds.push_back(operand["name"].toString().toStdString());
+            //qDebug() << QString::fromStdString(operand["name"].toString().toStdString());
+        }
+        //qDebug() << jSt["instruction"].toString();
+        p->createStatement(jSt["instruction"].toString().toStdString(), operds, jSt["label"].toString().toStdString());
+    }
+    QJsonArray vars = jProgram["variables"].toArray();
+    foreach (const QJsonValue & var, vars)
+    {
+        p->createVariable(var["name"].toString().toStdString());
+        //qDebug() << var["name"].toString();
+    }
+    QJsonArray labels = jProgram["labels"].toArray();
+    foreach (const QJsonValue & label, labels)
+    {
+        p->createLabel(label["name"].toString().toStdString());
+        //qDebug() << label["name"].toString();
+
+    }
+    return p;
 }
 
-
-string Program::getFileName(string filePath, bool withExtension, char seperator)
-{
-    // Get last dot position
-    std::size_t dotPos = filePath.rfind('.');
-    std::size_t sepPos = filePath.rfind(seperator);
-    int extensionLength;
-    extensionLength = filePath.size() - dotPos +1;
-    if(sepPos != string::npos)
-    {
-        return filePath.substr(sepPos + 1, filePath.size() - (withExtension ? 1 : extensionLength) );
-    }
-    return "";
-}
-/*
-Variable* Program::findVariable(Variable var)
-{
-    for(Variable element: variables)
-    {
-        if (element.getName() == var.getName())
-            return &element;
-    }
-    return nullptr;
-}
-*/
-int Program::ifExistVariable(string name)
+int Program::findVariable(string name, Variable* output)
 {
     for(Variable element: variables)
     {
         if (element.getName() == name)
-            return 1;
+        {
+            output = &element;
+            return SUCCESS;
+        }
     }
-    return 0;
+    return ERROR;
+}
+
+int Program::findLabel(string label)
+{
+    if (!ifExistLabel(label))
+    {
+        logger->error("Label not found");
+        return -1;
+    }
+    for (size_t i=0; i<statements.size(); i++)
+    {
+        if (statements.at(i)->getLabel()->getName() == label)
+        {
+            return static_cast<int>(i);
+        }
+    }
+    return -1;
+}
+
+int Program::ifExistVariable(string name, Variable* output)
+{
+    for(Variable element: variables)
+    {
+        if (element.getName() == name)
+        {
+            output = &element;
+            return SUCCESS;
+        }
+    }
+    return ERROR;
 }
 
 int Program::ifExistLabel(string name)
@@ -270,17 +387,88 @@ int Program::ifExistLabel(string name)
     for(Label element: labels)
     {
         if (element.getName() == name)
-            return 1;
+            return SUCCESS;
     }
-    return 0;
+    return ERROR;
 }
 
 int Program::ifPrevCompExist()
 {
     if(statements.rbegin()[1]->getInstruction() == "cmp")
     {
-        return 1;
+        return SUCCESS;
     }
+    return ERROR;
+}
+
+int Program::readInput()
+{
     return 0;
 }
 
+int Program::setVariable(string name, int value, int index)
+{
+    Variable* var = nullptr;
+    if (!findVariable(name, var))
+    {
+        //error variable not exist
+        return ERROR;
+    }
+    if (var->isVarArray())
+    {
+        var->setValueByIndex(value, index);
+    }
+    else
+    {
+        var->setValue(value);
+    }
+    return SUCCESS;
+}
+// arrayToInt(): takes a operand and return its index value
+/*
+int Program::arrayToInt(const string& s)
+{
+    size_t posOfPlus = s.find("+"); // posistion of the "+" symbol in the operand
+    string varName = s.substr(1,posOfPlus-1);
+    int index;
+
+    if(s.substr(0,1) != "$")
+    {
+        // error: doesn't strart with $
+        return -1;
+    }
+
+    if(!ifExistVariable(varName, nullptr))
+    {
+        //error: variable doesn't exist
+        return -1;
+    }
+    else
+    {
+        if(!findVariable(varName, nullptr)->isVarArray())
+        {
+            //variable exist but is not an array variable
+            return -1;
+        }
+    }
+
+    if(!HelperFunction::isNumber(s.substr(posOfPlus+1)))
+    {
+        // whatever after the "+" sign is not an integer
+        return -1;
+    }
+    else
+    {
+        index = std::stoi(s.substr(posOfPlus+1));
+    }
+    
+    if((!findVariable(varName)->getSize()) <= 0 || (!findVariable(varName)->getSize()) > index){
+        // index out of bound
+        return -1;
+    }
+    
+    // return the value
+    return findVariable(varName)->getValueByIndex(index);
+
+}
+*/

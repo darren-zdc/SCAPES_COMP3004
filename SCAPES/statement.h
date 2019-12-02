@@ -5,6 +5,7 @@
 #include <algorithm>
 #include "operand.h"
 #include "label.h"
+#include "logger.h"
 using namespace  std;
 
 class Program;
@@ -15,20 +16,22 @@ public:
     Statement();
     Statement(vector<string> lineParses);
     Statement(vector<string> lineParses, string label);
+    Statement(string instr, vector<string> operds, string label);
+
     virtual ~Statement() = 0;
     virtual int compile() = 0;
-    virtual void run() = 0;
+    virtual int run() = 0;
     string getInstruction();
     vector<Operand> getOperands();
     Label* getLabel();
     void setProgram(Program &prog);
 protected:
     vector<string> lineParses;
+    vector<string> p_operands;
     vector<Operand> operands;
     Label label;
     string instruction;
     Program* program;
-    //CPlusPlusLogging::Logger* logger;
-
+    Logger* logger;
 };
 #endif // STATEMENT_H

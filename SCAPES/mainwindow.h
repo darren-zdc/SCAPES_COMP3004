@@ -22,6 +22,7 @@ public:
     void attachDependancies(uimanager *manager);
     void displayMessage(QString text);
     void displayOutput(QStringList output);
+    QTextEdit* getBottomBox();
     ~MainWindow();
 
 private slots:

@@ -20,6 +20,7 @@ int JmpStmt::compile()
     if(p_operands.size() != 1)
     {
         //error invalid input
+        logger->error("Invalid jmp input");
         return ERROR;
     }
 

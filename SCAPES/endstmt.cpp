@@ -18,6 +18,7 @@ int EndStmt::compile()
     if(p_operands.size() != 0)
     {
         //error invalid input
+        logger->error("Invalid end input");
         return ERROR;
     }
     return SUCCESS;

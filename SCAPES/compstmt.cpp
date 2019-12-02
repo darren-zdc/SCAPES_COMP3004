@@ -20,7 +20,7 @@ int CompStmt::compile()
     if(p_operands.size() != 2)
     {
         //error invalid input
-        //logger->error("Invalid input");
+        logger->error("Invalid cmp input");
         return ERROR;
     }
     operands.push_back(Operand(p_operands[0]));

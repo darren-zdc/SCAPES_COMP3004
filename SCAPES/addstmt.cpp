@@ -19,12 +19,13 @@ int AddStmt::compile()
     if(p_operands.size() != 2)
     {
         //error invalid input
-        return 0;
+        logger->error("Invalid add input");
+        return ERROR;
     }
 
     operands.push_back(p_operands[0]);
     operands.push_back(p_operands[1]);
-    return 1;
+    return SUCCESS;
 }
 
 int AddStmt::run()

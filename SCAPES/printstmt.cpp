@@ -23,6 +23,7 @@ int PrintStmt::compile()
     if(p_operands.size() != 1)
     {
         //error invalid input
+        logger->error("Invalid prt input");
         return ERROR;
     }
     operands.push_back(Operand(p_operands[0]));

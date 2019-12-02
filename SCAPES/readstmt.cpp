@@ -19,23 +19,29 @@ int ReadStmt::compile()
     if (p_operands.size() != 1)
     {
         //error not a valid input
+        logger->error("Invalid rdi input");
         return 0;
     }
     string varName = p_operands[0];
     if (varName[0] == '$')
     {
         if (!varName.find("+"))
+        {
+            logger->error("Invalid array representation");
             return ERROR;
+        }
         int index = stoi(varName.substr(varName.find("+"), varName.length() - varName.find("+")));
         if (index < 0)
         {
             //array index cannot less than 0
+            logger->error("Invalid array index");
             return ERROR;
         }
     }
     else if (HelperFunction::isNumber(p_operands[0]))
     {
         //input is an integer
+        logger->error("Invalid variable");
         return ERROR;
     }
     /*

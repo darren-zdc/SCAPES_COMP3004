@@ -19,6 +19,7 @@ int MovStmt::compile()
     if(p_operands.size() != 2)
     {
         //error invalid input
+        logger->error("Invalid mov input");
         return ERROR;
     }
 

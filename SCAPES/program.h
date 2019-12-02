@@ -63,5 +63,6 @@ private:
     int createStatement(string line, string label="");
     //void createIdentifier(Statement* st, string line);
     void serializeToJSON();
+    Logger* logger;
 };
 #endif // PROGRAM_H

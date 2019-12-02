@@ -5,6 +5,7 @@
 #include <algorithm>
 #include "operand.h"
 #include "label.h"
+#include "logger.h"
 using namespace  std;
 
 class Program;
@@ -31,7 +32,6 @@ protected:
     Label label;
     string instruction;
     Program* program;
-    //CPlusPlusLogging::Logger* logger;
-
+    Logger* logger;
 };
 #endif // STATEMENT_H

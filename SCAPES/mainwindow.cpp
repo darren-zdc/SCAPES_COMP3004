@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "helperfunction.h"
 #include <uimanager.h>
 #include <ui_mainwindow.h>
 #include <QStringListModel>
@@ -20,6 +21,10 @@ MainWindow::~MainWindow() //destructor
     delete listview;
 }
 
+QTextEdit* MainWindow::getBottomBox()
+{
+    return textbox;
+}
 void MainWindow::attachDependancies(uimanager *manager) //connects the mainwindow pointes to the relevant ui elements for future use
 {
     this->manager = manager;
@@ -50,7 +55,7 @@ void MainWindow::on_CreateButton_clicked() //sends command to create a file, the
 {
     if (texteditor->isVisible() == false)
     {
-        textbox->setText("Created New File");
+        textbox->setText(QString::fromStdString(HelperFunction::getCurrentTime()) + " Created New File");
         manager->RecieveSignal("create", "null", "null");
         if (manager->PollProgramList().size() != 0)
         {
@@ -70,8 +75,7 @@ void MainWindow::on_CompileButton_clicked() //sends compile command, then update
     {
         QModelIndex index = this->listview->currentIndex();
         QString name = index.data(Qt::DisplayRole).toString();
-        textbox->setText("Compiling File ");
-        textbox->append(name);
+        textbox->setText(QString::fromStdString(HelperFunction::getCurrentTime()) + " Compiling File " + name);
         manager->RecieveSignal("compile", name, "null");
         if (manager->PollProgramList().size() != 0)
         {
@@ -88,8 +92,7 @@ void MainWindow::on_RunButton_clicked() //sends run command, then update the pro
     {
         QModelIndex index = this->listview->currentIndex();
         QString name = index.data(Qt::DisplayRole).toString();
-        textbox->setText("Running File ");
-        textbox->append(name);
+        textbox->setText(QString::fromStdString(HelperFunction::getCurrentTime()) + " Running File " + name);
         manager->RecieveSignal("run", name, "null");
     }
 }
@@ -110,7 +113,7 @@ void MainWindow::on_OpenButton_clicked() //send open command
     {
         QModelIndex index = this->listview->currentIndex();
         QString name = index.data(Qt::DisplayRole).toString();
-        textbox->setText(name);
+        textbox->setText(QString::fromStdString(HelperFunction::getCurrentTime()) + " Opening file " + name);
         manager->openFile = name;
         QStringList contents = manager->PollFileContents(name);
         for (int i = 0; i < contents.size(); i++)

@@ -31,6 +31,7 @@ SOURCES += \
         jmorestmt.cpp \
         jmpstmt.cpp \
         label.cpp \
+    logger.cpp \
         main.cpp \
         mainwindow.cpp \
     opencontrol.cpp \
@@ -75,6 +76,7 @@ HEADERS += \
     jmorestmt.h \
     jmpstmt.h \
     label.h \
+    logger.h \
     mainwindow.h \
     opencontrol.h \
     operand.h \

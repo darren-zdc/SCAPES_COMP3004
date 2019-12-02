@@ -1,6 +1,7 @@
 #include <QApplication>
 #include "mainwindow.h"
 #include "uimanager.h"
+#include "logger.h"
 //#include <stdio.h>  /* defines FILENAME_MAX */
 //#include <unistd.h>
 //#include <QDebug>
@@ -15,7 +16,8 @@ int main(int argc, char *argv[])
     w.attachDependancies(manager);
     manager->window = &w;
     manager->GetFileManager()->ui = manager;
-
+    Logger* logger = Logger::getInstance();
+    logger->setOutput(w.getBottomBox());
     w.show();
     return a.exec();
     /*

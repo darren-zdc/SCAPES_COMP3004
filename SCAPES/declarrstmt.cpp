@@ -21,7 +21,8 @@ int DeclArrStmt::compile()
     if(p_operands.size() != 2)
     {
         //error invalid input
-        return 0;
+        logger->error("Invalid dca input");
+        return ERROR;
     }
 
     // check if its a number
@@ -31,18 +32,21 @@ int DeclArrStmt::compile()
         if(std::stoi(p_operands[1]) < 0)
         {
             //error: invalid index < 0
+            logger->error("Invalid index size <0");
             return ERROR;
         }
     }
     else
     {
         //Error: not a number
+        logger->error("Invalid array size");
         return ERROR;
     }
 
     if(!program->createVariable(lineParses[1], std::stoi(p_operands[1])))
     {
         //error: variable already exists
+        logger->error("Variable already exists");
         return ERROR;
     }
 

@@ -52,3 +52,16 @@ vector<string> HelperFunction::split(string line)
                    istream_iterator<std::string>());
     return results;
 }
+
+string HelperFunction::getCurrentTime()
+{
+   string currTime;
+   //Current date/time based on current time
+   time_t now = time(0);
+   // Convert current time to string
+   currTime.assign(ctime(&now));
+
+   // Last charactor of currentTime is "\n", so remove it
+   string currentTime = currTime.substr(0, currTime.size()-1);
+   return "[" + currentTime + "]";
+}

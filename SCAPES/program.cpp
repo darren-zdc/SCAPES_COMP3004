@@ -3,7 +3,7 @@
 
 Program::Program(string filename, string dir) : filename(filename), directory(dir)
 {
-
+    logger = Logger::getInstance();
 }
 
 
@@ -23,11 +23,13 @@ int Program::Compile()
                 Statement* st = statements.back();
                 if(st->compile() == ERROR)
                 {
+                    logger->error("Invalid statement in line " + to_string(statements.size()));
                     return ERROR;
                 }
             }
             else if (flag == ERROR)
             {
+                logger->error("Failed to create statement \"" + line + "\"");
                 return ERROR;
             }
         }
@@ -35,6 +37,7 @@ int Program::Compile()
     else if (myprogram.fail())
     {
         //failed to open a file
+        logger->error("Faild to open file \"" + filename + "\" under \"" + directory + "\" directory");
         return ERROR;
     }
 
@@ -75,6 +78,11 @@ int Program::createStatement(string instr, vector<string> operds, string label)
         //declares an integer variable
         statements.push_back(new DeclIntStmt(instr, operds, label));
     }
+    else if (instr == "dca")
+    {
+        //declares an array
+        statements.push_back(new DeclArrStmt(instr, operds, label));
+    }
     else if (instr == "rdi")
     {
         //reads an integer value from the user
@@ -85,6 +93,16 @@ int Program::createStatement(string instr, vector<string> operds, string label)
     {
         //prints out the value of a variable
         statements.push_back(new PrintStmt(instr, operds, label));
+    }    
+    else if (instr == "mov")
+    {
+        //copies values
+        statements.push_back(new MovStmt(instr, operds, label));
+    }
+    else if (instr == "add")
+    {
+        //adds values
+        statements.push_back(new AddStmt(instr, operds, label));
     }
     else if (instr == "cmp")
     {
@@ -92,10 +110,20 @@ int Program::createStatement(string instr, vector<string> operds, string label)
         statements.push_back(new CompStmt(instr, operds, label));
 
     }
+    else if (instr == "jls")
+    {
+        //jumps to the specified label if smaller
+        statements.push_back(new JLessStmt(instr, operds, label));
+    }
     else if (instr == "jmr")
     {
-        //jump to the specified label
+        //jumps to the specified label if greater
         statements.push_back(new JMoreStmt(instr, operds, label));
+    }
+    else if (instr == "jeq")
+    {
+        //jumps to the specified label if equal
+        statements.push_back(new JEqStmt(instr, operds, label));
     }
     else if (instr == "jmp")
     {
@@ -111,6 +139,7 @@ int Program::createStatement(string instr, vector<string> operds, string label)
     else
     {
         //error
+        logger->error("Invalid instruction " + instr);
         return ERROR;
     }
 }

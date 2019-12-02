@@ -30,5 +30,23 @@ int CompStmt::compile()
 
 int CompStmt::run()
 {
+    int var1 = program->getValueByInput(operands[0].getValue());
+    int var2 = program->getValueByInput(operands[1].getValue());
+    if (var1 < 0 || var2 < 0)
+    {
+        return ERROR;
+    }
+    if (var1 < var2)
+    {
+        program->setComparisonFlag(SMALLER);
+    }
+    else if (var1 > var2)
+    {
+        program->setComparisonFlag(GREATER);
+    }
+    else if(var1 == var2)
+    {
+        program->setComparisonFlag(EQUAL);
+    }
     return 0;
 }

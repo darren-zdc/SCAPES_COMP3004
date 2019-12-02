@@ -10,21 +10,24 @@ MovStmt::MovStmt(vector<string> lineParses): Statement(lineParses)
 MovStmt::MovStmt(vector<string> lineParses, string label):Statement(lineParses, label)
 {}
 
-void MovStmt::run()
-{
-
-}
+MovStmt::MovStmt(string instr, vector<string> operds, string label): Statement (instr, operds, label)
+{}
 
 //Syntax checking
 int MovStmt::compile()
 {
-    if(lineParses.size() != 3)
+    if(p_operands.size() != 2)
     {
         //error invalid input
-        return 0;
+        return ERROR;
     }
 
-    operands.push_back(lineParses[1]);
-    operands.push_back(lineParses[2]);
-    return 1;
+    operands.push_back(p_operands[0]);
+    operands.push_back(p_operands[1]);
+    return SUCCESS;
+}
+
+int MovStmt::run()
+{
+    return 0;
 }

@@ -10,7 +10,8 @@ public:
     DeclArrStmt();
     DeclArrStmt(vector<string> line);
     DeclArrStmt(vector<string> line, string label);
+    DeclArrStmt(string instr, vector<string> operds, string label);
     int compile();
-    void run();
+    int run();
 };
 #endif // DECLARRSTMT_H

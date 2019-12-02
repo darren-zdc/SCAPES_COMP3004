@@ -10,25 +10,28 @@ JEqStmt::JEqStmt(vector<string> lineParses): Statement(lineParses)
 JEqStmt::JEqStmt(vector<string> lineParses, string label):Statement(lineParses, label)
 {}
 
-void JEqStmt::run()
-{
-
-}
+JEqStmt::JEqStmt(string instr, vector<string> operds, string label): Statement (instr, operds, label)
+{}
 
 //Syntax checking
 int JEqStmt::compile()
 {
-    if(lineParses.size() != 2)
+    if(p_operands.size() != 1)
     {
         //error invalid input
-        return 0;
+        return ERROR;
     }
     if (!program->ifPrevCompExist())
     {
         //error: previous instruction need to be comp
-        return 0;
+        return ERROR;
     }
-    program->createLabel(lineParses[1]);
-    operands.push_back(lineParses[1]);
-    return 1;
+    program->createLabel(p_operands[0]);
+    operands.push_back(p_operands[0]);
+    return SUCCESS;
+}
+
+int JEqStmt::run()
+{
+    return 0;
 }

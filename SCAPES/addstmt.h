@@ -8,8 +8,9 @@ public:
     AddStmt();
     AddStmt(vector<string> lineParses);
     AddStmt(vector<string> lineParses, string label);
+    AddStmt(string instr, vector<string> operds, string label);
     int compile();
-    void run();
+    int run();
 };
 
 #endif // ADDSTMT_H

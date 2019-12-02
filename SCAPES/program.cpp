@@ -6,10 +6,6 @@ Program::Program(string filename, string dir) : filename(filename), directory(di
 
 }
 
-vector<Variable> Program::getVariables()
-{
-    return variables;
-}
 
 int Program::Compile()
 {
@@ -121,7 +117,7 @@ int Program::createStatement(string instr, vector<string> operds, string label)
 
 int Program::createStatement(string line, string label)
 {
-    vector<string> lineParses =split(line);
+    vector<string> lineParses = HelperFunction::split(line);
 
     //Case for empty line
     if (lineParses.size() == 0)
@@ -152,12 +148,21 @@ int Program::createStatement(string line, string label)
     return SUCCESS;
 }
 
-int Program::createVariable(string name, int size){
-    if(ifExistVariable(name)){
-        return 0;
+int Program::createVariable(string name, int size)
+{
+    if(ifExistVariable(name, nullptr))
+    {
+        return ERROR;
     }
-    variables.push_back(Variable(name, size));
-    return 1;
+    if (size == 0)
+    {
+        variables.push_back(Variable(name));
+    }
+    else
+    {
+        variables.push_back(Variable(name, size));
+    }
+    return SUCCESS;
 }
 
 void Program::createLabel(string name)
@@ -219,7 +224,7 @@ void Program::serializeToJSON()
 
     QJsonDocument doc(jProgram);
     string jsonFilename;
-    jsonFilename = directory + "/" + getFileName("/" + this->filename, false) + ".json";
+    jsonFilename = directory + "/" + HelperFunction::getFileName("/" + this->filename, false) + ".json";
     QFile jsonFile(QString::fromStdString(jsonFilename));
     jsonFile.open(QIODevice::WriteOnly);
     jsonFile.write(doc.toJson());
@@ -267,37 +272,17 @@ Program* Program::deserializeToObject(string jsonFilename, string dir)
     return p;
 }
 
-vector<string> Program::split(string line)
-{
-    istringstream iss(line);
-    vector<string> results((istream_iterator<std::string>(iss)),
-                   istream_iterator<std::string>());
-    return results;
-}
-
-
-string Program::getFileName(string filePath, bool withExtension, char seperator)
-{
-    // Get last dot position
-    std::size_t dotPos = filePath.rfind('.');
-    std::size_t sepPos = filePath.rfind(seperator);
-    int extensionLength;
-    extensionLength = filePath.size() - dotPos +1;
-    if(sepPos != string::npos)
-    {
-        return filePath.substr(sepPos + 1, filePath.size() - (withExtension ? 1 : extensionLength) );
-    }
-    return "";
-}
-
-Variable* Program::findVariable(string name)
+int Program::findVariable(string name, Variable* output)
 {
     for(Variable element: variables)
     {
         if (element.getName() == name)
-            return &element;
+        {
+            output = &element;
+            return SUCCESS;
+        }
     }
-    return nullptr;
+    return ERROR;
 }
 
 int Program::ifExistVariable(string name, Variable* output)
@@ -332,38 +317,64 @@ int Program::ifPrevCompExist()
     return ERROR;
 }
 
-bool Program::isNumber(const std::string& s)
+int Program::readInput()
 {
-    std::string::const_iterator it = s.begin();
-    while (it != s.end() && std::isdigit(*it)) ++it;
-    return !s.empty() && it == s.end();
+    return 0;
 }
 
-// arrayToInt(): takes a operand and check if its an array and return its index value
-int Program::arrayToInt(const std::string& s){
+int Program::setVariable(string name, int value, int index)
+{
+    Variable* var = nullptr;
+    if (!findVariable(name, var))
+    {
+        //error variable not exist
+        return ERROR;
+    }
+    if (var->isVarArray())
+    {
+        var->setValueByIndex(value, index);
+    }
+    else
+    {
+        var->setValue(value);
+    }
+    return SUCCESS;
+}
+// arrayToInt(): takes a operand and return its index value
+/*
+int Program::arrayToInt(const string& s)
+{
     size_t posOfPlus = s.find("+"); // posistion of the "+" symbol in the operand
     string varName = s.substr(1,posOfPlus-1);
     int index;
 
-    if(s.substr(0,1) != "$"){
-        // doesn't strart with $
+    if(s.substr(0,1) != "$")
+    {
+        // error: doesn't strart with $
         return -1;
     }
 
-    if(!ifExistVariable(varName)){
-        // variable doesn't exist
+    if(!ifExistVariable(varName, nullptr))
+    {
+        //error: variable doesn't exist
         return -1;
-    }else{
-        if(!findVariable(varName)->isVarArray()){
+    }
+    else
+    {
+        if(!findVariable(varName, nullptr)->isVarArray())
+        {
             //variable exist but is not an array variable
             return -1;
         }
     }
 
-    if(!isNumber(s.substr(posOfPlus+1))){
+    if(!HelperFunction::isNumber(s.substr(posOfPlus+1)))
+    {
         // whatever after the "+" sign is not an integer
         return -1;
-    }else{
+    }
+    else
+    {
         index = std::stoi(s.substr(posOfPlus+1));
     }
     
@@ -376,3 +387,4 @@ int Program::arrayToInt(const std::string& s){
     return findVariable(varName)->getValueByIndex(index);
 
 }
+*/

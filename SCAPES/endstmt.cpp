@@ -1,5 +1,5 @@
 #include "endstmt.h"
-
+#include "program.h"
 EndStmt::EndStmt()
 {
 }
@@ -10,17 +10,20 @@ EndStmt::EndStmt(vector<string> lineParses):Statement(lineParses)
 EndStmt::EndStmt(vector<string> lineParses, string label):Statement(lineParses, label)
 {}
 
-void EndStmt::run()
-{
-
-}
+EndStmt::EndStmt(string instr, vector<string> operds, string label): Statement (instr, operds, label)
+{}
 
 int EndStmt::compile()
 {
-    if(lineParses.size() != 1)
+    if(p_operands.size() != 0)
     {
         //error invalid input
-        return 0;
+        return ERROR;
     }
-    return 1;
+    return SUCCESS;
+}
+
+int EndStmt::run()
+{
+    return 0;
 }

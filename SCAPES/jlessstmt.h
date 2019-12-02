@@ -8,8 +8,9 @@ public:
     JLessStmt();
     JLessStmt(vector<string> lineParses);
     JLessStmt(vector<string> lineParses, string label);
+    JLessStmt(string instr, vector<string> operds, string label);
     int compile();
-    void run();
+    int run();
 };
 
 #endif // JLESSSTMT_H

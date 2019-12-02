@@ -1,5 +1,6 @@
 #include "declarrstmt.h"
 #include "program.h"
+#include "helperfunction.h"
 
 DeclArrStmt::DeclArrStmt()
 {
@@ -10,13 +11,14 @@ DeclArrStmt::DeclArrStmt(vector<string> lineParses): Statement(lineParses)
 {}
 
 DeclArrStmt::DeclArrStmt(vector<string> lineParses, string label): Statement(lineParses, label)
-{
+{}
 
-}
+DeclArrStmt::DeclArrStmt(string instr, vector<string> operds, string label): Statement (instr, operds, label)
+{}
 
 int DeclArrStmt::compile()
 {
-    if(lineParses.size() != 3)
+    if(p_operands.size() != 2)
     {
         //error invalid input
         return 0;
@@ -24,32 +26,37 @@ int DeclArrStmt::compile()
 
     // check if its a number
     // max array length can not be less than 0
-    if(program->isNumber(lineParses[2])){
-        if(std::stoi(lineParses[2]) <= 0){
-            return 0;
+    if(HelperFunction::isNumber(p_operands[1]))
+    {
+        if(std::stoi(p_operands[1]) < 0)
+        {
+            //error: invalid index < 0
+            return ERROR;
         }
-    }else{
-        // is not a number
-        return 0;
+    }
+    else
+    {
+        //Error: not a number
+        return ERROR;
     }
 
-    if(program->createVariable(lineParses[1], std::stoi(lineParses[2])) != 1)
+    if(!program->createVariable(lineParses[1], std::stoi(p_operands[1])))
     {
         //error: variable already exists
-        return 0;
+        return ERROR;
     }
 
 
 
-    operands.push_back(Operand(lineParses[1]));
-    operands.push_back(Operand(lineParses[2]));
-    return 1;
+    operands.push_back(Operand(p_operands[0]));
+    operands.push_back(Operand(p_operands[1]));
+    return SUCCESS;
 }
 
-void DeclArrStmt::run()
+int DeclArrStmt::run()
 {
 
-
+    return 0;
 }
 
 

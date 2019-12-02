@@ -22,8 +22,9 @@ int Variable::getValue()
     return value;
 }
 
-size_t Variable::getValueByIndex(int i){
-    return arrayValues[i];
+int Variable::getValueByIndex(int i)
+{
+    return arrayValues.at(i);
 }
 
 void Variable::setValue(int value)
@@ -31,8 +32,9 @@ void Variable::setValue(int value)
     this->value = value;
 }
 
-void Variable::setValueByIndex(int value, int i){
-    this->arrayValues[i] = value;
+void Variable::setValueByIndex(int value, int i)
+{
+    this->arrayValues.at(i) = value;
 }
 
 bool Variable::isVarArray(){

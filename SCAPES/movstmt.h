@@ -8,8 +8,10 @@ public:
     MovStmt();
     MovStmt(vector<string> lineParses);
     MovStmt(vector<string> lineParses, string label);
+    MovStmt(string instr, vector<string> operds, string label);
+
     int compile();
-    void run();
+    int run();
 };
 
 #endif // MOVSTMT_H

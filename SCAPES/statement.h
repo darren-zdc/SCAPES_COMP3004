@@ -15,6 +15,8 @@ public:
     Statement();
     Statement(vector<string> lineParses);
     Statement(vector<string> lineParses, string label);
+    Statement(string instr, vector<string> operds, string label);
+
     virtual ~Statement() = 0;
     virtual int compile() = 0;
     virtual int run() = 0;
@@ -24,6 +26,7 @@ public:
     void setProgram(Program &prog);
 protected:
     vector<string> lineParses;
+    vector<string> p_operands;
     vector<Operand> operands;
     Label label;
     string instruction;

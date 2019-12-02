@@ -10,7 +10,7 @@ public:
     Variable(string name);
     Variable(string name, int size);
     int getValue();
-    size_t getValueByIndex(int i); // for array
+    int getValueByIndex(int i); // for array
     void setValue(int value);
     void setValueByIndex(int value, int i);
     bool isVarArray();

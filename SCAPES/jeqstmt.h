@@ -8,8 +8,9 @@ public:
     JEqStmt();
     JEqStmt(vector<string> lineParses);
     JEqStmt(vector<string> lineParses, string label);
+    JEqStmt(string instr, vector<string> operds, string label);
     int compile();
-    void run();
+    int run();
 };
 
 #endif // JEQSTMT_H

@@ -10,24 +10,24 @@ AddStmt::AddStmt(vector<string> lineParses): Statement(lineParses)
 AddStmt::AddStmt(vector<string> lineParses, string label):Statement(lineParses, label)
 {}
 
-void AddStmt::run()
-{
-
-}
+AddStmt::AddStmt(string instr, vector<string> operds, string label): Statement (instr, operds, label)
+{}
 
 //Syntax checking
 int AddStmt::compile()
 {
-    if(lineParses.size() != 3)
+    if(p_operands.size() != 2)
     {
         //error invalid input
         return 0;
     }
 
-
-
-
-    operands.push_back(lineParses[1]);
-    operands.push_back(lineParses[2]);
+    operands.push_back(p_operands[0]);
+    operands.push_back(p_operands[1]);
     return 1;
+}
+
+int AddStmt::run()
+{
+    return 0;
 }

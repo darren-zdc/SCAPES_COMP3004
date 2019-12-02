@@ -26,6 +26,7 @@ SOURCES += \
         endstmt.cpp \
     executecontrol.cpp \
         filemanager.cpp \
+    helperfunction.cpp \
         identifier.cpp \
         jmorestmt.cpp \
         jmpstmt.cpp \
@@ -44,7 +45,6 @@ SOURCES += \
     renamecontrol.cpp \
     savecontrol.cpp \
         statement.cpp \
-    syntaxhelper.cpp \
         uimanager.cpp \
         variable.cpp \
  	Create.cpp \
@@ -70,6 +70,7 @@ HEADERS += \
     endstmt.h \
     executecontrol.h \
     filemanager.h \
+    helperfunction.h \
     identifier.h \
     jmorestmt.h \
     jmpstmt.h \
@@ -87,7 +88,6 @@ HEADERS += \
     renamecontrol.h \
     savecontrol.h \
     statement.h \
-    syntaxhelper.h \
     uimanager.h \
     variable.h \
     Create.h \

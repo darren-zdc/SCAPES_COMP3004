@@ -1,6 +1,6 @@
 #include "readstmt.h"
 #include "program.h"
-#include "syntaxhelper.h"
+#include "helperfunction.h"
 ReadStmt::ReadStmt()
 {
 
@@ -14,7 +14,6 @@ ReadStmt::ReadStmt(vector<string> lineParses, string label): Statement(lineParse
 ReadStmt::ReadStmt(string instr, vector<string> operds, string label): Statement (instr, operds, label)
 {}
 
-//Syntax checking
 int ReadStmt::compile()
 {
     if (p_operands.size() != 1)
@@ -34,7 +33,7 @@ int ReadStmt::compile()
             return ERROR;
         }
     }
-    else if (SyntaxHelper::isInteger(p_operands[0]))
+    else if (HelperFunction::isNumber(p_operands[0]))
     {
         //input is an integer
         return ERROR;
@@ -66,13 +65,11 @@ int ReadStmt::run()
         index = stoi(varName.substr(varName.find("+"), varName.length() - varName.find("+")));
         varName = varName.substr(1, varName.find("+")-1);
     }
-    Variable* output;
-    if (!program->ifExistVariable(operands[0].getValue(), output))
+    if (!program->ifExistVariable(varName, nullptr))
     {
         //Error: variable not exists
         return ERROR;
     }
     int varValue = program->readInput();
-    program->setVariable(varName, varValue, index);
-    return SUCCESS;
+    return program->setVariable(varName, varValue, index);
 }

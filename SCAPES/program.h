@@ -16,6 +16,7 @@
 #include "jlessstmt.h"
 #include "jeqstmt.h"
 #include "label.h"
+#include "helperfunction.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -23,9 +24,8 @@
 #include <vector>
 #include <fstream>
 #include <string>
-#include <sstream>
 #include <iterator>
-
+#include <QDebug>
 using namespace std;
 enum flag{ERROR, SUCCESS, CONTINUE};
 
@@ -37,24 +37,21 @@ public:
     int Compile();
     int Execute();
     void print();
-    static string getFileName(string filePath, bool withExtension = true, char seperator = '/');
     static Program* deserializeToObject(string filename, string dir);
 
-    vector<Variable> getVariables();
-    int createVariable(string name);
-    int createVariable(string name, int size);
+    int createVariable(string name, int size=0);
     void createLabel(string name);
     int createStatement(string instr, vector<string> operds, string label="");
-    Variable* findVariable(string name);
+    int findVariable(string name, Variable* output);
+
     int ifExistVariable(string name, Variable* output);
     int ifExistLabel(string name);
     int ifPrevCompExist();
 
+    int setVariable(string name, int value, int index = 0);
+
     int readInput();
     int output(string value);
-    int setVariable(string name, int value, int index);
-    int setVariable(string name, int value);
-    bool isNumber(const std::string& s);
     int arrayToInt(const std::string& s);
 private:
     vector<Label> labels;
@@ -65,7 +62,6 @@ private:
     string comparisonFlag;
     int createStatement(string line, string label="");
     //void createIdentifier(Statement* st, string line);
-    static vector<string> split(string line);
     void serializeToJSON();
 };
 #endif // PROGRAM_H

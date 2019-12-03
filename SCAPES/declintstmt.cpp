@@ -36,5 +36,5 @@ int DeclIntStmt::compile()
 int DeclIntStmt::run()
 {
 
-    return 0;
+    return SUCCESS;
 }

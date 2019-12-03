@@ -19,7 +19,7 @@ int HelperFunction::isArraySyntax(string input, string varname, int* i)
             //array index cannot less than 0
             return 0;
         }
-        i = &index;
+        *i = index;
         return 1;
     }
     return 0;

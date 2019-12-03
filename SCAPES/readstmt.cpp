@@ -59,23 +59,18 @@ int ReadStmt::compile()
 
 int ReadStmt::run()
 {
-    string varName = operands[0].getValue();
+    string input = p_operands[0];
     int index = 0;
-    if (varName[0] == '$')
-    {
-        if (!varName.find("+"))
-        {
-            //Error: Syntax not right
-            return ERROR;
-        }
-        index = stoi(varName.substr(varName.find("+"), varName.length() - varName.find("+")));
-        varName = varName.substr(1, varName.find("+")-1);
-    }
+    string varName;
+
+    HelperFunction::isArraySyntax(input, varName, &index);
+
     if (!program->ifExistVariable(varName, nullptr))
     {
         //Error: variable not exists
         return ERROR;
     }
     int varValue = program->readInput();
+    logger->info("hahah");
     return program->setVariable(varName, varValue, index);
 }

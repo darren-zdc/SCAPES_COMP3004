@@ -34,5 +34,9 @@ int JLessStmt::compile()
 
 int JLessStmt::run()
 {
+    if (program->getComparisonFlag() == SMALLER)
+    {
+
+    }
     return 0;
 }

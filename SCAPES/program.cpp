@@ -79,10 +79,7 @@ int Program::Execute()
             logger->error("Runtime error in line "  + to_string(index));
             return ERROR;
         }
-        if (st->getInstruction() == "jmp"
-                || st->getInstruction() == "jls"
-                || st->getInstruction() == "jmr"
-                || st->getInstruction() == "jeq")
+        if (jump)
         {
             int labelIndex  = findLabel(st->getOperands()[0].getValue());
             if (labelIndex < 0)
@@ -95,6 +92,7 @@ int Program::Execute()
             {
                 index = static_cast<size_t>(labelIndex);
             }
+            jump = false;
         }
         else
         {
@@ -181,6 +179,7 @@ int Program::createStatement(string instr, vector<string> operds, string label)
         logger->error("Invalid instruction " + instr);
         return ERROR;
     }
+    return ERROR;
 }
 
 int Program::createStatement(string line, string label)
@@ -425,6 +424,55 @@ int Program::setVariable(string name, int value, int index)
     }
     return SUCCESS;
 }
+
+void Program::setComparisonFlag(flag f)
+{
+    this->comparisonFlag = f;
+}
+
+flag Program::getComparisonFlag()
+{
+    return this->comparisonFlag;
+}
+
+int Program::getValueByInput(string input)
+{
+    int index = 0;
+    Variable* var = nullptr;
+    string varname;
+    if (HelperFunction::isNumber(input))
+    {
+        return stoi(input);
+    }
+    else if (ifExistVariable(input, var))
+    {
+        return var->getValue();
+    }
+    else if (HelperFunction::isArraySyntax(input, varname, &index))
+    {
+        if (ifExistVariable(varname, var))
+        {
+            if (var->isVarArray() && index < var->getSize())
+            {
+                return var->getValueByIndex(index);
+            }
+            else
+            {
+                logger->error("Index out of bound");
+                return -1;
+            }
+        }
+        logger->error("Variable not exist");
+        return -1;
+    }
+    else
+    {
+        //Error invalid input
+        logger->error("Invalid input " + input);
+        return -1;
+    }
+}
+
 // arrayToInt(): takes a operand and return its index value
 /*
 int Program::arrayToInt(const string& s)

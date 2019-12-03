@@ -28,7 +28,7 @@
 #include <fstream>
 #include <string>
 using namespace std;
-enum flag{ERROR, SUCCESS, CONTINUE};
+enum flag{ERROR, SUCCESS, CONTINUE, GREATER, SMALLER, EQUAL};
 
 class executeControl;
 
@@ -36,12 +36,15 @@ class Program
 {
 
 public:
+    static Program* deserializeToObject(string filename, string dir);
+
     Program(string filename, string dir);
+    void setComparisonFlag(flag f);
+    flag getComparisonFlag();
+    void setJump(bool b);
+
     int Compile();
     int Execute();    
-
-    int setUIManager(uimanager* ui);
-    static Program* deserializeToObject(string filename, string dir);
 
     int createVariable(string name, int size=0);
     void createLabel(string name);
@@ -53,7 +56,7 @@ public:
     int ifPrevCompExist();
 
     int setVariable(string name, int value, int index = 0);
-
+    int getValueByInput(string input);
     int readInput();
     int output(string value);
     int arrayToInt(const std::string& s);
@@ -65,11 +68,10 @@ private:
     vector<Variable> variables;
     string filename;
     string directory;
-    string comparisonFlag;
+    flag comparisonFlag = ERROR;
+    bool jump = false;
     int createStatement(string line, string label="");
-    //void createIdentifier(Statement* st, string line);
     void serializeToJSON();
     Logger* logger;
-    uimanager* ui;
 };
 #endif // PROGRAM_H

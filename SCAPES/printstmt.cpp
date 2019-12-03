@@ -32,5 +32,7 @@ int PrintStmt::compile()
 
 int PrintStmt::run()
 {
+    int value = program->getValueByInput(p_operands[0]);
+    logger->error("printing: ");
     return 0;
 }

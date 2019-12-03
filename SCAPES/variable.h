@@ -19,7 +19,7 @@ private:
     int value;
     int size;
     bool isArray;
-    vector<int> arrayValues;
+    int arrayValues[10];
 };
 
 #endif // VARIABLE_H

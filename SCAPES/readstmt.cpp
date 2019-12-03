@@ -61,7 +61,7 @@ int ReadStmt::run()
     string varName = p_operands[0];
     int index = 0;
 
-    if (HelperFunction::isArraySyntax(varName, varName, &index))
+    if (HelperFunction::isArraySyntax(varName, &varName, &index))
     {
     }
 

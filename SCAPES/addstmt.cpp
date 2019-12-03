@@ -43,7 +43,7 @@ int AddStmt::run()
         return ERROR;
     }
 
-    if (HelperFunction::isArraySyntax(p_operands[1],destName,&destIndex))
+    if (HelperFunction::isArraySyntax(p_operands[1],&destName,&destIndex))
     {
         if (program->findVariable(destName, &destVar))
         {

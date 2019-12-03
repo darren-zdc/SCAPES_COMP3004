@@ -43,7 +43,7 @@ int DeclArrStmt::compile()
         return ERROR;
     }
 
-    if(!program->createVariable(lineParses[1], std::stoi(p_operands[1])))
+    if(!program->createVariable(p_operands[0], std::stoi(p_operands[1])))
     {
         //error: variable already exists
         logger->error("Variable already exists");
@@ -54,8 +54,13 @@ int DeclArrStmt::compile()
 
 int DeclArrStmt::run()
 {
-
-    return 0;
+    if (program->findVariable(p_operands[0], nullptr))
+    {
+        logger->error("Variable already exist \'" + p_operands[0] + "\'");
+        return ERROR;
+    }
+    program->createVariable(p_operands[0], stoi(p_operands[1]));
+    return SUCCESS;
 }
 
 

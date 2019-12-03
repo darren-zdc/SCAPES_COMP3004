@@ -15,6 +15,7 @@ Variable::Variable(string name, int size): Identifier (name), size(size)
 {
     this->isArray = true;
     this->size = size;
+    this->arrayValues[static_cast<size_t>(size)];
 }
 
 int Variable::getValue()
@@ -24,7 +25,7 @@ int Variable::getValue()
 
 int Variable::getValueByIndex(int i)
 {
-    return arrayValues.at(i);
+    return arrayValues[static_cast<size_t>(i)];
 }
 
 void Variable::setValue(int value)
@@ -34,7 +35,7 @@ void Variable::setValue(int value)
 
 void Variable::setValueByIndex(int value, int i)
 {
-    this->arrayValues.at(i) = value;
+    this->arrayValues[static_cast<size_t>(i)] = value;
 }
 
 bool Variable::isVarArray(){

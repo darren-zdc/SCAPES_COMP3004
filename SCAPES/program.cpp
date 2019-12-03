@@ -456,7 +456,7 @@ int Program::getValueByInput(string input)
     {
         return var->getValue();
     }
-    else if (HelperFunction::isArraySyntax(input, varname, &index))
+    else if (HelperFunction::isArraySyntax(input, &varname, &index))
     {
         if (findVariable(varname, &var))
         {

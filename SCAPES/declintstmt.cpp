@@ -35,5 +35,11 @@ int DeclIntStmt::compile()
 
 int DeclIntStmt::run()
 {
+    if (program->findVariable(p_operands[0], nullptr))
+    {
+        logger->error("Variable already exist " + p_operands[0]);
+        return ERROR;
+    }
+    program->createVariable(p_operands[0]);
     return SUCCESS;
 }

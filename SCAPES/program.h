@@ -41,6 +41,8 @@ public:
     void setComparisonFlag(flag f);
     flag getComparisonFlag();
     void setJump(bool b);
+    string getProgramOutput();
+    void appendProgramOutput(string input);
 
     int Compile();
     int Execute();    
@@ -48,9 +50,8 @@ public:
     int createVariable(string name, int size=0);
     void createLabel(string name);
     int createStatement(string instr, vector<string> operds, string label="");
-    int findVariable(string name, Variable* output);
+    int findVariable(string name, Variable** output);
     int findLabel(string label);
-    int ifExistVariable(string name, Variable* output);
     int ifExistLabel(string name);
     int ifPrevCompExist();
 
@@ -62,9 +63,10 @@ public:
 private:
     vector<Label> labels;
     vector<Statement*> statements;
-    vector<Variable> variables;
+    vector<Variable*> variables;
     string filename;
     string directory;
+    string programOutput;
     flag comparisonFlag = ERROR;
     bool jump = false;
     int createStatement(string line, string label="");

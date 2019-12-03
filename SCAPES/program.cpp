@@ -6,6 +6,10 @@ Program::Program(string filename, string dir) : filename(filename), directory(di
     logger = Logger::getInstance();
 }
 
+Program::~Program()
+{
+    //deallocated statement vector
+}
 
 int Program::Compile()
 {
@@ -184,6 +188,7 @@ int Program::createStatement(string instr, vector<string> operds, string label)
         logger->error("Invalid instruction " + instr);
         return ERROR;
     }
+    statements.back()->setProgram(*this);
     return ERROR;
 }
 
@@ -216,23 +221,22 @@ int Program::createStatement(string line, string label)
         vector<string> tempOperds(lineParses.begin()+1, lineParses.end());
         createStatement(lineParses[0], tempOperds, label);
     }
-    statements.back()->setProgram(*this);
     return SUCCESS;
 }
 
 int Program::createVariable(string name, int size)
 {
-    if(ifExistVariable(name, nullptr))
+    if(findVariable(name, nullptr))
     {
         return ERROR;
     }
     if (size == 0)
     {
-        variables.push_back(Variable(name));
+        variables.push_back(new Variable(name));
     }
     else
     {
-        variables.push_back(Variable(name, size));
+        variables.push_back(new Variable(name, size));
     }
     return SUCCESS;
 }
@@ -276,10 +280,10 @@ void Program::serializeToJSON()
 
     //serialize the variable vector
     QJsonArray jVariables;
-    for(Variable var:variables)
+    for(Variable* var:variables)
     {
         QJsonObject jVariable;
-        jVariable["name"] = QString::fromStdString(var.getName());
+        jVariable["name"] = QString::fromStdString(var->getName());
         jVariables.push_back(jVariable);
     }
     jProgram["variables"] = jVariables;
@@ -328,29 +332,21 @@ Program* Program::deserializeToObject(string jsonFilename, string dir)
         //qDebug() << jSt["instruction"].toString();
         p->createStatement(jSt["instruction"].toString().toStdString(), operds, jSt["label"].toString().toStdString());
     }
-    QJsonArray vars = jProgram["variables"].toArray();
-    foreach (const QJsonValue & var, vars)
-    {
-        p->createVariable(var["name"].toString().toStdString());
-        //qDebug() << var["name"].toString();
-    }
-    QJsonArray labels = jProgram["labels"].toArray();
-    foreach (const QJsonValue & label, labels)
-    {
-        p->createLabel(label["name"].toString().toStdString());
-        //qDebug() << label["name"].toString();
-
-    }
     return p;
 }
 
-int Program::findVariable(string name, Variable* output)
+int Program::findVariable(string name, Variable** output)
 {
-    for(Variable element: variables)
+    if (this->variables.empty())
     {
-        if (element.getName() == name)
+        return ERROR;
+    }
+    for(Variable* element: variables)
+    {
+        if (element->getName() == name)
         {
-            output = &element;
+            if (output != nullptr)
+                *output = element;
             return SUCCESS;
         }
     }
@@ -374,18 +370,6 @@ int Program::findLabel(string label)
     return -1;
 }
 
-int Program::ifExistVariable(string name, Variable* output)
-{
-    for(Variable element: variables)
-    {
-        if (element.getName() == name)
-        {
-            output = &element;
-            return SUCCESS;
-        }
-    }
-    return ERROR;
-}
 
 int Program::ifExistLabel(string name)
 {
@@ -408,13 +392,13 @@ int Program::ifPrevCompExist()
 
 int Program::readInput()
 {
-    return 0;
+    return SUCCESS;
 }
 
 int Program::setVariable(string name, int value, int index)
 {
-    Variable* var = nullptr;
-    if (!findVariable(name, var))
+    Variable* var;
+    if (!findVariable(name, &var))
     {
         //error variable not exist
         return ERROR;
@@ -445,22 +429,39 @@ flag Program::getComparisonFlag()
     return this->comparisonFlag;
 }
 
+string Program::getProgramOutput()
+{
+    return programOutput;
+}
+
+void Program::appendProgramOutput(string input)
+{
+    if (programOutput.empty())
+    {
+        programOutput = input + "\n";
+    }
+    else
+    {
+        programOutput += input + "\n";
+    }
+}
+
 int Program::getValueByInput(string input)
 {
     int index = 0;
-    Variable* var = nullptr;
+    Variable* var;
     string varname;
     if (HelperFunction::isNumber(input))
     {
         return stoi(input);
     }
-    else if (ifExistVariable(input, var))
+    else if (findVariable(input, &var))
     {
         return var->getValue();
     }
     else if (HelperFunction::isArraySyntax(input, varname, &index))
     {
-        if (ifExistVariable(varname, var))
+        if (findVariable(varname, &var))
         {
             if (var->isVarArray() && index < var->getSize())
             {

@@ -32,5 +32,19 @@ int PrintStmt::compile()
 
 int PrintStmt::run()
 {
-    return 0;
+    if (p_operands[0][0] == '"')
+    {
+        program->appendProgramOutput(p_operands[0]);
+        return SUCCESS;
+    }
+    int output = program->getValueByInput(p_operands[0]);
+    if (output > 0)
+    {
+        program->appendProgramOutput(p_operands[0]);
+        return SUCCESS;
+    }
+    else{
+        logger->error("Invalid print statement");
+        return ERROR;
+    }
 }

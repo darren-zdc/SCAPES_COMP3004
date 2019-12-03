@@ -68,8 +68,9 @@ void filemanager::createRunControl(QString name) //initiate control flow to exec
 {
     if (name.endsWith(".json"))
     {
-        executeControl *control = new executeControl(name.QString::toStdString(), pref->GetDirectory());
+        executeControl *control = new executeControl(name.QString::toStdString(), pref->GetDirectory(), this);
         string output = control->executeProgram();
+        control->readInput("test");
         delete control;
         this->ui->displayOutput(output);
     }
@@ -122,4 +123,9 @@ void filemanager::createCompileControl(QString name) //initiate control flow for
 void filemanager::sendMessage(string message, string source)
 {
     this->ui->displayMessage(message, source);
+}
+
+int filemanager::requestInput(string name)
+{
+    return this->ui->requestInput(name);
 }

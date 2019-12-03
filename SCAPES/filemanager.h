@@ -21,6 +21,7 @@ public:
     uimanager *ui;
     void setLogger(Logger *log);
     void sendMessage(string message, string source);
+    int requestInput(string name);
 private:
     void createCreateControl();
     void createSaveControl(QString name, QStringList contents);

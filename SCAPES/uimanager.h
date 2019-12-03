@@ -23,6 +23,7 @@ public:
     void SetLang(QString lang, QString user);
     void displayMessage(string type, string source);
     void displayOutput(string output);
+    int requestInput(string name);
     filemanager* GetFileManager();
     QString openFile;
 private:

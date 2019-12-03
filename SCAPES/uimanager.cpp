@@ -139,3 +139,9 @@ void uimanager::displayOutput(string output)
     QStringList display = temp.split("#");
     window->displayInPopup(display, QString::fromStdString("Program"));
 }
+
+int uimanager::requestInput(string name)
+{
+    QString temp = QString::fromStdString(name);
+    return window->requestInput(temp);
+}

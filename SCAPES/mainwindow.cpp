@@ -5,6 +5,7 @@
 #include <QStringListModel>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QInputDialog>
 
 MainWindow::MainWindow(QWidget *parent) :   //setup use of UI file
     QMainWindow(parent),
@@ -75,8 +76,11 @@ void MainWindow::on_CompileButton_clicked() //sends compile command, then update
     {
         QModelIndex index = this->listview->currentIndex();
         QString name = index.data(Qt::DisplayRole).toString();
-        textbox->setText(QString::fromStdString(HelperFunction::getCurrentTime()) + " Compiling File " + name);
-        manager->RecieveSignal("compile", name, "null");
+        if (name.endsWith(".txt")) //can only compile .txt files
+        {
+            textbox->setText(QString::fromStdString(HelperFunction::getCurrentTime()) + " Compiling File " + name);
+            manager->RecieveSignal("compile", name, "null");
+        }
         if (manager->PollProgramList().size() != 0)
         {
             QStringListModel *model = new QStringListModel;
@@ -236,6 +240,7 @@ void MainWindow::displayInPopup(QStringList output, QString source) //displays a
     }
     else if (source == QString::fromStdString("Logger"))
     {
+
         QMessageBox message;
         message.setWindowTitle("Logger Message");
         QString text;
@@ -246,5 +251,39 @@ void MainWindow::displayInPopup(QStringList output, QString source) //displays a
         }
         message.setText(text);
         message.exec();
+
+    }
+    else if (source == QString::fromStdString("Input"))
+    {
+        QMessageBox message;
+        message.setWindowTitle("Input Error");
+        QString text;
+        text.append("<b>Logger: </b> <br>");
+        for (int i = 0; i < output.size(); i++)
+        {
+            text.append(output[i] + "<br>");
+        }
+        message.setText(text);
+        message.exec();
+    }
+}
+
+int MainWindow::requestInput(QString name)
+{
+    bool success = false;
+
+    int value = QInputDialog::getInt(this, tr("Input Required"), "Input value for " + name, 0, -2147483647, 2147483647, 1, &success);
+
+    if (success)
+    {
+        return value;
+    }
+    else
+    {
+        QStringList temp;
+        temp[0] = "Input required, defaulting to 0";
+        this->displayInPopup(temp, QString::fromStdString("Input"));
+        int value = 0;
+        return value;
     }
 }

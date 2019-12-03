@@ -22,6 +22,7 @@ public:
     void attachDependancies(uimanager *manager);
     void displayInBox(QString text);
     void displayInPopup(QStringList output, QString source);
+    int requestInput(QString name);
     QTextEdit* getBottomBox();
     ~MainWindow();
 

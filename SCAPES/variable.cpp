@@ -18,6 +18,11 @@ Variable::Variable(string name, int size): Identifier (name), size(size)
     this->arrayValues[static_cast<size_t>(size)];
 }
 
+Variable::~Variable()
+{
+
+}
+
 int Variable::getValue()
 {
     return value;

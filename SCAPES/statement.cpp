@@ -3,8 +3,7 @@
 
 Statement::~Statement()
 {
-
-
+    delete logger;
 }
 
 Statement::Statement() {}

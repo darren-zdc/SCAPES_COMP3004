@@ -10,6 +10,15 @@ Program::Program(string filename, string dir) : filename(filename), directory(di
 Program::~Program()
 {
     //deallocated statement vector
+    delete logger;
+    for (Statement* st :statements)
+    {
+        delete st;
+    }
+    for (Variable* var :variables)
+    {
+        delete var;
+    }
 }
 
 int Program::Compile()

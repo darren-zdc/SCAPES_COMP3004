@@ -40,7 +40,7 @@ QStringList openControl::openControlFuncitonality()
         while (iterator.hasNext()) //iterate through working directory
         {
             QFile file(iterator.next());
-            if (file.fileName().endsWith("txt") || file.fileName().endsWith("json")) //return files of valid type only
+            if (file.fileName().endsWith(".txt") || file.fileName().endsWith(".json")) //return files of valid type only
             {
                 file.open(QIODevice::ReadOnly);
                 filenames.append(file.fileName());

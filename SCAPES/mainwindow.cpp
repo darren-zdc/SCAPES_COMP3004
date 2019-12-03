@@ -99,7 +99,7 @@ void MainWindow::on_RunButton_clicked() //sends run command, then update the pro
 
 void MainWindow::on_SaveButton_clicked() //send save command
 {
-    if (texteditor->isVisible())
+    if (texteditor->isVisible() && manager->openFile.endsWith(".txt"))
     {
         QString temp = texteditor->toPlainText();
         manager->RecieveSignal("save", "null", temp);
@@ -113,7 +113,7 @@ void MainWindow::on_OpenButton_clicked() //send open command, alternate visible 
     {
         QModelIndex index = this->listview->currentIndex();
         QString name = index.data(Qt::DisplayRole).toString();
-        textbox->setText(QString::fromStdString(HelperFunction::getCurrentTime()) + " Opening file " + name);
+        textbox->setText(name);
         manager->openFile = name;
         QStringList contents = manager->PollFileContents(name);
         for (int i = 0; i < contents.size(); i++)
@@ -121,9 +121,15 @@ void MainWindow::on_OpenButton_clicked() //send open command, alternate visible 
             texteditor->append(contents[i]);
         }
         texteditor->setVisible(true);
-        texteditor->setReadOnly(false);
+        if (name.QString::toStdString().substr(name.length() -4, name.length() - 1) == ".txt")
+            texteditor->setReadOnly(false);
+        else
+            texteditor->setReadOnly(true);
         listview->setVisible(false);
-        textbox->setReadOnly(false);
+        if (name.QString::toStdString().substr(name.length() -4, name.length() - 1) == ".txt")
+            textbox->setReadOnly(false);
+        else
+            textbox->setReadOnly(true);
 
         OpenButton->setEnabled(false);
         CompileButton->setEnabled(false);
@@ -205,7 +211,7 @@ void MainWindow::on_actionAdmin_Options_triggered() //alternates between program
     message.exec();
 }
 
-void MainWindow::displayMessage(QString text) //displays a given message, with location depending on flag
+void MainWindow::displayInBox(QString text) //displays a given message, with location depending on flag
 {
     QMessageBox message;
     message.setWindowTitle("System Message");
@@ -213,16 +219,32 @@ void MainWindow::displayMessage(QString text) //displays a given message, with l
     message.exec();
 }
 
-void MainWindow::displayOutput(QStringList output) //displays a programs output
+void MainWindow::displayInPopup(QStringList output, QString source) //displays a programs output
 {
-    QMessageBox message;
-    message.setWindowTitle("Output");
-    QString text;
-    text.append("<b>Program Output: </b> <br>");
-    for (int i = 0; i < output.size(); i++)
+    if (source == QString::fromStdString("Program"))
     {
-        text.append(output[i] + "<br>");
+        QMessageBox message;
+        message.setWindowTitle("Output");
+        QString text;
+        text.append("<b>Program Output: </b> <br>");
+        for (int i = 0; i < output.size(); i++)
+        {
+            text.append(output[i] + "<br>");
+        }
+        message.setText(text);
+        message.exec();
     }
-    message.setText(text);
-    message.exec();
+    else if (source == QString::fromStdString("Logger"))
+    {
+        QMessageBox message;
+        message.setWindowTitle("Logger Message");
+        QString text;
+        text.append("<b>Logger: </b> <br>");
+        for (int i = 0; i < output.size(); i++)
+        {
+            text.append(output[i] + "<br>");
+        }
+        message.setText(text);
+        message.exec();
+    }
 }

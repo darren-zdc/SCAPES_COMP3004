@@ -14,6 +14,12 @@ filemanager::filemanager()
 
 }
 
+void filemanager::setLogger(Logger *log)
+{
+    this->log = log;
+    this->log->setManager(this);
+}
+
 QStringList filemanager::programRequest() //request list of programs
 {
     return (createOpenControl("null", 2));
@@ -69,7 +75,7 @@ void filemanager::createRunControl(QString name) //initiate control flow to exec
     }
     else
     {
-        this->ui->displayMessage(1, "ExecuteControl");
+        this->ui->displayMessage(to_string(1), "ExecuteControl");
     }
 }
 
@@ -86,7 +92,7 @@ void filemanager::createSaveControl(QString name, QStringList contents) //initia
     savecontrol *control = new savecontrol(name, contents, pref->GetDirectory());
     int message = control->saveFile();
     delete control;
-    this->ui->displayMessage(message, "SaveControl");
+    this->ui->displayMessage(to_string(message), "SaveControl");
 }
 
 void filemanager::createRenameControl(QString name, QString newName) //initiate control flow to rename a file (only occurs after saving a file)
@@ -94,7 +100,7 @@ void filemanager::createRenameControl(QString name, QString newName) //initiate 
     renameControl *control = new renameControl(name.QString::toStdString(), newName.QString::toStdString(), pref->GetDirectory());
     int message = control->renameFile();
     delete control;
-    this->ui->displayMessage(message, "RenameControl");
+    this->ui->displayMessage(to_string(message), "RenameControl");
 
 }
 
@@ -110,5 +116,10 @@ void filemanager::createCompileControl(QString name) //initiate control flow for
     compileControl *control = new compileControl(name, pref->GetDirectory());
     int message = control->compile();
     delete control;
-    this->ui->displayMessage(message, "CompileControl");
+    this->ui->displayMessage(to_string(message), "CompileControl");
+}
+
+void filemanager::sendMessage(string message, string source)
+{
+    this->ui->displayMessage(message, source);
 }

@@ -37,7 +37,7 @@ int Program::Compile()
     else if (myprogram.fail())
     {
         //failed to open a file
-        logger->error("Faild to open file \"" + filename + "\" under \"" + directory + "\" directory");
+        logger->error("Failed to open file \"" + filename + "\" under \"" + directory + "\" directory");
         return ERROR;
     }
 

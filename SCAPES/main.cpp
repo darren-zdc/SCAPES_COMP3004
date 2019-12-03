@@ -17,7 +17,8 @@ int main(int argc, char *argv[])
     manager->window = &w;
     manager->GetFileManager()->ui = manager;
     Logger* logger = Logger::getInstance();
-    logger->setOutput(w.getBottomBox());
+    manager->GetFileManager()->setLogger(logger);
+    //logger->setOutput(w.getBottomBox());
     w.show();
     return a.exec();
     /*

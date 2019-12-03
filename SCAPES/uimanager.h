@@ -21,8 +21,9 @@ public:
     QString getLang();
     void SetDirectory(QString dir, QString user);
     void SetLang(QString lang, QString user);
-    void displayMessage(int type, string source);
+    void displayMessage(string type, string source);
     void displayOutput(string output);
+    int requestInput(string name);
     filemanager* GetFileManager();
     QString openFile;
 private:

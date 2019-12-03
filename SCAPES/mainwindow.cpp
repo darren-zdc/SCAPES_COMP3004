@@ -5,6 +5,7 @@
 #include <QStringListModel>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QInputDialog>
 
 MainWindow::MainWindow(QWidget *parent) :   //setup use of UI file
     QMainWindow(parent),
@@ -34,7 +35,7 @@ void MainWindow::attachDependancies(uimanager *manager) //connects the mainwindo
     this->texteditor = this->findChild<QTextEdit *>("TextEditor"); //setup text editor
     texteditor->setVisible(false);
     this->listview = this->findChild<QListView *>("ProgramList"); //setup program list
-    this->CreateButton = this->findChild<QPushButton *>("CreateButton");
+    this->CreateButton = this->findChild<QPushButton *>("CreateButton"); //setup ui buttons
     this->RunButton = this->findChild<QPushButton *>("RunButton");
     this->OpenButton = this->findChild<QPushButton *>("OpenButton");
     this->CloseButton = this->findChild<QPushButton *>("CloseButton");
@@ -75,8 +76,11 @@ void MainWindow::on_CompileButton_clicked() //sends compile command, then update
     {
         QModelIndex index = this->listview->currentIndex();
         QString name = index.data(Qt::DisplayRole).toString();
-        textbox->setText(QString::fromStdString(HelperFunction::getCurrentTime()) + " Compiling File " + name);
-        manager->RecieveSignal("compile", name, "null");
+        if (name.endsWith(".txt")) //can only compile .txt files
+        {
+            textbox->setText(QString::fromStdString(HelperFunction::getCurrentTime()) + " Compiling File " + name);
+            manager->RecieveSignal("compile", name, "null");
+        }
         if (manager->PollProgramList().size() != 0)
         {
             QStringListModel *model = new QStringListModel;
@@ -99,7 +103,7 @@ void MainWindow::on_RunButton_clicked() //sends run command, then update the pro
 
 void MainWindow::on_SaveButton_clicked() //send save command
 {
-    if (texteditor->isVisible())
+    if (texteditor->isVisible() && manager->openFile.endsWith(".txt"))
     {
         QString temp = texteditor->toPlainText();
         manager->RecieveSignal("save", "null", temp);
@@ -107,13 +111,13 @@ void MainWindow::on_SaveButton_clicked() //send save command
     }
 }
 
-void MainWindow::on_OpenButton_clicked() //send open command
+void MainWindow::on_OpenButton_clicked() //send open command, alternate visible ui buttons
 {
     if (this->listview->currentIndex().isValid() && texteditor->isVisible() == false)
     {
         QModelIndex index = this->listview->currentIndex();
         QString name = index.data(Qt::DisplayRole).toString();
-        textbox->setText(QString::fromStdString(HelperFunction::getCurrentTime()) + " Opening file " + name);
+        textbox->setText(name);
         manager->openFile = name;
         QStringList contents = manager->PollFileContents(name);
         for (int i = 0; i < contents.size(); i++)
@@ -121,9 +125,15 @@ void MainWindow::on_OpenButton_clicked() //send open command
             texteditor->append(contents[i]);
         }
         texteditor->setVisible(true);
-        texteditor->setReadOnly(false);
+        if (name.QString::toStdString().substr(name.length() -4, name.length() - 1) == ".txt")
+            texteditor->setReadOnly(false);
+        else
+            texteditor->setReadOnly(true);
         listview->setVisible(false);
-        textbox->setReadOnly(false);
+        if (name.QString::toStdString().substr(name.length() -4, name.length() - 1) == ".txt")
+            textbox->setReadOnly(false);
+        else
+            textbox->setReadOnly(true);
 
         OpenButton->setEnabled(false);
         CompileButton->setEnabled(false);
@@ -141,7 +151,7 @@ void MainWindow::on_OpenButton_clicked() //send open command
     }
 }
 
-void MainWindow::on_CloseButton_clicked() //send close command, then update program list
+void MainWindow::on_CloseButton_clicked() //send close command, then update program list and alternate visible ui elements
 {
     if (texteditor->isVisible())
     {
@@ -205,7 +215,7 @@ void MainWindow::on_actionAdmin_Options_triggered() //alternates between program
     message.exec();
 }
 
-void MainWindow::displayMessage(QString text) //displays a given message, with location depending on flag
+void MainWindow::displayInBox(QString text) //displays a given message, with location depending on flag
 {
     QMessageBox message;
     message.setWindowTitle("System Message");
@@ -213,16 +223,67 @@ void MainWindow::displayMessage(QString text) //displays a given message, with l
     message.exec();
 }
 
-void MainWindow::displayOutput(QStringList output)
+void MainWindow::displayInPopup(QStringList output, QString source) //displays a programs output
 {
-    QMessageBox message;
-    message.setWindowTitle("Output");
-    QString text;
-    text.append("<b>Program Output: </b> <br>");
-    for (int i = 0; i < output.size(); i++)
+    if (source == QString::fromStdString("Program"))
     {
-        text.append(output[i] + "<br>");
+        QMessageBox message;
+        message.setWindowTitle("Output");
+        QString text;
+        text.append("<b>Program Output: </b> <br>");
+        for (int i = 0; i < output.size(); i++)
+        {
+            text.append(output[i] + "<br>");
+        }
+        message.setText(text);
+        message.exec();
     }
-    message.setText(text);
-    message.exec();
+    else if (source == QString::fromStdString("Logger"))
+    {
+
+        QMessageBox message;
+        message.setWindowTitle("Logger Message");
+        QString text;
+        text.append("<b>Logger: </b> <br>");
+        for (int i = 0; i < output.size(); i++)
+        {
+            text.append(output[i] + "<br>");
+        }
+        message.setText(text);
+        message.exec();
+
+    }
+    else if (source == QString::fromStdString("Input"))
+    {
+        QMessageBox message;
+        message.setWindowTitle("Input Error");
+        QString text;
+        text.append("<b>Logger: </b> <br>");
+        for (int i = 0; i < output.size(); i++)
+        {
+            text.append(output[i] + "<br>");
+        }
+        message.setText(text);
+        message.exec();
+    }
+}
+
+int MainWindow::requestInput(QString name)
+{
+    bool success = false;
+
+    int value = QInputDialog::getInt(this, tr("Input Required"), "Input value for " + name, 0, -2147483647, 2147483647, 1, &success);
+
+    if (success)
+    {
+        return value;
+    }
+    else
+    {
+        QStringList temp;
+        temp[0] = "Input required, defaulting to 0";
+        this->displayInPopup(temp, QString::fromStdString("Input"));
+        int value = 0;
+        return value;
+    }
 }

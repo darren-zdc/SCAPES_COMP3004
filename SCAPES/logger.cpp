@@ -1,4 +1,5 @@
 #include "logger.h"
+#include <filemanager.h>
 Logger* Logger::myLogger = nullptr;
 
 Logger::Logger()
@@ -23,27 +24,30 @@ Logger* Logger::getInstance()
     return myLogger;
 }
 
-void Logger::setOutput(QTextEdit *textBox)
+void Logger::setManager(filemanager *manager)
 {
-    this->textBox = textBox;
+    this->manager = manager;
 }
 
 void Logger::info(string meg)
 {
-    textBox->append(QString::fromStdString("[INFO]: " + HelperFunction::getCurrentTime() + " " + meg));
+    this->manager->sendMessage("[INFO]: " + HelperFunction::getCurrentTime() + " " + meg, "Logger");
 }
 
 void Logger::error(string meg)
 {
-    textBox->append(QString::fromStdString("[ERROR]: " + HelperFunction::getCurrentTime() + " " + meg));
+    this->manager->sendMessage("[ERROR]: " + HelperFunction::getCurrentTime() + " " + meg, "Logger");
 }
+
 
 void Logger::warning(string meg)
 {
-    textBox->append(QString::fromStdString("[WARNING]: " + HelperFunction::getCurrentTime() + " " + meg));
+    this->manager->sendMessage("[WARNING]: " + HelperFunction::getCurrentTime() + " " + meg, "Logger");
 }
+
 
 void Logger::debug(string meg)
 {
-    textBox->append(QString::fromStdString("[DEBUG]: " + HelperFunction::getCurrentTime() + " " + meg));
+    this->manager->sendMessage("[DEBUG]: " + HelperFunction::getCurrentTime() + " " + meg, "Logger");
 }
+

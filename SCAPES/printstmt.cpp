@@ -35,16 +35,20 @@ int PrintStmt::run()
     if (p_operands[0][0] == '"')
     {
         program->appendProgramOutput(p_operands[0]);
+	logger->info("Printing: " + p_operands[0]);
         return SUCCESS;
     }
     int output = program->getValueByInput(p_operands[0]);
-    if (output > 0)
+    if (output >= 0)
     {
-        program->appendProgramOutput(p_operands[0]);
+        program->appendProgramOutput(to_string(output));
+	logger->info("Printing: " + to_string(output));
         return SUCCESS;
     }
-    else{
+    else
+    {	
         logger->error("Invalid print statement");
         return ERROR;
     }
+    return 0;
 }

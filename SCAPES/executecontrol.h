@@ -4,17 +4,21 @@
 #include <string>
 #include "program.h"
 using namespace std;
+
+class filemanager;
+
 class executeControl
 {
 public:
-    executeControl(string file, string dir);
+    executeControl(string file, string dir, filemanager* manager);
     string executeProgram();
-    int readInput();
+    int readInput(string name);
     int output(string value);
 private:
     string directory;
     string name;
-    Program* program = nullptr;
+    Program* program;
+    filemanager* manager;
 };
 
 #endif // EXECUTECONTROL_H

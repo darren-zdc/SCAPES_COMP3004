@@ -1,4 +1,5 @@
 #include "program.h"
+#include <executecontrol.h>
 
 
 Program::Program(string filename, string dir) : filename(filename), directory(dir)
@@ -41,7 +42,7 @@ int Program::Compile()
     else if (myprogram.fail())
     {
         //failed to open a file
-        logger->error("Faild to open file \"" + filename + "\" under \"" + directory + "\" directory");
+        logger->error("Failed to open file \"" + filename + "\" under \"" + directory + "\" directory");
         return ERROR;
     }
 
@@ -308,7 +309,7 @@ void Program::serializeToJSON()
 }
 
 Program* Program::deserializeToObject(string jsonFilename, string dir)
-{
+{   
     QFile jsonFile(QString::fromStdString(dir + "/" + jsonFilename));
     jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
     QString programJson = jsonFile.readAll();

@@ -20,8 +20,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     void attachDependancies(uimanager *manager);
-    void displayMessage(QString text);
-    void displayOutput(QStringList output);
+    void displayInBox(QString text);
+    void displayInPopup(QStringList output, QString source);
+    int requestInput(QString name);
     QTextEdit* getBottomBox();
     ~MainWindow();
 

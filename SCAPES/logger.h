@@ -6,6 +6,8 @@
 #include "helperfunction.h"
 using namespace std;
 
+class filemanager;
+
 class Logger
 {
 public:
@@ -13,7 +15,7 @@ public:
     Logger(QTextEdit*);
     ~Logger();
     static Logger* getInstance();
-    void setOutput(QTextEdit* textBox);
+    void setManager(filemanager* manager);
     void info(string meg);
     void error(string mes);
     void warning(string mes);
@@ -21,6 +23,7 @@ public:
 private:
     QTextEdit* textBox;
     static Logger* myLogger;
+    filemanager *manager;
 
 };
 #endif // LOGGER_H

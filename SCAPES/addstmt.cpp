@@ -30,5 +30,40 @@ int AddStmt::compile()
 
 int AddStmt::run()
 {
+    string destName;
+    int sourceValue;
+    int destValue;
+    int destIndex;
+    Variable *destVar;
+
+
+    if(program->getValueByInput(p_operands[0]) != -1){
+        sourceValue = program->getValueByInput(p_operands[0]);
+    }else{
+        return -1;
+    }
+
+    if(HelperFunction::isArraySyntax(p_operands[1],destName,&destIndex)){
+        if(program->findVariable(destName, destVar)){
+            if(destIndex > destVar->getSize() || destIndex < 1){
+                destValue = destVar->getValueByIndex(destIndex);
+            }else{
+                logger->error("Array out of bound.");
+                return -1;
+            }
+        }else{
+            logger->error("Variable '" + destName + "' does not exist.");
+            return -1;
+        }
+    }else{
+        if(program->findVariable(destName, destVar)){
+            destValue = destVar->getValue();
+        }else{
+            logger->error("Variable '" + destName + "' does not exist.");
+            return -1;
+        }
+    }
+
+    destVar->setValue(sourceValue+destValue);
     return 0;
 }

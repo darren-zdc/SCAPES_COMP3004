@@ -14,7 +14,7 @@ public:
 private:
     string directory;
     string name;
-    Program* program;
+    Program* program = nullptr;
 };
 
 #endif // EXECUTECONTROL_H

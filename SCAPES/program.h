@@ -28,7 +28,7 @@
 #include <fstream>
 #include <string>
 using namespace std;
-enum flag{ERROR, SUCCESS, CONTINUE, GREATER, SMALLER, EQUAL};
+enum flag{ERROR, SUCCESS, CONTINUE, END, GREATER, SMALLER, EQUAL};
 
 class Program
 {
@@ -37,6 +37,7 @@ public:
     static Program* deserializeToObject(string filename, string dir);
 
     Program(string filename, string dir);
+    ~Program();
     void setComparisonFlag(flag f);
     flag getComparisonFlag();
     void setJump(bool b);

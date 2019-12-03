@@ -36,7 +36,7 @@ int JLessStmt::run()
 {
     if (program->getComparisonFlag() == SMALLER)
     {
-
+        program->setJump(true);
     }
-    return 0;
+    return SUCCESS;
 }

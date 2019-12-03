@@ -31,6 +31,7 @@ int JmpStmt::compile()
 }
 
 int JmpStmt::run()
-{
-    return 0;
+{    
+    program->setJump(true);
+    return SUCCESS;
 }

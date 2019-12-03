@@ -35,5 +35,9 @@ int JEqStmt::compile()
 
 int JEqStmt::run()
 {
-    return 0;
+    if (program->getComparisonFlag() == EQUAL)
+    {
+        program->setJump(true);
+    }
+    return SUCCESS;
 }

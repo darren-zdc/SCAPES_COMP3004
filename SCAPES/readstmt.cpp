@@ -59,7 +59,7 @@ int ReadStmt::compile()
 
 int ReadStmt::run()
 {
-    string varName = operands[0].getValue();
+    string varName = p_operands[0];
     int index = 0;
     if (varName[0] == '$')
     {

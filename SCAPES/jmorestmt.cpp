@@ -35,5 +35,9 @@ int JMoreStmt::compile()
 
 int JMoreStmt::run()
 {
-    return 0;
+    if (program->getComparisonFlag() == GREATER)
+    {
+        program->setJump(true);
+    }
+    return SUCCESS;
 }

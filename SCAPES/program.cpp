@@ -72,11 +72,17 @@ int Program::Execute()
     while(1)
     {
         Statement* st = statements.at(index);
-        if (!st->run())
+        int status = st->run();
+        if (status == ERROR)
         {
             //error when running
             logger->error("Runtime error in line "  + to_string(index));
             return ERROR;
+        }
+        else if (status == END )
+        {
+            logger->info("Run successfully!!");
+            return SUCCESS;
         }
         if (jump)
         {
@@ -427,6 +433,11 @@ int Program::setVariable(string name, int value, int index)
 void Program::setComparisonFlag(flag f)
 {
     this->comparisonFlag = f;
+}
+
+void Program::setJump(bool b)
+{
+    this->jump = b;
 }
 
 flag Program::getComparisonFlag()

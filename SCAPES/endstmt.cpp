@@ -26,5 +26,5 @@ int EndStmt::compile()
 
 int EndStmt::run()
 {
-    return 0;
+    return END;
 }

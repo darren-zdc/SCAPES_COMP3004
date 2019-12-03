@@ -26,7 +26,6 @@ int JmpStmt::compile()
 
     //check if the previous instruction is comp
     program->createLabel(p_operands[0]);
-    operands.push_back(p_operands[0]);
     return SUCCESS;
 }
 

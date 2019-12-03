@@ -26,7 +26,6 @@ int PrintStmt::compile()
         logger->error("Invalid prt input");
         return ERROR;
     }
-    operands.push_back(Operand(p_operands[0]));
     return SUCCESS;
 }
 

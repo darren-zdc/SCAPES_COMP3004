@@ -81,7 +81,7 @@ int Program::Execute()
         if (status == ERROR)
         {
             //error when running
-            logger->error("Runtime error in line "  + to_string(index));
+            logger->error("Runtime error in line "  + to_string(index+1));
             return ERROR;
         }
         else if (status == END )
@@ -95,7 +95,7 @@ int Program::Execute()
             if (labelIndex < 0)
             {
                 //Error label not found
-                logger->error("Label not found for line " + to_string(index));
+                logger->error("Label not found for line " + to_string(index+1));
                 return ERROR;
             }
             else
@@ -189,6 +189,7 @@ int Program::createStatement(string instr, vector<string> operds, string label)
         logger->error("Invalid instruction " + instr);
         return ERROR;
     }
+    statements.back()->setOperands(operds);
     statements.back()->setProgram(*this);
     return ERROR;
 }
@@ -356,11 +357,6 @@ int Program::findVariable(string name, Variable** output)
 
 int Program::findLabel(string label)
 {
-    if (!ifExistLabel(label))
-    {
-        logger->error("Label not found");
-        return -1;
-    }
     for (size_t i=0; i<statements.size(); i++)
     {
         if (statements.at(i)->getLabel()->getName() == label)
@@ -391,9 +387,9 @@ int Program::ifPrevCompExist()
     return ERROR;
 }
 
-int Program::readInput()
+int Program::readInput(string varname)
 {
-    return SUCCESS;
+    return control->readInput(varname);
 }
 
 int Program::setVariable(string name, int value, int index)
@@ -439,11 +435,11 @@ void Program::appendProgramOutput(string input)
 {
     if (programOutput.empty())
     {
-        programOutput = input + "\n";
+        programOutput = input + "#";
     }
     else
     {
-        programOutput += input + "\n";
+        programOutput += input + "#";
     }
 }
 

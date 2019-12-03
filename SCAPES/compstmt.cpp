@@ -23,15 +23,13 @@ int CompStmt::compile()
         logger->error("Invalid cmp input");
         return ERROR;
     }
-    operands.push_back(Operand(p_operands[0]));
-    operands.push_back(Operand(p_operands[1]));
     return SUCCESS;
 }
 
 int CompStmt::run()
 {
-    int var1 = program->getValueByInput(operands[0].getValue());
-    int var2 = program->getValueByInput(operands[1].getValue());
+    int var1 = program->getValueByInput(p_operands[0]);
+    int var2 = program->getValueByInput(p_operands[1]);
     if (var1 < 0 || var2 < 0)
     {
         return ERROR;
@@ -39,14 +37,17 @@ int CompStmt::run()
     if (var1 < var2)
     {
         program->setComparisonFlag(SMALLER);
+        return SUCCESS;
     }
     else if (var1 > var2)
     {
         program->setComparisonFlag(GREATER);
+        return SUCCESS;
     }
     else if(var1 == var2)
     {
         program->setComparisonFlag(EQUAL);
+        return SUCCESS;
     }
-    return 0;
+    return ERROR;
 }

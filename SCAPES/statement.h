@@ -23,6 +23,7 @@ public:
     virtual int run() = 0;
     string getInstruction();
     vector<Operand> getOperands();
+    void setOperands(vector<string> operds);
     Label* getLabel();
     void setProgram(Program &prog);
 protected:

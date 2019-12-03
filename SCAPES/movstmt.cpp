@@ -23,9 +23,6 @@ int MovStmt::compile()
         logger->error("Invalid mov input");
         return ERROR;
     }
-
-    operands.push_back(p_operands[0]);
-    operands.push_back(p_operands[1]);
     return SUCCESS;
 }
 
@@ -38,33 +35,49 @@ int MovStmt::run()
     Variable *destVar;
 
 
-    if(program->getValueByInput(p_operands[0]) != -1){
+    if (program->getValueByInput(p_operands[0]) != -1)
+    {
         sourceValue = program->getValueByInput(p_operands[0]);
-    }else{
-        return -1;
+    }
+    else
+    {
+        return ERROR;
     }
 
-    if(HelperFunction::isArraySyntax(p_operands[1],destName,&destIndex)){
-        if(program->findVariable(destName, destVar)){
-            if(destIndex > destVar->getSize() || destIndex < 1){
+    if (HelperFunction::isArraySyntax(p_operands[1],destName,&destIndex))
+    {
+        if (program->findVariable(destName, &destVar))
+        {
+            if (destIndex > destVar->getSize() || destIndex < 1)
+            {
                 destValue = destVar->getValueByIndex(destIndex);
-            }else{
-                logger->error("Array out of bound.");
-                return -1;
             }
-        }else{
-            logger->error("Variable '" + destName + "' does not exist.");
-            return -1;
+            else
+            {
+                logger->error("Array out of bound.");
+                return ERROR;
+            }
         }
-    }else{
-        if(program->findVariable(destName, destVar)){
+        else
+        {
+            logger->error("Variable \"" + destName + "\" does not exist");
+            return ERROR;
+        }
+    }
+    else
+    {
+        destName = p_operands[1];
+        if (program->findVariable(destName, &destVar))
+        {
             destValue = destVar->getValue();
-        }else{
+        }
+        else
+        {
             logger->error("Variable '" + destName + "' does not exist.");
-            return -1;
+            return ERROR;
         }
     }
 
     destVar->setValue(sourceValue);
-    return 0;
+    return SUCCESS;
 }

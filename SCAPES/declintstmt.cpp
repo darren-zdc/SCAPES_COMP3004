@@ -29,7 +29,6 @@ int DeclIntStmt::compile()
         logger->error("Variablie " + p_operands[0] + " already exists");
         return ERROR;
     }
-    operands.push_back(Operand(p_operands[0]));
     return SUCCESS;
 }
 

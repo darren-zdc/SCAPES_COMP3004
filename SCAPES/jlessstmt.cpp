@@ -28,7 +28,6 @@ int JLessStmt::compile()
         return ERROR;
     }
     program->createLabel(p_operands[0]);
-    operands.push_back(p_operands[0]);
     return 1;
 }
 

@@ -49,11 +49,6 @@ int DeclArrStmt::compile()
         logger->error("Variable already exists");
         return ERROR;
     }
-
-
-
-    operands.push_back(Operand(p_operands[0]));
-    operands.push_back(Operand(p_operands[1]));
     return SUCCESS;
 }
 

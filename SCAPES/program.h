@@ -18,8 +18,6 @@
 #include "label.h"
 #include "helperfunction.h"
 
-#include "uimanager.h"
-
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -59,7 +57,7 @@ public:
 
     int setVariable(string name, int value, int index = 0);
     int getValueByInput(string input);
-    int readInput();
+    int readInput(string varname);
     int output(string value);
     int arrayToInt(const std::string& s);
 

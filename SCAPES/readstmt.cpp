@@ -53,7 +53,6 @@ int ReadStmt::compile()
         return 0;
     }
     */
-    operands.push_back(Operand(p_operands[0]));
     return SUCCESS;
 }
 
@@ -71,7 +70,6 @@ int ReadStmt::run()
         //Error: variable not exists
         return ERROR;
     }
-    int varValue = program->readInput();
-    logger->info("hahah");
+    int varValue = program->readInput(varName);
     return program->setVariable(varName, varValue, index);
 }

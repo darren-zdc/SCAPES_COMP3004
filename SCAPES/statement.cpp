@@ -33,6 +33,13 @@ vector<Operand> Statement::getOperands()
     return operands;
 }
 
+void Statement::setOperands(vector<string> operds)
+{
+    for (string o : operds) {
+        operands.push_back(Operand(o));
+    }
+}
+
 Label* Statement::getLabel()
 {
     return &label;

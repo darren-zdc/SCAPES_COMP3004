@@ -1,4 +1,5 @@
 #include "program.h"
+#include <executecontrol.h>
 
 
 Program::Program(string filename, string dir) : filename(filename), directory(dir)
@@ -299,7 +300,7 @@ void Program::serializeToJSON()
 }
 
 Program* Program::deserializeToObject(string jsonFilename, string dir)
-{
+{   
     QFile jsonFile(QString::fromStdString(dir + "/" + jsonFilename));
     jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
     QString programJson = jsonFile.readAll();

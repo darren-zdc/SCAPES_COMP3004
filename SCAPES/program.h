@@ -30,6 +30,8 @@
 using namespace std;
 enum flag{ERROR, SUCCESS, CONTINUE};
 
+class executeControl;
+
 class Program
 {
 
@@ -55,6 +57,8 @@ public:
     int readInput();
     int output(string value);
     int arrayToInt(const std::string& s);
+
+    executeControl* control;
 private:
     vector<Label> labels;
     vector<Statement*> statements;

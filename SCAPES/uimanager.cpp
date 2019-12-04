@@ -118,19 +118,19 @@ void uimanager::displayMessage(string type, string source) //display pop-up mess
     }
     else if (source == "ExecuteControl")
     {
-        window->displayInBox("Execution Error: Invalid File Type");
+        window->displayInBox("Execution Error");
     }
     else if (source == "Logger")
     {
         QString temp = QString::fromStdString(type);
         window->displayLoggerMessage(temp);
     }
-    else if (source == "ExecuteControl") //we are in an error case
-    {
-        QString temp = QString::fromStdString(type);
-        QStringList display = temp.split("#");
-        window->displayInPopup(display, QString::fromStdString("Program Execution"));
-    }
+    //else if (source == "ExecuteControl") //we are in an error case
+    //{
+      //  QString temp = QString::fromStdString(type);
+       // QStringList display = temp.split("#");
+       // window->displayInPopup(display, QString::fromStdString("Program Execution"));
+    //}
 }
 
 filemanager* uimanager::GetFileManager()

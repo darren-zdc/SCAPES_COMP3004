@@ -39,12 +39,10 @@ void Logger::error(string meg)
     this->manager->sendMessage("[ERROR]: " + HelperFunction::getCurrentTime() + " " + meg, "Logger");
 }
 
-
 void Logger::warning(string meg)
 {
     this->manager->sendMessage("[WARNING]: " + HelperFunction::getCurrentTime() + " " + meg, "Logger");
 }
-
 
 void Logger::debug(string meg)
 {

@@ -63,11 +63,13 @@ int ReadStmt::run()
 
     if (HelperFunction::isArraySyntax(varName, &varName, &index))
     {
+
     }
 
     if (!program->findVariable(varName, nullptr))
     {
         //Error: variable not exists
+        logger->error("variable not found");
         return ERROR;
     }
     int varValue = program->readInput(varName);

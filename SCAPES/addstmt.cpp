@@ -49,12 +49,12 @@ int AddStmt::run()
         {
             if (destIndex > destVar->getSize() || destIndex < 1)
             {
-                destValue = destVar->getValueByIndex(destIndex);
+                logger->error("Array out of bound.");
+                return ERROR;
             }
             else
             {
-                logger->error("Array out of bound.");
-                return ERROR;
+                destValue = destVar->getValueByIndex(destIndex);
             }
         }
         else
@@ -77,6 +77,6 @@ int AddStmt::run()
         }
     }
 
-    destVar->setValue(sourceValue+destValue);
+    program->setVariable(destName, sourceValue+destValue, destIndex);
     return SUCCESS;
 }

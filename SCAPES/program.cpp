@@ -469,13 +469,13 @@ int Program::getValueByInput(string input)
     {
         if (findVariable(varname, &var))
         {
-            if (var->isVarArray() && index < var->getSize())
+            if (var->isVarArray() && index <= var->getSize())
             {
                 return var->getValueByIndex(index);
             }
             else
             {
-                logger->error("Index out of bound");
+                logger->error("Index out of bound.");
                 return -1;
             }
         }

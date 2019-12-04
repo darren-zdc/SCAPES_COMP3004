@@ -31,7 +31,7 @@ int MovStmt::run()
     string destName;
     int sourceValue;
     int destValue;
-    int destIndex;
+    int destIndex = 0;
     Variable *destVar;
 
 
@@ -50,12 +50,12 @@ int MovStmt::run()
         {
             if (destIndex > destVar->getSize() || destIndex < 1)
             {
-                destValue = destVar->getValueByIndex(destIndex);
+                logger->error("Array out of bound.");
+                return ERROR;
             }
             else
             {
-                logger->error("Array out of bound.");
-                return ERROR;
+                destValue = destVar->getValueByIndex(destIndex);
             }
         }
         else
@@ -77,7 +77,6 @@ int MovStmt::run()
             return ERROR;
         }
     }
-
-    destVar->setValue(sourceValue);
+    program->setVariable(destName, sourceValue, destIndex);
     return SUCCESS;
 }

@@ -48,7 +48,7 @@ int MovStmt::run()
     {
         if (program->findVariable(destName, &destVar))
         {
-            if (destIndex > destVar->getSize() || destIndex < 1)
+            if (destIndex > destVar->getSize() || destIndex < 0)
             {
                 logger->error("Array out of bound.");
                 return ERROR;

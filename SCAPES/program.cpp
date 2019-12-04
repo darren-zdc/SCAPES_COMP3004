@@ -118,7 +118,7 @@ int Program::Execute()
             index++;
         }
 
-        if (index > statements.size())
+        if (index >= statements.size())
         {
             //Error index exceed statements size
             logger->error("No valid end statement");
@@ -469,7 +469,7 @@ int Program::getValueByInput(string input)
     {
         if (findVariable(varname, &var))
         {
-            if (var->isVarArray() && index <= var->getSize())
+            if (var->isVarArray() && index < var->getSize())
             {
                 return var->getValueByIndex(index);
             }

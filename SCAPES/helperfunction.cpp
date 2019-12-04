@@ -47,12 +47,37 @@ string HelperFunction::getFileName(string filePath, bool withExtension, char sep
     return "";
 }
 
-vector<string> HelperFunction::split(string line)
-{
-    istringstream iss(line);
-    vector<string> results((istream_iterator<std::string>(iss)),
-                   istream_iterator<std::string>());
-    return results;
+vector<string> HelperFunction::split(string str)
+{   
+    vector<string> v;
+    string temp;
+    for( size_t i=0; i<str.length(); i++){
+        char c = str[i];
+        //temp += to_string(c);
+        if( c == ' ' )
+        {
+            v.push_back(temp);
+            temp = "";
+        }
+        else if (c == '\"' )
+        {
+            temp += string(1,c);
+            i++;
+            while( str[i] != '\"' )
+            {
+                temp += string(1, str[i]);
+                i++;
+            }
+            temp += string(1, str[i]);
+        }
+        else {
+
+            temp += string(1, str[i]);
+
+        }
+    }
+    v.push_back(temp);
+    return v;
 }
 
 string HelperFunction::getCurrentTime()

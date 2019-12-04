@@ -62,8 +62,7 @@ int ReadStmt::run()
 {
     string varName = p_operands[0];
     string index;
-    bool flag = false;
-    int i = 0;
+    int i = -1;
     if (HelperFunction::isArraySyntax(varName, &varName, &index))
     {
         if (HelperFunction::isNumber(index))
@@ -76,7 +75,6 @@ int ReadStmt::run()
             Variable* indexVar;
             if (program->findVariable(index, &indexVar))
             {
-                flag = true;
                 i = indexVar->getValue();
             }
             else
@@ -94,7 +92,7 @@ int ReadStmt::run()
         return ERROR;
     }
 
-    if(flag){
+    if(i >= 0){
         return program->setVariable(varName, program->readInput(varName + " at index " + std::to_string(i)), i);
     }else{
         return program->setVariable(varName, program->readInput(p_operands[0]), i);

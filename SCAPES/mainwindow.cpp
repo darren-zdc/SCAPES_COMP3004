@@ -215,12 +215,17 @@ void MainWindow::on_actionAdmin_Options_triggered() //alternates between program
     message.exec();
 }
 
-void MainWindow::displayInBox(QString text) //displays a given message, with location depending on flag
+void MainWindow::displayInBox(QString text)
 {
     QMessageBox message;
     message.setWindowTitle("System Message");
     message.setText(text);
     message.exec();
+}
+
+void MainWindow::displayLoggerMessage(QString text)
+{
+    textbox->append(text);
 }
 
 void MainWindow::displayInPopup(QStringList output, QString source) //displays a programs output
@@ -258,7 +263,7 @@ void MainWindow::displayInPopup(QStringList output, QString source) //displays a
         QMessageBox message;
         message.setWindowTitle("Input Error");
         QString text;
-        text.append("<b>Logger: </b> <br>");
+        text.append("<b>Invalid Input: </b> <br>");
         for (int i = 0; i < output.size(); i++)
         {
             text.append(output[i] + "<br>");
@@ -281,7 +286,7 @@ int MainWindow::requestInput(QString name)
     else
     {
         QStringList temp;
-        temp[0] = "Input required, defaulting to 0";
+        temp.append("Input required, defaulting to 0");
         this->displayInPopup(temp, QString::fromStdString("Input"));
         int value = 0;
         return value;

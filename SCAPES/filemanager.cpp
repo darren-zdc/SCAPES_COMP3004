@@ -70,7 +70,7 @@ void filemanager::createRunControl(QString name) //initiate control flow to exec
     {
         executeControl *control = new executeControl(name.QString::toStdString(), pref->GetDirectory(), this);
         string output = control->executeProgram();
-        //control->readInput("test");
+        control->readInput("test");
         delete control;
         this->ui->displayOutput(output);
     }

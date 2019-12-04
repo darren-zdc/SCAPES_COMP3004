@@ -21,6 +21,7 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     void attachDependancies(uimanager *manager);
     void displayInBox(QString text);
+    void displayLoggerMessage(QString text);
     void displayInPopup(QStringList output, QString source);
     int requestInput(QString name);
     QTextEdit* getBottomBox();

@@ -95,7 +95,7 @@ int ReadStmt::run()
     }
 
     if(flag){
-        return program->setVariable(varName, program->readInput("$" + varName + "+" + std::to_string(i)), i);
+        return program->setVariable(varName, program->readInput(varName + " at index " + std::to_string(i)), i);
     }else{
         return program->setVariable(varName, program->readInput(p_operands[0]), i);
     }

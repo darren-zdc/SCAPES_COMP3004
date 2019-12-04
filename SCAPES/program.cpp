@@ -469,7 +469,7 @@ int Program::getValueByInput(string input)
     {
         if (findVariable(varname, &var))
         {
-            if (var->isVarArray() && index <= var->getSize())
+            if (var->isVarArray() && index < var->getSize())
             {
                 return var->getValueByIndex(index);
             }

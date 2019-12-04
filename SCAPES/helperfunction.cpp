@@ -13,7 +13,7 @@ int HelperFunction::isArraySyntax(string input, string* varname, string* i)
         if (!input.find("+"))
             return 0;
         *varname = input.substr(1,input.find("+")-1);
-        *i = input.substr(input.find("+"), input.length() - input.find("+"));
+        *i = input.substr(input.find("+")+1);
         return 1;
     }
     return 0;

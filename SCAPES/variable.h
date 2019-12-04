@@ -9,6 +9,7 @@ public:
     Variable();
     Variable(string name);
     Variable(string name, int size);
+    ~Variable();
     int getValue();
     int getValueByIndex(int i); // for array
     void setValue(int value);
@@ -19,7 +20,7 @@ private:
     int value;
     int size;
     bool isArray;
-    vector<int> arrayValues;
+    int arrayValues[10];
 };
 
 #endif // VARIABLE_H

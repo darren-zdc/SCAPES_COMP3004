@@ -7,6 +7,19 @@ Program::Program(string filename, string dir) : filename(filename), directory(di
     logger = Logger::getInstance();
 }
 
+Program::~Program()
+{
+    //deallocated statement vector
+    delete logger;
+    for (Statement* st :statements)
+    {
+        delete st;
+    }
+    for (Variable* var :variables)
+    {
+        delete var;
+    }
+}
 
 int Program::Compile()
 {
@@ -73,11 +86,17 @@ int Program::Execute()
     while(1)
     {
         Statement* st = statements.at(index);
-        if (!st->run())
+        int status = st->run();
+        if (status == ERROR)
         {
             //error when running
-            logger->error("Runtime error in line "  + to_string(index));
+            logger->error("Runtime error in line "  + to_string(index+1));
             return ERROR;
+        }
+        else if (status == END )
+        {
+            logger->info("Run successfully!!");
+            return SUCCESS;
         }
         if (jump)
         {
@@ -85,7 +104,7 @@ int Program::Execute()
             if (labelIndex < 0)
             {
                 //Error label not found
-                logger->error("Label not found for line " + to_string(index));
+                logger->error("Label not found for line " + to_string(index+1));
                 return ERROR;
             }
             else
@@ -179,6 +198,8 @@ int Program::createStatement(string instr, vector<string> operds, string label)
         logger->error("Invalid instruction " + instr);
         return ERROR;
     }
+    statements.back()->setOperands(operds);
+    statements.back()->setProgram(*this);
     return ERROR;
 }
 
@@ -211,23 +232,22 @@ int Program::createStatement(string line, string label)
         vector<string> tempOperds(lineParses.begin()+1, lineParses.end());
         createStatement(lineParses[0], tempOperds, label);
     }
-    statements.back()->setProgram(*this);
     return SUCCESS;
 }
 
 int Program::createVariable(string name, int size)
 {
-    if(ifExistVariable(name, nullptr))
+    if(findVariable(name, nullptr))
     {
         return ERROR;
     }
     if (size == 0)
     {
-        variables.push_back(Variable(name));
+        variables.push_back(new Variable(name));
     }
     else
     {
-        variables.push_back(Variable(name, size));
+        variables.push_back(new Variable(name, size));
     }
     return SUCCESS;
 }
@@ -271,10 +291,10 @@ void Program::serializeToJSON()
 
     //serialize the variable vector
     QJsonArray jVariables;
-    for(Variable var:variables)
+    for(Variable* var:variables)
     {
         QJsonObject jVariable;
-        jVariable["name"] = QString::fromStdString(var.getName());
+        jVariable["name"] = QString::fromStdString(var->getName());
         jVariables.push_back(jVariable);
     }
     jProgram["variables"] = jVariables;
@@ -323,29 +343,21 @@ Program* Program::deserializeToObject(string jsonFilename, string dir)
         //qDebug() << jSt["instruction"].toString();
         p->createStatement(jSt["instruction"].toString().toStdString(), operds, jSt["label"].toString().toStdString());
     }
-    QJsonArray vars = jProgram["variables"].toArray();
-    foreach (const QJsonValue & var, vars)
-    {
-        p->createVariable(var["name"].toString().toStdString());
-        //qDebug() << var["name"].toString();
-    }
-    QJsonArray labels = jProgram["labels"].toArray();
-    foreach (const QJsonValue & label, labels)
-    {
-        p->createLabel(label["name"].toString().toStdString());
-        //qDebug() << label["name"].toString();
-
-    }
     return p;
 }
 
-int Program::findVariable(string name, Variable* output)
+int Program::findVariable(string name, Variable** output)
 {
-    for(Variable element: variables)
+    if (this->variables.empty())
     {
-        if (element.getName() == name)
+        return ERROR;
+    }
+    for(Variable* element: variables)
+    {
+        if (element->getName() == name)
         {
-            output = &element;
+            if (output != nullptr)
+                *output = element;
             return SUCCESS;
         }
     }
@@ -354,11 +366,6 @@ int Program::findVariable(string name, Variable* output)
 
 int Program::findLabel(string label)
 {
-    if (!ifExistLabel(label))
-    {
-        logger->error("Label not found");
-        return -1;
-    }
     for (size_t i=0; i<statements.size(); i++)
     {
         if (statements.at(i)->getLabel()->getName() == label)
@@ -369,18 +376,6 @@ int Program::findLabel(string label)
     return -1;
 }
 
-int Program::ifExistVariable(string name, Variable* output)
-{
-    for(Variable element: variables)
-    {
-        if (element.getName() == name)
-        {
-            output = &element;
-            return SUCCESS;
-        }
-    }
-    return ERROR;
-}
 
 int Program::ifExistLabel(string name)
 {
@@ -401,15 +396,15 @@ int Program::ifPrevCompExist()
     return ERROR;
 }
 
-int Program::readInput()
+int Program::readInput(string varname)
 {
-    return 0;
+    return control->readInput(varname);
 }
 
 int Program::setVariable(string name, int value, int index)
 {
-    Variable* var = nullptr;
-    if (!findVariable(name, var))
+    Variable* var;
+    if (!findVariable(name, &var))
     {
         //error variable not exist
         return ERROR;
@@ -430,35 +425,57 @@ void Program::setComparisonFlag(flag f)
     this->comparisonFlag = f;
 }
 
+void Program::setJump(bool b)
+{
+    this->jump = b;
+}
+
 flag Program::getComparisonFlag()
 {
     return this->comparisonFlag;
 }
 
+string Program::getProgramOutput()
+{
+    return programOutput;
+}
+
+void Program::appendProgramOutput(string input)
+{
+    if (programOutput.empty())
+    {
+        programOutput = input + "#";
+    }
+    else
+    {
+        programOutput += input + "#";
+    }
+}
+
 int Program::getValueByInput(string input)
 {
     int index = 0;
-    Variable* var = nullptr;
+    Variable* var;
     string varname;
     if (HelperFunction::isNumber(input))
     {
         return stoi(input);
     }
-    else if (ifExistVariable(input, var))
+    else if (findVariable(input, &var))
     {
         return var->getValue();
     }
-    else if (HelperFunction::isArraySyntax(input, varname, &index))
+    else if (HelperFunction::isArraySyntax(input, &varname, &index))
     {
-        if (ifExistVariable(varname, var))
+        if (findVariable(varname, &var))
         {
-            if (var->isVarArray() && index < var->getSize())
+            if (var->isVarArray() && index <= var->getSize())
             {
                 return var->getValueByIndex(index);
             }
             else
             {
-                logger->error("Index out of bound");
+                logger->error("Index out of bound.");
                 return -1;
             }
         }

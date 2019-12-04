@@ -22,13 +22,61 @@ int AddStmt::compile()
         logger->error("Invalid add input");
         return ERROR;
     }
-
-    operands.push_back(p_operands[0]);
-    operands.push_back(p_operands[1]);
     return SUCCESS;
 }
 
 int AddStmt::run()
 {
-    return 0;
+    string destName;
+    int sourceValue;
+    int destValue;
+    int destIndex;
+    Variable *destVar;
+
+
+    if (program->getValueByInput(p_operands[0]) != -1)
+    {
+        sourceValue = program->getValueByInput(p_operands[0]);
+    }
+    else
+    {
+        return ERROR;
+    }
+
+    if (HelperFunction::isArraySyntax(p_operands[1],&destName,&destIndex))
+    {
+        if (program->findVariable(destName, &destVar))
+        {
+            if (destIndex > destVar->getSize() || destIndex < 1)
+            {
+                logger->error("Array out of bound.");
+                return ERROR;
+            }
+            else
+            {
+                destValue = destVar->getValueByIndex(destIndex);
+            }
+        }
+        else
+        {
+            logger->error("Variable '" + destName + "' does not exist.");
+            return ERROR;
+        }
+    }
+    else
+    {
+        destName = p_operands[1];
+        if (program->findVariable(destName, &destVar))
+        {
+            destValue = destVar->getValue();
+        }
+        else
+        {
+            logger->error("Variable \"" + destName + "\" does not exist.");
+            return ERROR;
+        }
+    }
+
+    program->setVariable(destName, sourceValue+destValue, destIndex);
+    return SUCCESS;
 }

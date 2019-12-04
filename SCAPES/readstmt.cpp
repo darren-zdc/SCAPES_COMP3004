@@ -53,24 +53,25 @@ int ReadStmt::compile()
         return 0;
     }
     */
-    operands.push_back(Operand(p_operands[0]));
     return SUCCESS;
 }
 
 int ReadStmt::run()
 {
-    string input = p_operands[0];
+    string varName = p_operands[0];
     int index = 0;
-    string varName;
 
-    HelperFunction::isArraySyntax(input, varName, &index);
+    if (HelperFunction::isArraySyntax(varName, &varName, &index))
+    {
 
-    if (!program->ifExistVariable(varName, nullptr))
+    }
+
+    if (!program->findVariable(varName, nullptr))
     {
         //Error: variable not exists
+        logger->error("variable not found");
         return ERROR;
     }
-    int varValue = program->readInput();
-    logger->info("hahah");
+    int varValue = program->readInput(varName);
     return program->setVariable(varName, varValue, index);
 }

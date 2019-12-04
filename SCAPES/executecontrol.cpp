@@ -14,8 +14,7 @@ string executeControl::executeProgram()
     program = Program::deserializeToObject(name, directory);
     program->control = this;
     program->Execute();
-    string temp = "Test # of # program # output # handling";
-    return temp;
+    return program->getProgramOutput();
 }
 
 int executeControl::readInput(string name)

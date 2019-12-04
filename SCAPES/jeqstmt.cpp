@@ -29,11 +29,14 @@ int JEqStmt::compile()
         return ERROR;
     }
     program->createLabel(p_operands[0]);
-    operands.push_back(p_operands[0]);
     return SUCCESS;
 }
 
 int JEqStmt::run()
 {
-    return 0;
+    if (program->getComparisonFlag() == EQUAL)
+    {
+        program->setJump(true);
+    }
+    return SUCCESS;
 }

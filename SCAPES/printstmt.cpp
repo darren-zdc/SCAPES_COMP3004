@@ -26,11 +26,27 @@ int PrintStmt::compile()
         logger->error("Invalid prt input");
         return ERROR;
     }
-    operands.push_back(Operand(p_operands[0]));
     return SUCCESS;
 }
 
 int PrintStmt::run()
 {
-    return 0;
+    if (p_operands[0][0] == '"')
+    {
+        program->appendProgramOutput(p_operands[0]);
+        //logger->info("Printing: " + p_operands[0]);
+        return SUCCESS;
+    }
+    int output = program->getValueByInput(p_operands[0]);
+    if (output >= 0)
+    {
+        program->appendProgramOutput(to_string(output));
+        //logger->info("Printing: " + to_string(output));
+        return SUCCESS;
+    }
+    else
+    {	
+        logger->error("Invalid print statement");
+        return ERROR;
+    }
 }

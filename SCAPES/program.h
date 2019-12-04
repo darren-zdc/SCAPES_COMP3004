@@ -18,8 +18,6 @@
 #include "label.h"
 #include "helperfunction.h"
 
-#include "uimanager.h"
-
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -28,7 +26,7 @@
 #include <fstream>
 #include <string>
 using namespace std;
-enum flag{ERROR, SUCCESS, CONTINUE, GREATER, SMALLER, EQUAL};
+enum flag{ERROR, SUCCESS, CONTINUE, END, GREATER, SMALLER, EQUAL};
 
 class executeControl;
 
@@ -39,9 +37,12 @@ public:
     static Program* deserializeToObject(string filename, string dir);
 
     Program(string filename, string dir);
+    ~Program();
     void setComparisonFlag(flag f);
     flag getComparisonFlag();
     void setJump(bool b);
+    string getProgramOutput();
+    void appendProgramOutput(string input);
 
     int Compile();
     int Execute();    
@@ -49,15 +50,14 @@ public:
     int createVariable(string name, int size=0);
     void createLabel(string name);
     int createStatement(string instr, vector<string> operds, string label="");
-    int findVariable(string name, Variable* output);
+    int findVariable(string name, Variable** output);
     int findLabel(string label);
-    int ifExistVariable(string name, Variable* output);
     int ifExistLabel(string name);
     int ifPrevCompExist();
 
     int setVariable(string name, int value, int index = 0);
     int getValueByInput(string input);
-    int readInput();
+    int readInput(string varname);
     int output(string value);
     int arrayToInt(const std::string& s);
 
@@ -65,9 +65,10 @@ public:
 private:
     vector<Label> labels;
     vector<Statement*> statements;
-    vector<Variable> variables;
+    vector<Variable*> variables;
     string filename;
     string directory;
+    string programOutput;
     flag comparisonFlag = ERROR;
     bool jump = false;
     int createStatement(string line, string label="");

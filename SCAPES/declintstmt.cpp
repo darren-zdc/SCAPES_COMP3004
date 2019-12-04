@@ -29,12 +29,16 @@ int DeclIntStmt::compile()
         logger->error("Variablie " + p_operands[0] + " already exists");
         return ERROR;
     }
-    operands.push_back(Operand(p_operands[0]));
     return SUCCESS;
 }
 
 int DeclIntStmt::run()
 {
-
+    if (program->findVariable(p_operands[0], nullptr))
+    {
+        logger->error("Variable already exist " + p_operands[0]);
+        return ERROR;
+    }
+    program->createVariable(p_operands[0]);
     return SUCCESS;
 }

@@ -28,7 +28,6 @@ int JLessStmt::compile()
         return ERROR;
     }
     program->createLabel(p_operands[0]);
-    operands.push_back(p_operands[0]);
     return 1;
 }
 
@@ -36,7 +35,7 @@ int JLessStmt::run()
 {
     if (program->getComparisonFlag() == SMALLER)
     {
-
+        program->setJump(true);
     }
-    return 0;
+    return SUCCESS;
 }

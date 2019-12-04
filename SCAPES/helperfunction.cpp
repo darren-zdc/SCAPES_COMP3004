@@ -6,20 +6,14 @@ HelperFunction::HelperFunction()
 }
 
 
-int HelperFunction::isArraySyntax(string input, string* varname, int* i)
+int HelperFunction::isArraySyntax(string input, string* varname, string* i)
 {
     if (input[0] == '$')
     {
         if (!input.find("+"))
             return 0;
         *varname = input.substr(1,input.find("+")-1);
-        int index = stoi(input.substr(input.find("+"), input.length() - input.find("+")));
-        if (index < 0)
-        {
-            //array index cannot less than 0
-            return 0;
-        }
-        *i = index;
+        *i = input.substr(input.find("+"), input.length() - input.find("+"));
         return 1;
     }
     return 0;

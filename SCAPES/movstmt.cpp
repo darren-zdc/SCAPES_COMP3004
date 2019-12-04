@@ -31,7 +31,8 @@ int MovStmt::run()
     string destName;
     int sourceValue;
     int destValue;
-    int destIndex = 0;
+    string destIndex;
+    int destI = 0;
     Variable *destVar;
 
 
@@ -48,19 +49,36 @@ int MovStmt::run()
     {
         if (program->findVariable(destName, &destVar))
         {
-            if (destIndex > destVar->getSize() || destIndex < 0)
+            if (HelperFunction::isNumber(destIndex))
+            {
+                destI = stoi(destIndex);
+            }
+            else
+            {
+                Variable* indexVar;
+                if (program->findVariable(destIndex, &indexVar))
+                {
+                    destI = indexVar->getValue();
+                }
+                else
+                {
+                    logger->error("Index variable \'"+ destIndex + "\' not exist");
+                    return ERROR;
+                }
+            }
+            if (destI > destVar->getSize() || destI < 0)
             {
                 logger->error("Array out of bound.");
                 return ERROR;
             }
             else
             {
-                destValue = destVar->getValueByIndex(destIndex);
+                destValue = destVar->getValueByIndex(destI);
             }
         }
         else
         {
-            logger->error("Variable \"" + destName + "\" does not exist");
+            logger->error("Variable '" + destName + "' does not exist.");
             return ERROR;
         }
     }
@@ -73,10 +91,10 @@ int MovStmt::run()
         }
         else
         {
-            logger->error("Variable '" + destName + "' does not exist.");
+            logger->error("Variable \"" + destName + "\" does not exist.");
             return ERROR;
         }
     }
-    program->setVariable(destName, sourceValue, destIndex);
+        program->setVariable(destName, sourceValue, destI);
     return SUCCESS;
 }

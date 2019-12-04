@@ -30,7 +30,8 @@ int AddStmt::run()
     string destName;
     int sourceValue;
     int destValue;
-    int destIndex;
+    string destIndex;
+    int destI = 0;
     Variable *destVar;
 
 
@@ -47,14 +48,31 @@ int AddStmt::run()
     {
         if (program->findVariable(destName, &destVar))
         {
-            if (destIndex > destVar->getSize() || destIndex < 0)
+            if (HelperFunction::isNumber(destIndex))
+            {
+                destI = stoi(destIndex);
+            }
+            else
+            {
+                Variable* indexVar;
+                if (program->findVariable(destIndex, &indexVar))
+                {
+                    destI = indexVar->getValue();
+                }
+                else
+                {
+                    logger->error("Index variable \'"+ destIndex + "\' not exist");
+                    return ERROR;
+                }
+            }
+            if (destI > destVar->getSize() || destI < 0)
             {
                 logger->error("Array out of bound.");
                 return ERROR;
             }
             else
             {
-                destValue = destVar->getValueByIndex(destIndex);
+                destValue = destVar->getValueByIndex(destI);
             }
         }
         else
@@ -77,6 +95,6 @@ int AddStmt::run()
         }
     }
 
-    program->setVariable(destName, sourceValue+destValue, destIndex);
+    program->setVariable(destName, sourceValue+destValue, destI);
     return SUCCESS;
 }

@@ -59,11 +59,28 @@ int ReadStmt::compile()
 int ReadStmt::run()
 {
     string varName = p_operands[0];
-    int index = 0;
-
+    string index;
+    int i = 0;
     if (HelperFunction::isArraySyntax(varName, &varName, &index))
     {
-
+        if (HelperFunction::isNumber(index))
+        {
+            i = stoi(index);
+        }
+        //if the input the not a number
+        else
+        {
+            Variable* indexVar;
+            if (program->findVariable(index, &indexVar))
+            {
+                i = indexVar->getValue();
+            }
+            else
+            {
+                logger->error("Index variable not find");
+                return -1;
+            }
+        }
     }
 
     if (!program->findVariable(varName, nullptr))
@@ -73,5 +90,5 @@ int ReadStmt::run()
         return ERROR;
     }
     int varValue = program->readInput(varName);
-    return program->setVariable(varName, varValue, index);
+    return program->setVariable(varName, varValue, i);
 }

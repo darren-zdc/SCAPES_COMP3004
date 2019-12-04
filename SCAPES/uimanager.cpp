@@ -123,9 +123,13 @@ void uimanager::displayMessage(string type, string source) //display pop-up mess
     else if (source == "Logger")
     {
         QString temp = QString::fromStdString(type);
-        //QStringList display = temp.split("#");
-        //window->displayInPopup(display, QString::fromStdString("Logger"));
         window->displayLoggerMessage(temp);
+    }
+    else if (source == "ExecuteControl") //we are in an error case
+    {
+        QString temp = QString::fromStdString(type);
+        QStringList display = temp.split("#");
+        window->displayInPopup(display, QString::fromStdString("Program Execution"));
     }
 }
 

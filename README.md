@@ -39,27 +39,30 @@ bash InstallScript.sh
 
 The default directory is `../localRepo`. All the test files and the compiled files will be located here.
 
-Program file is the file with `.txt` extension.
-Compiled file is the file with `.json` extension.
+Program files are files with the `.txt` extension.
+Compiled files are files with the `.json` extension.
 
-If the provided file structure is altered, select the change user type option to become a system admin, and manually set the directory with the chage directory option.
+If the provided file structure is altered, select the change user type option to become a system admin, and manually set the directory with the change directory option.
 
-### Open Program
-Select the file from the main menu and click `Open Program`
-
-### Create Program
+### Creating a Program
 Click the `Create Program` button, this will create a blank file that can then be opened and edited.
 
-### Save Program
-Click the `Save Program` button to save the program (program must be open).
+### Opening a Program
+Select the file from the main menu and click `Open Program`
 
+### Saving a Program
+Click the `Save Program` button to save the program. Changing the name of the file in the bottom text box will cause it to be renamed upon saving.
 
-### Compiled Program
+### Compiling a Program
 After saving and closing the program, select the program file and click `Compile Program` button to compile.
 The compiled program will be appeared in the main window. You are able to view the contents of the compiled program by selectiing the compiled program file and click `Open Program`.
-No json file will be created if the compiler encounters any syntax errors.
+No json file will be created if the compiler encounters any syntax errors. Compile time errors will be shown in the bottom text box.
 
+### Running Program
+Select a compiled(JSON) file from the main menu, and click `Run Program`. Runtime errors will be shown in the bottom text box, while program output will appear in a pop-up window.
 
+## Design Pattern
+The SCAPES system contains an implementation of the Proxy design pattern to manage the security of it's preference (default directory, default programming language) options. The design pattern is found in the preferences(.cpp and .h), proxypreferences(.cpp and .h), and realpreferences(.cpp and .h) classes.
 
 ## Authors
 

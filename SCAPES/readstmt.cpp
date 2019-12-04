@@ -62,6 +62,7 @@ int ReadStmt::run()
 {
     string varName = p_operands[0];
     string index;
+    bool flag = false;
     int i = 0;
     if (HelperFunction::isArraySyntax(varName, &varName, &index))
     {
@@ -75,6 +76,7 @@ int ReadStmt::run()
             Variable* indexVar;
             if (program->findVariable(index, &indexVar))
             {
+                flag = true;
                 i = indexVar->getValue();
             }
             else
@@ -91,6 +93,10 @@ int ReadStmt::run()
         logger->error("variable not found");
         return ERROR;
     }
-    int varValue = program->readInput(varName);
-    return program->setVariable(varName, varValue, i);
+
+    if(flag){
+        return program->setVariable(varName, program->readInput("$" + varName + "+" + std::to_string(i)), i);
+    }else{
+        return program->setVariable(varName, program->readInput(p_operands[0]), i);
+    }
 }

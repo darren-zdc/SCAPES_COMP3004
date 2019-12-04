@@ -30,13 +30,15 @@ int ReadStmt::compile()
             logger->error("Invalid array representation");
             return ERROR;
         }
-        int index = stoi(varName.substr(varName.find("+"), varName.length() - varName.find("+")));
-        if (index < 0)
+
+
+        //int index = stoi(varName.substr(varName.find("+"), varName.length() - varName.find("+")));
+        /*if (index < 0)
         {
             //array index cannot less than 0
             logger->error("Invalid array index");
             return ERROR;
-        }
+        }*/
     }
     else if (HelperFunction::isNumber(p_operands[0]))
     {

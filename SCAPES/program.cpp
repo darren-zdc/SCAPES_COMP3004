@@ -95,7 +95,7 @@ int Program::Execute()
         }
         else if (status == END )
         {
-            logger->info("Run successfully!!");
+            logger->info("Program Executed Successfully");
             return SUCCESS;
         }
         if (jump)

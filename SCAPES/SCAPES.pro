@@ -106,5 +106,4 @@ FORMS += \
 DISTFILES += \
     ../README.md \
     ../localRepo/test1.txt \
-    ../localRepo/test2.json \
     ../localRepo/test2.txt

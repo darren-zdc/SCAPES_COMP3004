@@ -6,20 +6,14 @@ HelperFunction::HelperFunction()
 }
 
 
-int HelperFunction::isArraySyntax(string input, string* varname, int* i)
+int HelperFunction::isArraySyntax(string input, string* varname, string* i)
 {
     if (input[0] == '$')
     {
         if (!input.find("+"))
             return 0;
         *varname = input.substr(1,input.find("+")-1);
-        int index = stoi(input.substr(input.find("+"), input.length() - input.find("+")));
-        if (index < 0)
-        {
-            //array index cannot less than 0
-            return 0;
-        }
-        *i = index;
+        *i = input.substr(input.find("+")+1);
         return 1;
     }
     return 0;
@@ -47,12 +41,37 @@ string HelperFunction::getFileName(string filePath, bool withExtension, char sep
     return "";
 }
 
-vector<string> HelperFunction::split(string line)
-{
-    istringstream iss(line);
-    vector<string> results((istream_iterator<std::string>(iss)),
-                   istream_iterator<std::string>());
-    return results;
+vector<string> HelperFunction::split(string str)
+{   
+    vector<string> v;
+    string temp;
+    for( size_t i=0; i<str.length(); i++){
+        char c = str[i];
+        //temp += to_string(c);
+        if( c == ' ' )
+        {
+            v.push_back(temp);
+            temp = "";
+        }
+        else if (c == '\"' )
+        {
+            temp += string(1,c);
+            i++;
+            while( str[i] != '\"' )
+            {
+                temp += string(1, str[i]);
+                i++;
+            }
+            temp += string(1, str[i]);
+        }
+        else {
+
+            temp += string(1, str[i]);
+
+        }
+    }
+    v.push_back(temp);
+    return v;
 }
 
 string HelperFunction::getCurrentTime()

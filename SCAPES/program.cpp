@@ -118,7 +118,7 @@ int Program::Execute()
             index++;
         }
 
-        if (index > statements.size())
+        if (index >= statements.size())
         {
             //Error index exceed statements size
             logger->error("No valid end statement");
@@ -454,7 +454,7 @@ void Program::appendProgramOutput(string input)
 
 int Program::getValueByInput(string input)
 {
-    int index = 0;
+    string index;
     Variable* var;
     string varname;
     if (HelperFunction::isNumber(input))
@@ -469,15 +469,43 @@ int Program::getValueByInput(string input)
     {
         if (findVariable(varname, &var))
         {
-            if (var->isVarArray() && index <= var->getSize())
+            //if the input index is a number
+            if (HelperFunction::isNumber(index))
             {
-                return var->getValueByIndex(index);
+                int i = stoi(index);
+                if (var->isVarArray() && i < var->getSize() && i >= 0)
+                {
+                    return var->getValueByIndex(i);
+                }
+                else
+                {
+                    logger->error("Index out of bound.");
+                    return -1;
+                }
             }
+            //if the input the not a number
             else
             {
-                logger->error("Index out of bound.");
-                return -1;
+                Variable* indexVar;
+                if (findVariable(index, &indexVar))
+                {
+                    if (var->isVarArray() && indexVar->getValue() < var->getSize() && indexVar->getValue() >= 0)
+                    {
+                        return var->getValueByIndex(indexVar->getValue());
+                    }
+                    else
+                    {
+                        logger->error("Index out of bound.");
+                        return -1;
+                    }
+                }
+                else
+                {
+                    logger->error("Index variable not find");
+                    return -1;
+                }
             }
+
         }
         logger->error("Variable not exist");
         return -1;

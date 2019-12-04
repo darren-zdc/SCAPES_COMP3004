@@ -25,25 +25,7 @@ int DeclArrStmt::compile()
         return ERROR;
     }
 
-    // check if its a number
-    // max array length can not be less than 0
-    if(HelperFunction::isNumber(p_operands[1]))
-    {
-        if(std::stoi(p_operands[1]) < 0)
-        {
-            //error: invalid index < 0
-            logger->error("Invalid index size <0");
-            return ERROR;
-        }
-    }
-    else
-    {
-        //Error: not a number
-        logger->error("Invalid array size");
-        return ERROR;
-    }
-
-    if(!program->createVariable(p_operands[0], std::stoi(p_operands[1])))
+    if(!program->createVariable(p_operands[0]))
     {
         //error: variable already exists
         logger->error("Variable already exists");
@@ -54,12 +36,26 @@ int DeclArrStmt::compile()
 
 int DeclArrStmt::run()
 {
+    int arraySize = 0;
     if (program->findVariable(p_operands[0], nullptr))
     {
         logger->error("Variable already exist \'" + p_operands[0] + "\'");
         return ERROR;
     }
-    program->createVariable(p_operands[0], stoi(p_operands[1]));
+    if (HelperFunction::isNumber(operands[1].getValue()))
+    {
+        arraySize = stoi(operands[1].getValue());
+    }
+    else
+    {
+        arraySize = program->getValueByInput(operands[1].getValue());
+        if (arraySize < 0)
+        {
+            logger->error("Invalid variable " + operands[1].getValue());
+            return ERROR;
+        }
+    }
+    program->createVariable(p_operands[0], arraySize);
     return SUCCESS;
 }
 

@@ -1,0 +1,65 @@
+#declare variables
+dci first
+dci second
+dci third
+dci iterations
+dca arr 3
+#read input for variables
+rdi first
+rdi second
+rdi third
+rdi iterations
+#if iterations is zero or less than zero, we have no work to do
+#compound condition, if d < 0 OR d == 0
+cmp 0 iterations
+jmr L2
+cmp 0 iterations
+jeq L2
+#fill in array values
+mov first $arr+0
+mov second $arr+1
+mov third $arr+2
+#setup loops
+dci outer
+dci inner
+mov 0 outer
+mov 0 inner
+#Nested loops
+L1: add $arr+inner $arr+inner
+#print for viewing control flow
+prt "Looping(Inner)"
+add 1 inner
+cmp inner 3
+jls L1
+prt "Looping(Outer)"
+add 1 outer
+mov 0 inner
+cmp iterations outer
+jmr L1
+#print new values
+dci temp
+mov 0 temp
+#Second loop
+prt "FinalValues"
+L5: prt $arr+temp
+add 1 temp
+cmp 3 temp
+jmr L5
+#printing variables at end of program
+prt "END_OF_PROGRAM"
+prt "Array"
+prt $arr+0
+prt $arr+1
+prt $arr+2
+prt "Iterators"
+prt inner
+prt outer
+jmp L2
+prt "END_OF_PROGRAM"
+L2: prt "Variables"
+prt first
+prt second
+prt third
+prt "Cycles"
+prt iterations
+end

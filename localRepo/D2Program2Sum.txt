@@ -1,0 +1,45 @@
+#size of array to sum
+dci size
+rdi size
+#if size is zero, no work to do
+cmp size 0
+jeq L4
+#declare array
+dca arr size
+#declare iterator
+dci iterator
+mov 0 iterator
+#declare temp variable
+dci nextValue
+#collect array values
+L1: rdi nextValue
+mov nextValue $arr+iterator
+add 1 iterator
+cmp iterator size
+jls L1
+#done with first loop, reset iterator
+mov 0 iterator
+#declare sum
+dci sum
+mov 0 sum
+#sum array values
+L2: add $arr+iterator sum
+add 1 iterator
+cmp size iterator
+jmr L2
+#sum complete
+prt sum
+prt "END_OF_PROGRAM"
+prt "Size/Sum"
+prt size
+prt sum
+prt "Input"
+dci a
+mov 0 a
+L3: prt $arr+a
+add 1 a
+cmp a size
+jls L3
+jmp L5
+L4: prt "INVALID_INPUT->ENDING
+L5: end

@@ -105,5 +105,7 @@ FORMS += \
 
 DISTFILES += \
     ../README.md \
+    ../localRepo/D2Program1Doubling.txt \
+    ../localRepo/D2Program2Sum.txt \
     ../localRepo/test1.txt \
     ../localRepo/test2.txt

@@ -39,9 +39,9 @@ QString uimanager::getLang() //ask preference manager for current language
     return temp;
 }
 
-void uimanager::SetDirectory(QString dir, QString user) //tell preference manager to change the directory
+int uimanager::SetDirectory(QString dir, QString user) //tell preference manager to change the directory
 {
-    pref->SetDirectory(dir.QString::toStdString(), user.QString::toStdString());
+    return pref->SetDirectory(dir.QString::toStdString(), user.QString::toStdString());
 }
 
 void uimanager::SetLang(QString lang, QString user) //tell the preferences manager to change the language

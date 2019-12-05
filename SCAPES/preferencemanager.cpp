@@ -20,7 +20,7 @@ void preferenceManager::SetLang(string lang, string user)
     pref->setLanguage(lang, user);
 }
 
-void preferenceManager::SetDirectory(string directory, string user)
+int preferenceManager::SetDirectory(string directory, string user)
 {
-    pref->setDirectory(directory, user);
+    return pref->setDirectory(directory, user);
 }

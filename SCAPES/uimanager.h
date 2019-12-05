@@ -19,7 +19,7 @@ public:
     MainWindow *window;
     QString getDirectory();
     QString getLang();
-    void SetDirectory(QString dir, QString user);
+    int SetDirectory(QString dir, QString user);
     void SetLang(QString lang, QString user);
     void displayMessage(string type, string source);
     void displayOutput(string output);

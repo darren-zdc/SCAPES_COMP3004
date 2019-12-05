@@ -194,7 +194,13 @@ void MainWindow::on_actionChange_Language_triggered()
 void MainWindow::on_actionChange_Directory_triggered() //allows navigation to change directory, input will be ignored if user does not have required permission
 {
     QString fileName = QFileDialog::getExistingDirectory(this, tr("Set Directory"), manager->getDirectory());
-    manager->SetDirectory(fileName, userType);
+
+    int i = manager->SetDirectory(fileName, userType);
+
+    if (i == 0)
+    {
+        this->displayInBox("You don't have access to this feature.");
+    }
     if (manager->PollProgramList().size() != 0)
     {
         QStringListModel *model = new QStringListModel;

@@ -9,7 +9,7 @@ class preferenceManager
 {
 public:
     preferenceManager();
-    void SetDirectory(string directory, string user);
+    int SetDirectory(string directory, string user);
     void SetLang(string directory, string user);
     string GetDirectory();
     string GetLang();

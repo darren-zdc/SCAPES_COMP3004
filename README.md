@@ -64,6 +64,10 @@ Select a compiled(JSON) file from the main menu, and click `Run Program`. Runtim
 ## Design Pattern
 The SCAPES system contains an implementation of the Proxy design pattern to manage the security of it's preference (default directory, default programming language) options. The design pattern is found in the preferences(.cpp and .h), proxypreferences(.cpp and .h), and realpreferences(.cpp and .h) classes.
 
+## Included Programs
+D2Program1Doubling takes a set of three numbers and doubles them x times, where x is the given iterator. (eg givin 3 as a number and 2 as an iterator, it will double 3 to 6 and then 6 to 12)
+D2Program2Sum takes a variable length set of numbers (size), places them in an array, and then sums them.
+
 ## Authors
 
 Dicong Zhao (100996654)

@@ -21,12 +21,14 @@ void proxypreferences::setLanguage(string lang, string user) //overwritten funct
     }
 }
 
-void proxypreferences::setDirectory(string dir, string user) //overwritten function to check permissions before setting directory
+int proxypreferences::setDirectory(string dir, string user) //overwritten function to check permissions before setting directory
 {
     if (checkAccess(user))
     {
         real->setDirectory(dir, user); //communicate with real preference object is user has valid permissions
+        return 1;
     }
+    return 0;
 }
 
 string proxypreferences::getDirectory() //permission check not required to get the current directory

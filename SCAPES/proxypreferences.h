@@ -9,7 +9,7 @@ class proxypreferences: public Preferences
 public:
     proxypreferences();
     void setLanguage(string lang, string user);
-    void setDirectory(string dir, string user);
+    int setDirectory(string dir, string user);
     string getDirectory();
     string getLanguage();
 private:

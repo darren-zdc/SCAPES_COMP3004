@@ -70,9 +70,9 @@ D2Program2Sum takes a variable length set of numbers (size), places them in an a
 
 ## Authors
 
-Dicong Zhao \\
-Marco Shen \\
-Liam Costello \\
+Dicong Zhao <br />
+Marco Shen <br />
+Liam Costello <br />
 
 ## License
 

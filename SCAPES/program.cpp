@@ -93,15 +93,11 @@ void Program::createStatement(string line, string label)
         //indicates that the line is a comment
         return;
     }
-    else if (lineParses[0].back() == ':')
-    {       
+    else if (ifExistLabel(lineParses[0].substr(0, lineParses[0].size()-1)))
+    {
         this->createStatement(line.substr(lineParses[0].length()+1, line.length() - lineParses[0].length())
                 , lineParses[0].substr(0,lineParses[0].size()-1));
         return;
-    }
-    else if (lineParses.size() == 0 || line.size() == 0)
-    {
-
     }
     else
     {
@@ -291,4 +287,3 @@ int Program::ifPrevCompExist()
     }
     return 0;
 }
-
